@@ -34,7 +34,7 @@ public class GroundItemMB : MonoBehaviour, ISerializationCallbackReceiver
 		return newGroundItem;
 	}
 
-	private static Vector2 GetSpawnPosition()
+	private static Vector3 GetSpawnPosition()
 	{
 		var player = GameObject.FindGameObjectWithTag("Player");
 		var playerPos = player.transform.position;
