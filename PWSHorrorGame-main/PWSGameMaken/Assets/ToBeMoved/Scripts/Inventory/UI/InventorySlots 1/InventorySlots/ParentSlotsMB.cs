@@ -193,16 +193,30 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 		InventorySlot slot = FindItemOnInventory(itemId_object);
 		var stackableItem = itemDatabaseSO.ItemSOlist[itemId_object].stackable;
 
-		if (!stackableItem || (stackableItem && slot == null))
+		if ((!stackableItem || (stackableItem && slot == null)) && CountEmptySlots() > 0)
 		{
 			FillNewSlot(itemObject, amount);
 			return true;
 		}
-		else  //als er ooit een maximum op het aantal stackable objecten komt moet hier de voorwaarde aangepast worden.
+		else if (stackableItem)  //als er ooit een maximum op het aantal stackable objecten komt moet hier de voorwaarde aangepast worden.
 		{
 			slot.AddAmount(amount);
 			return true;
-		};
+		}
+		return false;
+	}
+
+	private int CountEmptySlots()
+	{
+		var emptySlots = 0;
+		for (int i = 0; i < slots.Length; i++)
+		{
+			if (slots[i].ItemObject == null)
+			{
+				emptySlots++;
+			}
+		}
+		return emptySlots;
 	}
 
 	private void SwapItems(InventorySlot slot1)
