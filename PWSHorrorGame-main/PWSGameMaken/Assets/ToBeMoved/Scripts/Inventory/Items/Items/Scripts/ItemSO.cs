@@ -13,6 +13,8 @@ public enum ItemType
 	Mushroom,
 	PoisenousMushroom,
 	Food,
+	Artefact,
+	Camera,
 	Default
 }
 
