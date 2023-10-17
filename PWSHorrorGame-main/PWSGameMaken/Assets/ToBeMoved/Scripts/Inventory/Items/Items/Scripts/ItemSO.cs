@@ -23,6 +23,7 @@ public enum ItemType
 [System.Serializable]
 public class ItemSO : ScriptableObject
 {
+	public GameObject prefab;
 	public Sprite sprite;
 	public bool stackable;
 	public string itemName;

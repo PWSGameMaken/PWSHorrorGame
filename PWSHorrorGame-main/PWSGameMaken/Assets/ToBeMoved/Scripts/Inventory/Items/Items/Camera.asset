@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 993021986bb03964c9e7ecb21d0ee689, type: 3}
   m_Name: Camera
   m_EditorClassIdentifier: 
+  prefab: {fileID: 1394990789689852786, guid: 2a34ccfee50cadd47bd32fd6a4b1f8d2, type: 3}
   sprite: {fileID: 1186020496, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
   stackable: 0
   itemName: Camera
-  id: -1
+  id: 8
   type: 8
   description: The camera we found near the dead body. Seems quite a modern camera,
     maybe it still works?

@@ -26,10 +26,9 @@ public class GroundItemMB : MonoBehaviour, ISerializationCallbackReceiver
 
 	public static GameObject Create(ItemSO itemSO)
 	{
-		var newGroundItem = Instantiate(_itemPrefab, GetSpawnPosition(), Quaternion.identity, _collectables);
+		var newGroundItem = Instantiate(itemSO.prefab, GetSpawnPosition(), itemSO.prefab.transform.rotation, _collectables);
 
 		newGroundItem.GetComponent<GroundItemMB>().itemSO = itemSO;
-		//newGroundItem.GetComponent<SpriteRenderer>().sprite = itemSO.sprite;
 
 		return newGroundItem;
 	}
