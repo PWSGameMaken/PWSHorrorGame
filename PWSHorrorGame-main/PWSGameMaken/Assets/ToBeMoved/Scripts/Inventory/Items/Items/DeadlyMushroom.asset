@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 993021986bb03964c9e7ecb21d0ee689, type: 3}
   m_Name: DeadlyMushroom
   m_EditorClassIdentifier: 
+  prefab: {fileID: 137288753681790374, guid: 7ba061b91f8d85f4684f3295d50299ca, type: 3}
   sprite: {fileID: -801248925, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
   stackable: 0
   itemName: 
@@ -19,6 +20,3 @@ MonoBehaviour:
   type: 5
   description: Eat enough of these delicious looking little things and that will
     be another kill on the counter.
-  tempItemPrefab: {fileID: 4411246576773728976, guid: 3a9b7be24d09384469e65261aaba74e9, type: 3}
-  descriptionPrefab: {fileID: 4140267316113472383, guid: 3c32a9b8e23ed3343b6e8b4f49ba047d, type: 3}
-  canvas: {fileID: 1480061420441926223, guid: bfe512f163fda78488382f6cd8704927, type: 3}
