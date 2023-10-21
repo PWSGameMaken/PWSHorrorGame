@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Camera
   m_EditorClassIdentifier: 
   prefab: {fileID: 1394990789689852786, guid: 87be44b6112767e40986930d91825372, type: 3}
-  sprite: {fileID: 1186020496, guid: 5f3015a1ae314a94e8e5a933cc52334d, type: 3}
+  sprite: {fileID: 21300000, guid: 7ed79b06e1ccd264aab628ea57e4ebe9, type: 3}
   stackable: 0
   itemName: Camera
   id: 8
