@@ -3,17 +3,27 @@
 * https://github.com/GroBro-s
 */
 
+using System;
 using UnityEngine;
 
 namespace Inventory
 {
-	//De parentinventory moet worden opgedeelt in 2 groepen van inventories die grounditems op kunnen pakken en
-	//inventories die dat niet kunnen.
 	public class InteractableInventoryMB : ParentInventoryMB
 	{
 		#region variables
 		public GameObject InventoryUI;
 		#endregion
+
+		private void Update()
+		{
+			var scrollDelta = (int)Input.mouseScrollDelta.y;
+			var slotsMB = InventoryUI.GetComponent<ParentSlotsMB>();
+			print(scrollDelta);
+			if(scrollDelta != 0 )
+			{
+				slotsMB.ChangeSelectedSlot(scrollDelta);
+			}
+		}
 
 		protected override void OnTriggerEnter(Collider collision)
 		{
