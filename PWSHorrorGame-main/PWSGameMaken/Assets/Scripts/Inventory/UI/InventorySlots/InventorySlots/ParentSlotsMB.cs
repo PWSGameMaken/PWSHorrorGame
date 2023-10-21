@@ -249,6 +249,28 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 		slot2.UpdateSlot(slot1.ItemObject, slot1.amount);
 		slot1.UpdateSlot(temp.ItemObject, temp.amount);
 	}
+
+	public void ChangeSelectedSlot(int scrollDelta)
+	{
+		if (scrollDelta < 0)
+		{
+			SelectPreviousSlot();
+		}
+		else if (scrollDelta > 0)
+		{
+			SelectNextSlot();
+		}
+	}
+
+	private void SelectNextSlot()
+	{
+
+	}
+
+	private void SelectPreviousSlot()
+	{
+
+	}
 	#endregion
 }
 

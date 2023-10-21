@@ -11,33 +11,15 @@ public class FullScreenInventory : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if(inventoryIsActivated == false)
-            {
-                ActivateMouseCursor();
-                return;
-            }
-
-            if (inventoryIsActivated == true)
-		    {
-                DeactivateMouseCursor();
-                return;
-            }
+            EnableInventory(!inventoryIsActivated);
         }
 	}
 
-    private void ActivateMouseCursor()
+    private void EnableInventory(bool value)
     {
-		inventoryIsActivated = true;
+		inventoryIsActivated = value;
 
-		Cursor.visible = true;
-		Cursor.lockState = CursorLockMode.None;
-	}
-
-    private void DeactivateMouseCursor()
-    {
-		inventoryIsActivated = false;
-
-		Cursor.visible = true;
-		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.visible = value;
+		Cursor.lockState = value == true ? CursorLockMode.None : CursorLockMode.Locked;
 	}
 }
