@@ -29,6 +29,9 @@ namespace StarterAssets
 		public float JumpHeight = 1.2f;
 		[Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
 		public float Gravity = -15.0f;
+		[Tooltip("Max vertical downward speed")]
+		[Range(-10f, 0f)]	
+		public float maxVerticalVelocity;	
 
 		[Space(10)]
 		[Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
@@ -40,7 +43,7 @@ namespace StarterAssets
 		[Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
 		public bool Grounded = true;
 		[Tooltip("Useful for rough ground")]
-		public float GroundedOffset = -0.14f;
+		public float GroundedOffset = -0.55f;
 		[Tooltip("The radius of the grounded check. Should match the radius of the CharacterController")]
 		public float GroundedRadius = 0.5f;
 		[Tooltip("What layers the character uses as ground")]
@@ -212,9 +215,9 @@ namespace StarterAssets
 				_fallTimeoutDelta = FallTimeout;
 
 				// stop our velocity dropping infinitely when grounded
-				if (_verticalVelocity < 0.0f)
+				if (_verticalVelocity < maxVerticalVelocity)
 				{
-					_verticalVelocity = -2f;
+					_verticalVelocity = maxVerticalVelocity;
 				}
 
 				// Jump
