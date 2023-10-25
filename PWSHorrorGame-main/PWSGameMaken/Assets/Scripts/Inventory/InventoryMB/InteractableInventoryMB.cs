@@ -18,7 +18,7 @@ namespace Inventory
 		{
 			var scrollDelta = (int)Input.mouseScrollDelta.y;
 			var slotsMB = InventoryUI.GetComponent<ParentSlotsMB>();
-			print(scrollDelta);
+
 			if(scrollDelta != 0 )
 			{
 				slotsMB.ChangeSelectedSlot(scrollDelta);

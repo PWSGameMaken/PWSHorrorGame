@@ -19,13 +19,17 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 	[SerializeField] protected ItemDatabaseSO itemDatabaseSO;
 
 	protected Dictionary<GameObject, InventorySlot> slots_dict = new();
-	protected InventorySlot[] slots;	
+	protected InventorySlot[] slots;
+
+	private InventorySlot _selectedSlot;
+	private int _slotIndex;
 	#endregion
 
 	#region Unity Methods
 	private void Start()
 	{
 		slots = new InventorySlot[_slotAmount];
+		_selectedSlot = slots[_slotIndex];
 
 		CreateSlots();
 	}
@@ -165,7 +169,6 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 			{
 				MergeStackableSlots(slot1, slot2);
 			}
-
 			else
 			{
 				SwapUnstackableSlots(slot1, slot2);
@@ -252,24 +255,19 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 
 	public void ChangeSelectedSlot(int scrollDelta)
 	{
-		if (scrollDelta < 0)
+		switch (scrollDelta)
 		{
-			SelectPreviousSlot();
+			case 1:
+				_slotIndex = (_slotIndex < (_slotAmount - 1)) ? _slotIndex + 1 : 0;
+				break;
+			case -1:
+				_slotIndex = (_slotIndex > 0) ? _slotIndex - 1 : _slotAmount - 1;
+				break;
+			default: 
+				return;
 		}
-		else if (scrollDelta > 0)
-		{
-			SelectNextSlot();
-		}
-	}
-
-	private void SelectNextSlot()
-	{
-
-	}
-
-	private void SelectPreviousSlot()
-	{
-
+		print(_slotIndex);
+		_selectedSlot = slots[_slotIndex];
 	}
 	#endregion
 }
