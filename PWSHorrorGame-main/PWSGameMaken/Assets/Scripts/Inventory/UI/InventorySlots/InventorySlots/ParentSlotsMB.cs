@@ -9,6 +9,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using UnityEditor.Rendering;
 
 public abstract class ParentSlotsMB : UserInterfaceMB
 {
@@ -22,16 +24,32 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 	protected InventorySlot[] slots;
 
 	private InventorySlot _selectedSlot;
-	private int _slotIndex;
+	private int _slotIndex = 0;
+
+	[SerializeField] private Color _selectedSlotColor;
+	[SerializeField] private Color _slotColor;
 	#endregion
 
 	#region Unity Methods
 	private void Start()
 	{
 		slots = new InventorySlot[_slotAmount];
-		_selectedSlot = slots[_slotIndex];
-
 		CreateSlots();
+
+		_selectedSlot = slots[_slotIndex];
+		_selectedSlot.slotGO.GetComponent<Image>().color = _selectedSlotColor;
+	}
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Q))
+		{
+			for (int i = 0; i < _selectedSlot.amount; i++)
+			{
+				GroundItemMB.Create(_selectedSlot.ItemObject.Item.ItemSO);
+			}
+			slots[_slotIndex].ClearSlot();
+		}
 	}
 
 	public void OnEnter(GameObject slotGO)
@@ -266,8 +284,10 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 			default: 
 				return;
 		}
-		print(_slotIndex);
+
+		_selectedSlot.slotGO.GetComponent<Image>().color = _slotColor;
 		_selectedSlot = slots[_slotIndex];
+		_selectedSlot.slotGO.GetComponent<Image>().color = _selectedSlotColor;
 	}
 	#endregion
 }
