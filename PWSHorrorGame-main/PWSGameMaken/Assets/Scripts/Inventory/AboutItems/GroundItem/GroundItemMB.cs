@@ -9,6 +9,7 @@ public class GroundItemMB : MonoBehaviour, ISerializationCallbackReceiver
 {	
 	private static Transform _collectables;
 	public ItemSO itemSO;
+	private static int _power = 100;
 
 	private void Start()
 	{
@@ -24,13 +25,14 @@ public class GroundItemMB : MonoBehaviour, ISerializationCallbackReceiver
 	public static GameObject Create(ItemSO itemSO)
 	{
 		var player = GameObject.FindGameObjectWithTag("Player");
+		Vector3 forward = player.transform.TransformDirection(Vector3.forward);		
+		//var localPlayerRotation = player.transform.localRotation.eulerAngles;
 
-		var localPlayerRotation = player.transform.localRotation.eulerAngles;
-
-			var newGroundItem = Instantiate(itemSO.prefab, GetSpawnPosition(), itemSO.prefab.transform.rotation, _collectables);
+		var newGroundItem = Instantiate(itemSO.prefab, GetSpawnPosition() + forward * 2.5f, itemSO.prefab.transform.rotation, _collectables);
 		newGroundItem.GetComponent<GroundItemMB>().itemSO = itemSO;
 
-		newGroundItem.GetComponent<Rigidbody>().AddForce(localPlayerRotation * 1, ForceMode.Impulse);
+
+		newGroundItem.GetComponent<Rigidbody>().AddForce(forward * _power);
 
 		return newGroundItem;
 	}
@@ -40,7 +42,7 @@ public class GroundItemMB : MonoBehaviour, ISerializationCallbackReceiver
 		var player = GameObject.FindGameObjectWithTag("Player");
 		var playerPos = player.transform.position;
 
-		return new Vector3(playerPos.x, playerPos.y + 2, playerPos.z + 2);
+		return new Vector3(playerPos.x, playerPos.y + 1.8f, playerPos.z);
 	}
 
 	private static float GetOffset()
