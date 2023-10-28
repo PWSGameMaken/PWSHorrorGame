@@ -11,6 +11,7 @@ public class CinemachineShake : MonoBehaviour
 	private float shakeTimerTotal;
 	private float shakeTimer;
 	private float startingIntensity;
+	private GameStatsMB gameStatsMB;
 
 	private float defaultIntensity;
 	private float defaultFrequency;
@@ -21,6 +22,7 @@ public class CinemachineShake : MonoBehaviour
 	{
 		Instance = this;
 		cinemachineVirtualCamera  = GetComponent<CinemachineVirtualCamera>();
+		gameStatsMB = GameObject.Find("GameController").GetComponent<GameStatsMB>();
 	}
 
 	public void ShakeCamera(float intensity, float frequency, float time)
@@ -54,6 +56,7 @@ public class CinemachineShake : MonoBehaviour
 				if (shakeTimer >= shakeTimerTotal)
 				{
 					_hasClimaxed = true;
+					gameStatsMB.CollapseMap();
 				}
 
 			}
