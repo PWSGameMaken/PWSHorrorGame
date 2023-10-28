@@ -6,19 +6,16 @@ using UnityEngine;
 
 public class GameStatsMB : MonoBehaviour
 {
-    #region Variables
+     #region Variables
     public Transform collectables;
 
 	[SerializeField] private GameObject rocksToSpawn;
 	[SerializeField] private GameObject wallToCollapse;
-
 	#endregion
 
 	#region Unity Functions
-	public void CollapseMap()
+	public void CollapseWallAndStones()
 	{
-		print("collapse map is called");
-		//yield return new WaitForSeconds(1);
 		rocksToSpawn.SetActive(true);
 		wallToCollapse.SetActive(false);
 	}
