@@ -15,7 +15,6 @@ public class ArtifactMB : MonoBehaviour
 		if(other.gameObject.CompareTag("Player"))
 		{
 			CinemachineShake.Instance.ShakeCamera(shakeIntensity, shakeFrequency, shakeTime);
-			Invoke("CollapseMap", shakeTime / 2);
 		}	
 	}
 
