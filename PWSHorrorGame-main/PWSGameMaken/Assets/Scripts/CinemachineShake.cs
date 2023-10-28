@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class CinemachineShake : MonoBehaviour
 {
-	public static CinemachineShake Instance { get; private set; }	
+	public static CinemachineShake Instance { get; private set; }
 
-	private	CinemachineVirtualCamera  cinemachineVirtualCamera;
-	private float shakeTimerTotal;
-	private float shakeTimer;
-	private float startingIntensity;
+	private CinemachineVirtualCamera cinemachineVirtualCamera;
+	private float _shakeTimerTotal = 0;
+	private float _shakeTimer = 0;
+	private float _startingIntensity = 0;
 	private GameStatsMB gameStatsMB;
 
 	private float defaultIntensity;
@@ -18,68 +18,64 @@ public class CinemachineShake : MonoBehaviour
 
 	private bool _hasClimaxed = false;
 
+	private CinemachineBasicMultiChannelPerlin _cBMCP;
+
 	private void Awake()
 	{
 		Instance = this;
-		cinemachineVirtualCamera  = GetComponent<CinemachineVirtualCamera>();
+		cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
 		gameStatsMB = GameObject.Find("GameController").GetComponent<GameStatsMB>();
 	}
 
 	public void ShakeCamera(float intensity, float frequency, float time)
 	{
-		CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin =
-			cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-		
-		defaultIntensity = cinemachineBasicMultiChannelPerlin.m_AmplitudeGain;
-		defaultFrequency = cinemachineBasicMultiChannelPerlin.m_FrequencyGain;
-		
-		cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = intensity;
-		cinemachineBasicMultiChannelPerlin.m_FrequencyGain = frequency;
+		_cBMCP = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-		startingIntensity = intensity;
-		shakeTimerTotal = time;
-		//shakeTimer = time;
+		defaultIntensity = _cBMCP.m_AmplitudeGain;
+		defaultFrequency = _cBMCP.m_FrequencyGain;
+
+		_cBMCP.m_AmplitudeGain = intensity;
+		_cBMCP.m_FrequencyGain = frequency;
+
+		_startingIntensity = intensity;
+		_shakeTimerTotal = time;
 	}
 
 	private void Update()
 	{
-		if(shakeTimerTotal > 0)
+		if (_shakeTimerTotal == 0) return;
+
+		if (_hasClimaxed == false)
 		{
-			if(_hasClimaxed == false)
-			{
-				shakeTimer += Time.deltaTime;
-				CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin =
-					cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-
-				cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = Mathf.Lerp(startingIntensity, 0f, 1- (shakeTimer / shakeTimerTotal));
-
-				if (shakeTimer >= shakeTimerTotal)
-				{
-					_hasClimaxed = true;
-					gameStatsMB.CollapseMap();
-				}
-
-			}
-			else if(_hasClimaxed == true)
-			{
-				shakeTimer -= Time.deltaTime;
-				CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin =
-					cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-
-				cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = Mathf.Lerp(startingIntensity, 0f, 1 - (shakeTimer / shakeTimerTotal));
-				if(shakeTimer <= 0f)
-				{
-					ResetVariables(cinemachineBasicMultiChannelPerlin);
-				}
-			}
+			_shakeTimer += Time.deltaTime;
+			if (_shakeTimer >= _shakeTimerTotal) Climax();
 		}
+		else
+		{
+			_shakeTimer -= Time.deltaTime;
+			if (_shakeTimer <= 0f) UnshakeCamera();
+		}
+
+		_cBMCP.m_AmplitudeGain = GetAmplitude();
 	}
 
-	private void ResetVariables(CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin)
+	private void Climax()
 	{
-		shakeTimerTotal = 0f;
+		_hasClimaxed = true;
+		gameStatsMB.CollapseWallAndStones();
+	}
+
+	private float GetAmplitude()
+	{
+		var currentIntensity = 1 - (_shakeTimer / _shakeTimerTotal);
+		return Mathf.Lerp(_startingIntensity, 0f, currentIntensity);
+	}
+
+	private void UnshakeCamera()
+	{
+		_shakeTimerTotal = 0f;
 		_hasClimaxed = false;
-		cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = defaultIntensity;
-		cinemachineBasicMultiChannelPerlin.m_FrequencyGain = defaultFrequency;
+		_cBMCP.m_AmplitudeGain = defaultIntensity;
+		_cBMCP.m_FrequencyGain = defaultFrequency;
 	}
 }

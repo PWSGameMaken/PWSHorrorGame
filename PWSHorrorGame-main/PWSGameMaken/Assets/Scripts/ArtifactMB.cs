@@ -9,18 +9,17 @@ public class ArtifactMB : MonoBehaviour
 	[SerializeField] private float shakeIntensity = 25f;
 	[SerializeField] private float shakeFrequency = 10f;
 	[SerializeField] private float shakeTime = 1f;
-	public CameraShake cameraShake;
+
 	private void OnTriggerEnter(Collider other)
 	{
 		if(other.gameObject.CompareTag("Player"))
 		{
-			CinemachineShake.Instance.ShakeCamera(shakeIntensity, shakeFrequency, shakeTime);
+			EarthQuake();
 		}	
 	}
 
-	public void CollapseMap()
+	private void EarthQuake()
 	{
-		rocksToSpawn.SetActive(true);
-		wallToCollapse.SetActive(false);
+		CinemachineShake.Instance.ShakeCamera(shakeIntensity, shakeFrequency, shakeTime);
 	}
 }
