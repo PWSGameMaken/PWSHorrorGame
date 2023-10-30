@@ -3,19 +3,13 @@ using UnityEngine;
 
 public class ArtifactMB : MonoBehaviour
 {
-	[SerializeField] private GameObject rocksToSpawn;
-	[SerializeField] private GameObject wallToCollapse;
-
 	[SerializeField] private float shakeIntensity = 25f;
 	[SerializeField] private float shakeFrequency = 10f;
 	[SerializeField] private float shakeTime = 1f;
 
-	private void OnTriggerEnter(Collider other)
+	private void OnDestroy()
 	{
-		if(other.gameObject.CompareTag("Player"))
-		{
-			EarthQuake();
-		}	
+		EarthQuake();	
 	}
 
 	private void EarthQuake()

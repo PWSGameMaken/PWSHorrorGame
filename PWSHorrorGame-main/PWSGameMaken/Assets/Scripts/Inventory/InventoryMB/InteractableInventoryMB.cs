@@ -3,7 +3,6 @@
 * https://github.com/GroBro-s
 */
 
-using System;
 using UnityEngine;
 
 namespace Inventory
@@ -12,36 +11,55 @@ namespace Inventory
 	{
 		#region variables
 		public GameObject InventoryUI;
+		public Transform firePoint;
+		public float interactionDistanceLimit;
 		#endregion
 
 		private void Update()
 		{
+			ScrollSlots();
+			if(Input.GetKeyDown(KeyCode.E)) PickUpItem();
+		}
+
+		private void PickUpItem()
+		{
+			RaycastHit hit;
+
+			if(Physics.Raycast(firePoint.position , firePoint.transform.forward , out hit, 3))
+			{
+				//Deze lijn zie je nu niet aangezien deze functie maar 1 frame wordt aangeroepen.
+				Debug.DrawRay(firePoint.position, firePoint.transform.forward * hit.distance, Color.yellow);
+			}
+
+			var collidedGO = hit.transform?.gameObject;
+
+			if (collidedGO.TryGetComponent<GroundItemMB>(out var groundItem))
+			{
+				MoveGroundItemToInventorySlot(collidedGO);
+			}
+		}
+
+		private void ScrollSlots()
+		{
 			var scrollDelta = (int)Input.mouseScrollDelta.y;
 			var slotsMB = InventoryUI.GetComponent<ParentSlotsMB>();
 
-			if(scrollDelta != 0 )
+			if (scrollDelta != 0)
 			{
 				slotsMB.ChangeSelectedSlot(scrollDelta);
 			}
 		}
 
-		protected override void OnTriggerEnter(Collider collision)
-		{
-			if (collision.TryGetComponent<GroundItemMB>(out var groundItem))
-			{
-				SetGroundItemToInventorySlot(collision, groundItem);
-			}
-		}
-
-		private void SetGroundItemToInventorySlot(Collider collision, GroundItemMB groundItem) //TransferGroundItemToInventory
+		private void MoveGroundItemToInventorySlot(GameObject groundItem)
 		{
 			//voor nu is amount altijd hetzelfde want ieder in-game item komt overeen met 1 inventory-item.
 			//als dit niet meer het geval is moet dit systeem aangepast worden.
-			var itemObject = new ItemObject(groundItem.itemSO);
-			if (InventoryUI.GetComponent<DynamicSlotsMB>().AddItem(itemObject))
-			{
-				Destroy(collision.gameObject);
-			}
+			var itemSO = groundItem.GetComponent<GroundItemMB>().itemSO;
+			var itemObject = new ItemObject(itemSO);
+
+			var isMoved = InventoryUI.GetComponent<DynamicSlotsMB>().AddItem(itemObject);
+
+			if (isMoved) Destroy(groundItem);
 		}
 	}
 }
