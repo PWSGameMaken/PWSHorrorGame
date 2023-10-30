@@ -11,7 +11,7 @@ namespace Inventory
 	{
 		[SerializeField] private GameObject inventoryUI;
 
-		protected override void OnTriggerEnter(Collider collision)
+		protected void OnTriggerEnter(Collider collision)
 		{
 			inventoryUI.SetActive(true);
 		}

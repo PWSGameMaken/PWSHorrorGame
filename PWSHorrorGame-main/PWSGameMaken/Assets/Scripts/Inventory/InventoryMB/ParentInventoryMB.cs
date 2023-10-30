@@ -16,7 +16,7 @@ namespace Inventory
 		#endregion
 
 		#region Unity Methods
-		protected abstract void OnTriggerEnter(Collider collision);
+		//protected abstract void OnTriggerEnter(Collider collision);
 		#endregion
 	}
 }
