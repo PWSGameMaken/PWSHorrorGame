@@ -23,7 +23,7 @@ public static class MouseObject
 	public static void OnEnterSlot(GameObject slotGO, ParentSlotsMB parentSlotsMBInput)
 	{
 		slotHoveredOver = slotGO;
-		parentSlotsMB = parentSlotsMBInput; //Geen goede naam? Ik heb de Input zelf toegevoegd, anders krijg je namelijk een dubbele benaming.
+		parentSlotsMB = parentSlotsMBInput;
 	}
 
 	public static void OnExitSlot()

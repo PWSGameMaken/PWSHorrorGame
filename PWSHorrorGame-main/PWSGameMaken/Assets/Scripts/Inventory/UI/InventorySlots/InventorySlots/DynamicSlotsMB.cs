@@ -24,11 +24,8 @@ public class DynamicSlotsMB : ParentSlotsMB
 			AddEvents(slotGO);
 
 			var slot = slots[i];
-			slot = new InventorySlot()
-			{
-				slotGO = slotGO,
-				parent = this
-			};
+			slot = new InventorySlot { slotGO = slotGO };
+
 			slot.OnAfterUpdate += OnSlotUpdate;
 			slots[i] = slot;
 

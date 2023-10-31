@@ -13,8 +13,6 @@ public interface IBaseItem
 	ItemType Type { get; set; }
 	string Description { get; set; }
 	ItemSO ItemSO { get; set; }
-	//GameObject tempItemPrefab { get; set; }
-	//GameObject descriptionPrefab { get; set; }
 }
 
 public abstract class BaseItem : IBaseItem

@@ -9,25 +9,23 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
-using UnityEditor.Rendering;
 
 public abstract class ParentSlotsMB : UserInterfaceMB
 {
 	#region Variables
 	private bool _dragging = false;
 
-	[SerializeField] protected int _slotAmount = 20;
-	[SerializeField] protected ItemDatabaseSO itemDatabaseSO;
-
-	protected Dictionary<GameObject, InventorySlot> slots_dict = new();
-	protected InventorySlot[] slots;
-
 	private InventorySlot _selectedSlot;
 	private int _slotIndex = 0;
 
 	[SerializeField] private Color _selectedSlotColor;
 	[SerializeField] private Color _slotColor;
+
+	[SerializeField] protected int _slotAmount = 20;
+	[SerializeField] protected ItemDatabaseSO itemDatabaseSO;
+
+	protected Dictionary<GameObject, InventorySlot> slots_dict = new();
+	protected InventorySlot[] slots;
 	#endregion
 
 	#region Unity Methods
@@ -44,10 +42,7 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 	{
 		if (Input.GetKeyDown(KeyCode.Q))
 		{
-			for (int i = 0; i < _selectedSlot.amount; i++)
-			{
-				GroundItemMB.Create(_selectedSlot.ItemObject.Item.ItemSO);
-			}
+			CreateGroundItems(_selectedSlot);
 			slots[_slotIndex].ClearSlot();
 		}
 	}
@@ -98,14 +93,11 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 
 		if(itemObject != null)
 		{
-			TempItem.DeleteSprite();
+			TempItem.ResetSprite();
 
 			if (MouseObject.interfaceMouseIsOver == null && itemObject.Item.Id >= 0)
 			{
-				for (int i = 0; i < slot.amount; i++)
-				{
-					GroundItemMB.Create(itemObject.Item.ItemSO);
-				}
+				CreateGroundItems(slot);
 
 				slot.ClearSlot();
 				return;
@@ -115,6 +107,15 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 			{
 				SwapItems(slot);
 			}
+		}
+	}
+
+	public void CreateGroundItems(InventorySlot slot)
+	{
+		for (int i = 0; i < slot.amount; i++)
+		{
+			var itemSO = slot.ItemObject.Item.ItemSO;
+			GroundItemMB.Create(itemSO);
 		}
 	}
 

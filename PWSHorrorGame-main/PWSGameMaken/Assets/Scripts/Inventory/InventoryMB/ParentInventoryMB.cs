@@ -13,10 +13,8 @@ namespace Inventory
 	{
 		#region variables
 		[SerializeField] protected ItemDatabaseSO itemDatabaseSO;
-		#endregion
-
-		#region Unity Methods
-		//protected abstract void OnTriggerEnter(Collider collision);
+		
+		public GameObject inventoryUI;
 		#endregion
 	}
 }
