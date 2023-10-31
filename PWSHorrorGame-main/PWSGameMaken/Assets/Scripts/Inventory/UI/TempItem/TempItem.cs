@@ -22,11 +22,11 @@ public static class TempItem
 		}
 		else
 		{
-			DeleteSprite();
+			ResetSprite();
 		}
 	}
 
-	public static void DeleteSprite()
+	public static void ResetSprite()
 	{
 		item.GetComponent<Image>().sprite = null;
 		item.GetComponent<RectTransform>().sizeDelta = new Vector2 (0, 0);

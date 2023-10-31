@@ -9,8 +9,6 @@ namespace Inventory
 {
 	public class UninteractableInventoryMB : ParentInventoryMB
 	{
-		[SerializeField] private GameObject inventoryUI;
-
 		protected void OnTriggerEnter(Collider collision)
 		{
 			inventoryUI.SetActive(true);

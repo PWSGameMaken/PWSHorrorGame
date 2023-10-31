@@ -12,8 +12,6 @@ namespace Inventory
 	{
 		public ItemType[] AllowedItems = new ItemType[0];
 		[System.NonSerialized]
-		public UserInterfaceMB parent;
-		[System.NonSerialized]
 		public GameObject slotGO;
 		[System.NonSerialized]
 		public SlotUpdated OnAfterUpdate;
@@ -22,19 +20,6 @@ namespace Inventory
 		public ItemObject ItemObject { get; set; }
 		public int amount;
 
-		#region GetSetItemObject
-		//public ItemObject ItemObject
-		//{
-		//	get
-		//	{
-		//		if (itemObject.Id >= 0)
-		//		{
-		//			return parent.inventory.database.ItemObjects[item.Id];
-		//		}
-		//		return null;
-		//	}
-		//}
-		#endregion
 		public InventorySlot() {
 		}
 		public InventorySlot(ItemObject itemObject, int amount)
