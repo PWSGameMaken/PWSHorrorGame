@@ -15,7 +15,8 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 	#region Variables
 	private bool _dragging = false;
 
-	private InventorySlot _selectedSlot;
+	
+	[HideInInspector] public InventorySlot selectedSlot;
 	private int _slotIndex = 0;
 
 	[SerializeField] private Color _selectedSlotColor;
@@ -26,6 +27,7 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 
 	protected Dictionary<GameObject, InventorySlot> slots_dict = new();
 	protected InventorySlot[] slots;
+
 	#endregion
 
 	#region Unity Methods
@@ -34,15 +36,15 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 		slots = new InventorySlot[_slotAmount];
 		CreateSlots();
 
-		_selectedSlot = slots[_slotIndex];
-		_selectedSlot.slotGO.GetComponent<Image>().color = _selectedSlotColor;
+		selectedSlot = slots[_slotIndex];
+		selectedSlot.slotGO.GetComponent<Image>().color = _selectedSlotColor;
 	}
 
 	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Q))
 		{
-			CreateGroundItems(_selectedSlot);
+			CreateGroundItems(selectedSlot);
 			slots[_slotIndex].ClearSlot();
 		}
 	}
@@ -276,19 +278,24 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 	{
 		switch (scrollDelta)
 		{
-			case 1:
+			case -1:
 				_slotIndex = (_slotIndex < (_slotAmount - 1)) ? _slotIndex + 1 : 0;
 				break;
-			case -1:
+			case 1:
 				_slotIndex = (_slotIndex > 0) ? _slotIndex - 1 : _slotAmount - 1;
 				break;
 			default: 
 				return;
 		}
 
-		_selectedSlot.slotGO.GetComponent<Image>().color = _slotColor;
-		_selectedSlot = slots[_slotIndex];
-		_selectedSlot.slotGO.GetComponent<Image>().color = _selectedSlotColor;
+		selectedSlot.slotGO.GetComponent<Image>().color = _slotColor;
+		selectedSlot = slots[_slotIndex];
+		selectedSlot.slotGO.GetComponent<Image>().color = _selectedSlotColor;
+	}
+
+	public void ClearSlot(InventorySlot slot)
+	{
+		slots[_slotIndex].ClearSlot();
 	}
 	#endregion
 }
