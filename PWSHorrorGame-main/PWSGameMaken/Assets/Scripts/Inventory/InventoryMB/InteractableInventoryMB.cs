@@ -18,7 +18,7 @@ namespace Inventory
 		private void Update()
 		{
 			ScrollSlots();
-			if(Input.GetKeyDown(KeyCode.E)) PickUpItem();
+			if(Input.GetKeyDown(KeyCode.E)) Interact();
 		}
 
 		private void ScrollSlots()
@@ -32,7 +32,7 @@ namespace Inventory
 			}
 		}
 
-		private void PickUpItem()
+		private void Interact()
 		{
 			RaycastHit hit;
 
@@ -52,6 +52,12 @@ namespace Inventory
 				{
 					MoveGroundItemToInventorySlot(collidedGO);
 				}
+
+				else if (collidedGO.TryGetComponent<CollectionPoint>(out var collectionPoint))
+				{
+					var parentSlots = collidedGO.GetComponent<UninteractableInventoryMB>().inventoryUI.GetComponent<ParentSlotsMB>();
+					MoveItem(parentSlots);
+				}
 			}
 		}
 
@@ -62,9 +68,19 @@ namespace Inventory
 			var itemSO = groundItem.GetComponent<GroundItemMB>().itemSO;
 			var itemObject = new ItemObject(itemSO);
 
-			var isMoved = inventoryUI.GetComponent<DynamicSlotsMB>().AddItem(itemObject);
+			var isMoved = inventoryUI.GetComponent<ParentSlotsMB>().AddItem(itemObject);
 
 			if (isMoved) Destroy(groundItem);
+		}
+
+		private void MoveItem(ParentSlotsMB slotsToBeMoved)
+		{	
+			var parentSlotsMB = inventoryUI.GetComponent<ParentSlotsMB>();
+			var selectedSlot = parentSlotsMB.selectedSlot;
+
+			var isMoved = slotsToBeMoved.AddItem(selectedSlot.ItemObject);
+
+			if(isMoved) parentSlotsMB.ClearSlot(selectedSlot);
 		}
 	}
 }
