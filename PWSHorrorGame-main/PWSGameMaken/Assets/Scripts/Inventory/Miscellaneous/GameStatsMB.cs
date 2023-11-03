@@ -11,13 +11,13 @@ public class GameStatsMB : MonoBehaviour
 
 	[SerializeField] private GameObject rocksToSpawn;
 	[SerializeField] private GameObject wallToCollapse;
-	#endregion
+    public GameObject soundSource;
+    #endregion
 
-	#region Unity Functions
-	public void CollapseWallAndStones()
+    public void CollapseWallAndStones()
 	{
 		rocksToSpawn.SetActive(true);
 		wallToCollapse.SetActive(false);
+		soundSource.SetActive(true);
 	}
-	#endregion
 }
