@@ -660,7 +660,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shakeIntensity: 25
   shakeFrequency: 10
-  shakeTime: 10
+  shakeTime: 5
+  collapseSound: {fileID: 1977903424}
+--- !u!114 &63640612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63640597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a46a7f1d8fb562e45905c4d1ea52e52e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectsToDespawn:
+  - {fileID: 1652471359}
 --- !u!1 &85676901
 GameObject:
   m_ObjectHideFlags: 0
@@ -3254,7 +3269,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14acad613ccfca94497e26fc98f006d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSOToCollect: {fileID: 0}
+  acceptedItemSO:
+  - {fileID: 11400000, guid: 0f260beb6404a8d48846a5f1c75ae0ea, type: 2}
+  isFull: 0
 --- !u!65 &256635812
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3603,7 +3620,6 @@ Transform:
   - {fileID: 5516703161800607994}
   - {fileID: 1142882778}
   - {fileID: 4160884373691490371}
-  - {fileID: 672351129}
   m_Father: {fileID: 51062430}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &366398339
@@ -4324,6 +4340,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 63640605}
+    - targetCorrespondingSourceObject: {fileID: 6298199603819093617, guid: 3ea5fb10e94294047bacfa83868d1763,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 63640612}
   m_SourcePrefab: {fileID: 100100000, guid: 3ea5fb10e94294047bacfa83868d1763, type: 3}
 --- !u!1 &411816546
 GameObject:
@@ -4358,7 +4378,6 @@ MonoBehaviour:
   collectables: {fileID: 783139432}
   rocksToSpawn: {fileID: 1622058312}
   wallToCollapse: {fileID: 1652471359}
-  soundSource: {fileID: 1977903424}
 --- !u!114 &411816548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5036,11 +5055,11 @@ Transform:
   m_GameObject: {fileID: 509836689}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.08, y: 0.12, z: 7.41}
+  m_LocalPosition: {x: 0, y: 1, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1.4126}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1826365656}
+  m_Father: {fileID: 1768941171}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &509836691
 AudioSource:
@@ -7591,12 +7610,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 672351125}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3305143, y: -0, z: -0, w: 0.943801}
-  m_LocalPosition: {x: -35.9981, y: 22.9, z: -201.1718}
+  m_LocalRotation: {x: 0.3305143, y: -1.9815968e-10, z: -5.6585536e-10, w: 0.943801}
+  m_LocalPosition: {x: 2.0026627, y: 11.714999, z: -17.668121}
   m_LocalScale: {x: 0.40692022, y: 1, z: 6.419775}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 361561306}
+  m_Father: {fileID: 4160884373691490371}
   m_LocalEulerAnglesHint: {x: 38.6, y: 0, z: 0}
 --- !u!1001 &675703781
 PrefabInstance:
@@ -14095,6 +14114,7 @@ GameObject:
   - component: {fileID: 1064403221}
   - component: {fileID: 1064403223}
   - component: {fileID: 1064403222}
+  - component: {fileID: 1064403224}
   m_Layer: 0
   m_Name: FallingRocksEvent
   m_TagString: Untagged
@@ -14116,6 +14136,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1622058313}
+  - {fileID: 1977903425}
   m_Father: {fileID: 1513745471}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1064403222
@@ -14130,7 +14151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e9d39c36eee3fc44ba0d608de08f103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rocksToFall: {fileID: 1622058312}
+  objectsToSpawn:
+  - {fileID: 1622058312}
 --- !u!65 &1064403223
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14152,6 +14174,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4.3, y: 5, z: 1}
   m_Center: {x: 0.15, y: 2, z: 0}
+--- !u!114 &1064403224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1064403220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0bd0a086d731b24087207bee14c91e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeIntensity: 25
+  shakeFrequency: 10
+  shakeTime: 0.2
+  collapseSound: {fileID: 0}
 --- !u!1001 &1068733866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15120,10 +15158,12 @@ MonoBehaviour:
   selectedSlot:
     AllowedItems: 
     amount: 0
+  slotIndex: 0
   _selectedSlotColor: {r: 0.433, g: 0.432, b: 0.404, a: 0.47843137}
   _slotColor: {r: 0.8018868, g: 0.7508076, b: 0.63924, a: 0.47843137}
   _slotAmount: 4
   itemDatabaseSO: {fileID: 11400000, guid: db9e470c6a4a1d04da18539225b705fa, type: 2}
+  slots: []
   slotPrefab: {fileID: 8332319117625401570, guid: 1b4e1bebcaa14a346932e4af26c71450,
     type: 3}
   X_START: -160
@@ -18320,10 +18360,12 @@ MonoBehaviour:
   selectedSlot:
     AllowedItems: 
     amount: 0
+  slotIndex: 0
   _selectedSlotColor: {r: 0.433, g: 0.432, b: 0.404, a: 0.47843137}
   _slotColor: {r: 0.8018868, g: 0.7508076, b: 0.63924, a: 0.47843137}
   _slotAmount: 1
   itemDatabaseSO: {fileID: 11400000, guid: db9e470c6a4a1d04da18539225b705fa, type: 2}
+  slots: []
   slotPrefab: {fileID: 8332319117625401570, guid: 1b4e1bebcaa14a346932e4af26c71450,
     type: 3}
   X_START: 0
@@ -18463,6 +18505,38 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1732828121}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1768941170
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1768941171}
+  m_Layer: 0
+  m_Name: Audio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1768941171
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768941170}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 509836690}
+  m_Father: {fileID: 1699224050}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1782030457
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18900,9 +18974,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 509836690}
   - {fileID: 1350345110}
-  - {fileID: 1977903425}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1852998863 stripped
@@ -26588,11 +26660,11 @@ Transform:
   m_GameObject: {fileID: 1977903424}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.170841, y: -4.7361665, z: -5.1117706}
+  m_LocalPosition: {x: -0.87999725, y: -0.79999995, z: -4.906006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1826365656}
+  m_Father: {fileID: 1064403221}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1977903426
 AudioSource:
@@ -51069,7 +51141,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 9030664528571525778, guid: b1364c965d7d8f648b177cbce65d10b8,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 672351129}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1364c965d7d8f648b177cbce65d10b8, type: 3}
 --- !u!4 &4160884373691490371 stripped
@@ -51326,6 +51402,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1656002647}
+    - targetCorrespondingSourceObject: {fileID: 8997996947095583982, guid: c5efc39a8aaf6e64ea40e9ad573e9b47,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1768941171}
     - targetCorrespondingSourceObject: {fileID: 4135013735270702856, guid: c5efc39a8aaf6e64ea40e9ad573e9b47,
         type: 3}
       insertIndex: -1
