@@ -289,7 +289,7 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 		selectedSlot.slotGO.GetComponent<Image>().color = _selectedSlotColor;
 	}
 
-	public void ClearSlot(InventorySlot slot)
+	public void ClearSelectedSlot()
 	{
 		slots[slotIndex].ClearSlot();
 	}

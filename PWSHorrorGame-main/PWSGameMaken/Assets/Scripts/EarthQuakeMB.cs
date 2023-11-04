@@ -7,7 +7,7 @@ public class EarthQuakeMB : MonoBehaviour
     [SerializeField] private float shakeIntensity = 25f;
 	[SerializeField] private float shakeFrequency = 10f;
 	[SerializeField] private float shakeTime = 1f;
-	[SerializeField] private GameObject collapseSound;
+	[SerializeField] private GameObject[] sounds;
 
 	private void OnDestroy()
 	{
@@ -17,6 +17,9 @@ public class EarthQuakeMB : MonoBehaviour
 	public void EarthQuake()
 	{
 		CinemachineShake.Instance.ShakeCamera(shakeIntensity, shakeFrequency, shakeTime);
-		collapseSound.SetActive(true);
+		for (int i = 0; i < sounds.Length; i++)
+		{
+			sounds[i].SetActive(true);
+		}
 	}
 }
