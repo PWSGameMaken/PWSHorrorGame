@@ -15,6 +15,9 @@ public enum ItemType
 	Food,
 	Artefact,
 	Camera,
+	steenCirkel,
+	steenDriehoek,
+	steenVierkant,
 	Default
 }
 

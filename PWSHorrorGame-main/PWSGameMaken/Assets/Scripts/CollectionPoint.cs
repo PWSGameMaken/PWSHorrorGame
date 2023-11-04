@@ -5,21 +5,27 @@ using UnityEngine;
 
 public class CollectionPoint : MonoBehaviour
 {
+    [SerializeField] private GameObject[] itemsToSpawn;
+    [SerializeField] private GameObject[] itemsToDespawn;
+
+    private ParentSlotsMB _parentSlotsMB;
+
     public ItemSO[] acceptedItemSO;
-    public bool isFull = false;
-    private ParentSlotsMB parentSlotsMB;
+
+    [HideInInspector] public bool isFull = false;
+
 
 	private void Start()
 	{
-		parentSlotsMB = GetComponent<UninteractableInventoryMB>().inventoryUI.GetComponent<ParentSlotsMB>();
+		_parentSlotsMB = GetComponent<UninteractableInventoryMB>().inventoryUI.GetComponent<ParentSlotsMB>();
 	}
 
 	private void Update()
 	{
-        if(parentSlotsMB.CountEmptySlots() ==  0) isFull = true;
-		if(isFull)
+        if (isFull == false)
         {
-            ObjectiveCompleted();
+            if (_parentSlotsMB.CountEmptySlots() == 0) isFull = true;
+            if (isFull) ObjectiveCompleted();
         }
 	}
 
@@ -37,6 +43,14 @@ public class CollectionPoint : MonoBehaviour
 
     private void ObjectiveCompleted()
     {
-        print("Now the door needs to Despawn");
+        for (int i = 0; i < itemsToSpawn.Length; i++)
+        {
+            itemsToSpawn[i].SetActive(true);
+        }
+
+        for (int i = 0; i < itemsToDespawn.Length; i++)
+        {
+            itemsToDespawn[i].SetActive(false);
+        }
     }
 }

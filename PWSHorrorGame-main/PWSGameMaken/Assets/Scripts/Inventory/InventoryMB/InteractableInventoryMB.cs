@@ -88,7 +88,7 @@ namespace Inventory
 
 			var isMoved = slotsToBeMoved.AddItem(selectedSlot.ItemObject);
 
-			if(isMoved) parentSlotsMB.ClearSlot(selectedSlot);
+			if(isMoved) parentSlotsMB.ClearSelectedSlot();
 		}
 	}
 }

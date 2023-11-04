@@ -46,7 +46,7 @@ public class CinemachineShake : MonoBehaviour
 		if (_hasClimaxed == false)
 		{
 			_shakeTimer += Time.deltaTime;
-			if (_shakeTimer >= _shakeTimerTotal) Climax();
+			if (_shakeTimer >= _shakeTimerTotal/2) Climax();
 		}
 		else
 		{
