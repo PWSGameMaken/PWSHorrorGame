@@ -6,12 +6,9 @@ public class RumbleSound : MonoBehaviour
 {
     public AudioSource source;
     public AudioClip clip; 
-    void Start()
-    {
-    }
 
     void Update()
     {
-    source.PlayOneShot(clip);
+        source.PlayOneShot(clip);
     }
 }

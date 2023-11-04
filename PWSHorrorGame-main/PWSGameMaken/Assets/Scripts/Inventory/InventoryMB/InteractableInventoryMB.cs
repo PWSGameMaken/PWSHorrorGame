@@ -18,7 +18,8 @@ namespace Inventory
 		private void Update()
 		{
 			ScrollSlots();
-			if(Input.GetKeyDown(KeyCode.E)) Interact();
+			if (Input.GetKeyDown(KeyCode.E)) Interact();
+			if (Input.GetKeyDown(KeyCode.Q)) inventoryUI.GetComponent<ParentSlotsMB>().DropItems();
 		}
 
 		private void ScrollSlots()
@@ -55,8 +56,15 @@ namespace Inventory
 
 				else if (collidedGO.TryGetComponent<CollectionPoint>(out var collectionPoint))
 				{
-					var parentSlots = collidedGO.GetComponent<UninteractableInventoryMB>().inventoryUI.GetComponent<ParentSlotsMB>();
-					MoveItem(parentSlots);
+					var collidedparentSlotsMB = collidedGO.GetComponent<UninteractableInventoryMB>().inventoryUI.GetComponent<ParentSlotsMB>();
+					
+					var parentSlotsMB = inventoryUI.GetComponent<ParentSlotsMB>();
+					var selectedItemSO = parentSlotsMB.slots[parentSlotsMB.slotIndex].ItemObject.Item.ItemSO;
+
+					if(collectionPoint.CanAddItemToCollectionPoint(selectedItemSO))
+					{
+						MoveItem(collidedparentSlotsMB);
+					}
 				}
 			}
 		}

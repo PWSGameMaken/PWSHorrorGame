@@ -17,7 +17,7 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 
 	
 	[HideInInspector] public InventorySlot selectedSlot;
-	private int _slotIndex = 0;
+	[HideInInspector] public int slotIndex = 0;
 
 	[SerializeField] private Color _selectedSlotColor;
 	[SerializeField] private Color _slotColor;
@@ -26,7 +26,7 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 	[SerializeField] protected ItemDatabaseSO itemDatabaseSO;
 
 	protected Dictionary<GameObject, InventorySlot> slots_dict = new();
-	protected InventorySlot[] slots;
+	public InventorySlot[] slots;
 
 	#endregion
 
@@ -36,19 +36,15 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 		slots = new InventorySlot[_slotAmount];
 		CreateSlots();
 
-		selectedSlot = slots[_slotIndex];
+		selectedSlot = slots[slotIndex];
 		selectedSlot.slotGO.GetComponent<Image>().color = _selectedSlotColor;
 	}
 
-	private void Update()
+	public void DropItems()
 	{
-		if (Input.GetKeyDown(KeyCode.Q))
-		{
-			CreateGroundItems(selectedSlot);
-			slots[_slotIndex].ClearSlot();
-		}
+		CreateGroundItems(selectedSlot);
+		slots[slotIndex].ClearSlot();
 	}
-
 	public void OnEnter(GameObject slotGO)
 	{
 		MouseObject.OnEnterSlot(slotGO, this);
@@ -230,7 +226,7 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 		return false;
 	}
 
-	private int CountEmptySlots()
+	public int CountEmptySlots()
 	{
 		var emptySlots = 0;
 		for (int i = 0; i < slots.Length; i++)
@@ -279,23 +275,23 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 		switch (scrollDelta)
 		{
 			case -1:
-				_slotIndex = (_slotIndex < (_slotAmount - 1)) ? _slotIndex + 1 : 0;
+				slotIndex = (slotIndex < (_slotAmount - 1)) ? slotIndex + 1 : 0;
 				break;
 			case 1:
-				_slotIndex = (_slotIndex > 0) ? _slotIndex - 1 : _slotAmount - 1;
+				slotIndex = (slotIndex > 0) ? slotIndex - 1 : _slotAmount - 1;
 				break;
 			default: 
 				return;
 		}
 
 		selectedSlot.slotGO.GetComponent<Image>().color = _slotColor;
-		selectedSlot = slots[_slotIndex];
+		selectedSlot = slots[slotIndex];
 		selectedSlot.slotGO.GetComponent<Image>().color = _selectedSlotColor;
 	}
 
 	public void ClearSlot(InventorySlot slot)
 	{
-		slots[_slotIndex].ClearSlot();
+		slots[slotIndex].ClearSlot();
 	}
 	#endregion
 }
