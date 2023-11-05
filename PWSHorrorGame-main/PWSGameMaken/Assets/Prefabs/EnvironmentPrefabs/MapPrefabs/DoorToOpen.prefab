@@ -260,8 +260,7 @@ MonoBehaviour:
   itemsToSpawn: []
   itemsToDespawn:
   - {fileID: 6045755950957524632}
-  acceptedItemSO:
-  - {fileID: 11400000, guid: 0f260beb6404a8d48846a5f1c75ae0ea, type: 2}
+  acceptedItemSO: []
   isFull: 0
 --- !u!114 &8337848154309235373
 MonoBehaviour:

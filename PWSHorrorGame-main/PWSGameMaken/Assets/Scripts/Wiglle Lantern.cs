@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +17,6 @@ public class Wiggle : MonoBehaviour
     Vector3 initPos, initRot, startPos, startRot, endPos, endRot;
     float timePassed;
 
-    // Use this for initialization
     void Start()
     {
         initPos = startPos = transform.position;

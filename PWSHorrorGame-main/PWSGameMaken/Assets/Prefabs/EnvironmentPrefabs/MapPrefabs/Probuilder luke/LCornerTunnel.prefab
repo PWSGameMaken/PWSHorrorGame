@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 5667034043822423928}
   - component: {fileID: 5660938572005877495}
   m_Layer: 0
-  m_Name: RCornerTunnel
+  m_Name: LCornerTunnel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
