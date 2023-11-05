@@ -18,6 +18,7 @@ public enum ItemType
 	steenCirkel,
 	steenDriehoek,
 	steenVierkant,
+	ladder,
 	Default
 }
 

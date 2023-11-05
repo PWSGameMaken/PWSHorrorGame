@@ -5883,12 +5883,12 @@ PrefabInstance:
     - target: {fileID: 979714087230406981, guid: 86a70cbbff9f1a74ca74469c4eda235a,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 4.736547
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 979714087230406981, guid: 86a70cbbff9f1a74ca74469c4eda235a,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 4.736547
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 979714087230406981, guid: 86a70cbbff9f1a74ca74469c4eda235a,
         type: 3}
@@ -5967,12 +5967,12 @@ PrefabInstance:
     - target: {fileID: 979714087230406981, guid: 86a70cbbff9f1a74ca74469c4eda235a,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 4.736547
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 979714087230406981, guid: 86a70cbbff9f1a74ca74469c4eda235a,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 4.736547
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 979714087230406981, guid: 86a70cbbff9f1a74ca74469c4eda235a,
         type: 3}
