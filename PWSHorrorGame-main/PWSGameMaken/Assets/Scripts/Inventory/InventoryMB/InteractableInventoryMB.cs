@@ -3,6 +3,7 @@
 * https://github.com/GroBro-s
 */
 
+using System.Collections;
 using UnityEngine;
 
 namespace Inventory
@@ -13,6 +14,7 @@ namespace Inventory
 		[Header("Interaction With Items")]
 		[SerializeField] private Transform _firePoint;
 		[SerializeField] private float _interactionDistanceLimit;
+		private bool _isMoving = false;
 		#endregion
 
 		private void Update()
@@ -73,12 +75,47 @@ namespace Inventory
 		{
 			//voor nu is amount altijd hetzelfde want ieder in-game item komt overeen met 1 inventory-item.
 			//als dit niet meer het geval is moet dit systeem aangepast worden.
+			if (_isMoving) return;
+
 			var itemSO = groundItem.GetComponent<GroundItemMB>().itemSO;
+
 			var itemObject = new ItemObject(itemSO);
 
 			var isMoved = inventoryUI.GetComponent<ParentSlotsMB>().AddItem(itemObject);
 
-			if (isMoved) Destroy(groundItem);
+			if (isMoved)
+			{
+				groundItem.TryGetComponent<EarthQuakeMB>(out var earthQuake);
+				DestroyGroundItem(groundItem, earthQuake);
+				_isMoving = true;
+			}
+		}
+
+		private void DestroyGroundItem(GameObject groundItem, EarthQuakeMB earthQuakeMB)
+		{
+			earthQuakeMB.EarthQuake();
+			DestroyGroundItem(groundItem, earthQuakeMB.shakeTime/2);
+		}
+		private void DestroyGroundItem(GameObject groundItem, float delayTime = 0f)
+		{
+			StartCoroutine(DestroyExec(groundItem, delayTime));
+		}
+
+		private IEnumerator DestroyExec(GameObject groundItem, float delayTime)
+		{
+			yield return new WaitForSeconds(delayTime);
+
+			if(groundItem.TryGetComponent<SpawnObjectsInScene>(out var spawnObjectsInSceneMB))
+			{
+				spawnObjectsInSceneMB.SpawnObjects();
+			}
+			if (groundItem.TryGetComponent<DespawnObjectsInScene>(out var despawnObjectsInSceneMB))
+			{	
+				despawnObjectsInSceneMB.DespawnObjects();
+			}
+
+			Destroy(groundItem);
+			_isMoving = false;
 		}
 
 		private void MoveItem(ParentSlotsMB slotsToBeMoved)
