@@ -10,12 +10,17 @@ public class DespawnObjectsInScene : MonoBehaviour
 	{
 		if (other.gameObject.CompareTag("Player"))
 		{
-			for (int i = 0; i < objectsToDespawn.Length; i++)
+			DespawnObjects();
+		}
+	}
+
+	public void DespawnObjects()
+	{
+		for (int i = 0; i < objectsToDespawn.Length; i++)
+		{
+			if (objectsToDespawn[i].activeSelf)
 			{
-				if (!objectsToDespawn[i].activeSelf)
-				{
-					objectsToDespawn[i].SetActive(false);
-				}
+				objectsToDespawn[i].SetActive(false);
 			}
 		}
 	}

@@ -45,19 +45,6 @@ public class GroundItemMB : MonoBehaviour, ISerializationCallbackReceiver
 		return new Vector3(playerPos.x, playerPos.y + 1.8f, playerPos.z);
 	}
 
-	private static float GetOffset()
-	{
-		var offset = Random.Range(-2f, 2f);
-
-		//offset needs to be more than 1 unit from player	
-		while (offset > -1 && offset < 1)
-		{
-			offset = Random.Range(-2f, 2f);
-		}
-
-		return offset;
-	}
-
 	public void OnAfterDeserialize()
 	{
 

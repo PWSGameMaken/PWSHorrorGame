@@ -15,7 +15,7 @@ public class CinemachineShake : MonoBehaviour
 	private float defaultFrequency;
 
 	private bool _hasClimaxed = false;
-
+	
 	private CinemachineBasicMultiChannelPerlin _cBMCP;
 
 	private void Awake()
@@ -60,7 +60,7 @@ public class CinemachineShake : MonoBehaviour
 	private void Climax()
 	{
 		_hasClimaxed = true;
-		gameStatsMB.CollapseWallAndStones();
+		//gameStatsMB.CollapseWallAndStones();
 	}
 
 	private float GetAmplitude()

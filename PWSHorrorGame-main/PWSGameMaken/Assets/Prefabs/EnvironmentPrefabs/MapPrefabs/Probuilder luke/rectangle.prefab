@@ -260,7 +260,7 @@ MonoBehaviour:
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
-  m_SelectedVertices: 0100000002000000000000000300000009000000070000000b00000005000000
+  m_SelectedVertices: 
 --- !u!114 &3696190099208414788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,5 +358,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.9998207, y: 1, z: 3.999878}
-  m_Center: {x: 9.50009, y: 0.000000029802322, z: -8.000061}
+  m_Size: {x: 1, y: 1, z: 3.999878}
+  m_Center: {x: 0, y: 0, z: 0}
