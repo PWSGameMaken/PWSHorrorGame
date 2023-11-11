@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class IsRunning : MonoBehaviour
 {
-    public Animator Anim;
+    [SerializeField] private Animator Anim;
 
     void Start()
     {

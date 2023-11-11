@@ -61,7 +61,9 @@ namespace Inventory
 					var collidedparentSlotsMB = collidedGO.GetComponent<UninteractableInventoryMB>().inventoryUI.GetComponent<ParentSlotsMB>();
 					
 					var parentSlotsMB = inventoryUI.GetComponent<ParentSlotsMB>();
-					var selectedItemSO = parentSlotsMB.slots[parentSlotsMB.slotIndex].ItemObject.Item.ItemSO;
+					var selectedItemSO = parentSlotsMB.slots[parentSlotsMB.slotIndex].ItemObject?.Item.ItemSO;
+
+					if (selectedItemSO == null) return;
 
 					if(collectionPoint.CanAddItemToCollectionPoint(selectedItemSO))
 					{
@@ -85,17 +87,22 @@ namespace Inventory
 
 			if (isMoved)
 			{
-				groundItem.TryGetComponent<EarthQuakeMB>(out var earthQuake);
-				DestroyGroundItem(groundItem, earthQuake);
 				_isMoving = true;
+				
+				if (groundItem.TryGetComponent<EarthQuakeMB>(out var earthQuake))
+					DestroyGroundItem(groundItem, earthQuake);
+				else
+					DestroyGroundItem(groundItem);
 			}
 		}
 
 		private void DestroyGroundItem(GameObject groundItem, EarthQuakeMB earthQuakeMB)
 		{
 			earthQuakeMB.EarthQuake();
+			groundItem.GetComponent<MeshRenderer>().enabled = false;
 			DestroyGroundItem(groundItem, earthQuakeMB.shakeTime/2);
 		}
+
 		private void DestroyGroundItem(GameObject groundItem, float delayTime = 0f)
 		{
 			StartCoroutine(DestroyExec(groundItem, delayTime));
