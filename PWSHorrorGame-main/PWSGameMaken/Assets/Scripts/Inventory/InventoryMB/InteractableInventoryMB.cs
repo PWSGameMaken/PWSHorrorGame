@@ -14,14 +14,41 @@ namespace Inventory
 		[Header("Interaction With Items")]
 		[SerializeField] private Transform _firePoint;
 		[SerializeField] private float _interactionDistanceLimit;
+		[SerializeField] private GameObject pickUpHintUI;
+
 		private bool _isMoving = false;
 		#endregion
 
 		private void Update()
 		{
+			RaycastHit raycastHit = MakeRaycast(_firePoint.position, _firePoint.transform.forward, _interactionDistanceLimit);
+			var collidedGO = raycastHit.transform?.gameObject;
+
 			ScrollSlots();
-			if (Input.GetKeyDown(KeyCode.E)) Interact();
+
+			UpdateHintUI(collidedGO);
+
+
+			if (Input.GetKeyDown(KeyCode.E)) Interact(collidedGO);
 			if (Input.GetKeyDown(KeyCode.Q)) inventoryUI.GetComponent<ParentSlotsMB>().DropItems();
+		}
+		
+		private void UpdateHintUI(GameObject collidedGO)
+		{
+			if(collidedGO == null)
+			{
+				pickUpHintUI.SetActive(false);
+				return;
+			}
+
+			if (collidedGO.TryGetComponent(out GroundItemMB groundItemMB))
+			{
+				pickUpHintUI.SetActive(true);
+			}
+			else
+			{
+				pickUpHintUI.SetActive(false);
+			}
 		}
 
 		private void ScrollSlots()
@@ -35,30 +62,26 @@ namespace Inventory
 			}
 		}
 
-		private void Interact()
+		private RaycastHit MakeRaycast(Vector3 originPos, Vector3 direction, float maxDistance)
 		{
-			RaycastHit hit;
+			Physics.Raycast(originPos, direction, out RaycastHit hit, maxDistance);
+			Debug.DrawRay(originPos, direction * hit.distance, Color.yellow);
 
-			if(Physics.Raycast(_firePoint.position , _firePoint.transform.forward , out hit, _interactionDistanceLimit))
+			return hit;
+		}
+
+		private void Interact(GameObject itemToInteract)
+		{
+			if(itemToInteract != null)
 			{
-				//Deze lijn zie je nu niet aangezien deze functie maar 1 frame wordt aangeroepen.
-				Debug.DrawRay(_firePoint.position, _firePoint.transform.forward * hit.distance, Color.yellow);
-			}
-
-			var collidedGO = hit.transform?.gameObject;
-
-			//Hier is een 'dubbele' check, want als je de != null weghaalt zul je een error
-			//krijgen als je 'de leegte' probeert op te pakken.
-			if(collidedGO != null)
-			{
-				if (collidedGO.TryGetComponent<GroundItemMB>(out var groundItem))
+				if (itemToInteract.TryGetComponent<GroundItemMB>(out var groundItem))
 				{
-					MoveGroundItemToInventorySlot(collidedGO);
+					MoveGroundItemToInventorySlot(itemToInteract);
 				}
 
-				else if (collidedGO.TryGetComponent<CollectionPoint>(out var collectionPoint))
+				else if (itemToInteract.TryGetComponent(out CollectionPoint collectionPoint))
 				{
-					var collidedparentSlotsMB = collidedGO.GetComponent<UninteractableInventoryMB>().inventoryUI.GetComponent<ParentSlotsMB>();
+					var collidedparentSlotsMB = itemToInteract.GetComponent<UninteractableInventoryMB>().inventoryUI.GetComponent<ParentSlotsMB>();
 					
 					var parentSlotsMB = inventoryUI.GetComponent<ParentSlotsMB>();
 					var selectedItemSO = parentSlotsMB.slots[parentSlotsMB.slotIndex].ItemObject?.Item.ItemSO;
