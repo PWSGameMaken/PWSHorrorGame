@@ -1,29 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class IsWalking : MonoBehaviour
 {
-    public Animator Anim;
+    [SerializeField] private Animator _Anim;
+    private bool _isWalking = false;
 
     void Start()
     {
-        Anim = gameObject.GetComponent<Animator>();
+        _Anim = gameObject.GetComponent<Animator>();
+        _Anim.SetBool("IsWalking", _isWalking);
     }
 
     void Update()
     {
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)) 
         {
-            Anim.SetBool("IsWalking", true);
+			if (!_isWalking)
+            {
+                ChangeMovementState(!_isWalking);
+            }
         }
         else
         {
-            Anim.SetBool("IsWalking", false);
+            if (_isWalking) ChangeMovementState(!_isWalking);
         }
 
-        if(Input.GetKey(KeyCode.LeftShift)) {
-            Anim.SetBool("IsWalking", false);
-        }
+        if(_isWalking && Input.GetKey(KeyCode.LeftShift)) 
+            ChangeMovementState(!_isWalking);
     }
+
+    private void ChangeMovementState(bool isWalking)
+    {
+		_Anim.SetBool("IsWalking", isWalking);
+		_isWalking = isWalking;
+	}
 }

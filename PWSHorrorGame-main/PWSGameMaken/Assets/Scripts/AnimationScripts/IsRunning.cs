@@ -1,25 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class IsRunning : MonoBehaviour
 {
-    [SerializeField] private Animator Anim;
+    [SerializeField] private Animator _Anim;
+    private bool _isRunning = false;
 
     void Start()
     {
-        Anim = gameObject.GetComponent<Animator>();
+        _Anim = gameObject.GetComponent<Animator>();
+        _Anim.SetBool("IsRunning", false);
     }
 
     void Update()
     {
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A)  || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S))
         {
-            Anim.SetBool("IsRunning", true);
+            if(!_isRunning)
+            {
+                ChangeMovementState(!_isRunning);
+            }
         }
         else
         {
-            Anim.SetBool("IsRunning", false);
+            if(_isRunning)
+            {
+                ChangeMovementState(!_isRunning);
+            }
         }
     }
+
+    private void ChangeMovementState(bool isRunning)
+    {
+		_Anim.SetBool("IsRunning", isRunning);
+        _isRunning = isRunning;
+	}
 }
