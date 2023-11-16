@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 993021986bb03964c9e7ecb21d0ee689, type: 3}
   m_Name: SteenCirkel
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5432620915568743495, guid: 3c207f51c5b541f498e270cde9c97a48, type: 3}
+  groundItemPrefab: {fileID: 5432620915568743495, guid: 3c207f51c5b541f498e270cde9c97a48,
+    type: 3}
+  inHandItemPrefab: {fileID: 5432620915568743495, guid: 3f5260628e897984db950a5a473cd876,
+    type: 3}
   sprite: {fileID: 0}
   stackable: 0
   itemName: SteenCirkel

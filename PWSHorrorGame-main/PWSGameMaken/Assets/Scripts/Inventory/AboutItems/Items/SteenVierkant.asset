@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 993021986bb03964c9e7ecb21d0ee689, type: 3}
   m_Name: SteenVierkant
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6320035328214705818, guid: d9184bece8db3de45af3b3f617fd70ad, type: 3}
+  groundItemPrefab: {fileID: 6320035328214705818, guid: d9184bece8db3de45af3b3f617fd70ad,
+    type: 3}
+  inHandItemPrefab: {fileID: 6320035328214705818, guid: b14cccdac784b944083859aec4e0f8ef,
+    type: 3}
   sprite: {fileID: 0}
   stackable: 0
   itemName: SteenVierkant

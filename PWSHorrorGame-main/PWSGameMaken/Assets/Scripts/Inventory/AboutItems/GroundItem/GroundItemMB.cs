@@ -28,7 +28,7 @@ public class GroundItemMB : MonoBehaviour, ISerializationCallbackReceiver
 		Vector3 forward = player.transform.TransformDirection(Vector3.forward);		
 		//var localPlayerRotation = player.transform.localRotation.eulerAngles;
 
-		var newGroundItem = Instantiate(itemSO.prefab, GetSpawnPosition() + forward * 2.5f, itemSO.prefab.transform.rotation, _collectables);
+		var newGroundItem = Instantiate(itemSO.groundItemPrefab, GetSpawnPosition() + forward * 2.5f, itemSO.groundItemPrefab.transform.rotation, _collectables);
 		newGroundItem.GetComponent<GroundItemMB>().itemSO = itemSO;
 
 

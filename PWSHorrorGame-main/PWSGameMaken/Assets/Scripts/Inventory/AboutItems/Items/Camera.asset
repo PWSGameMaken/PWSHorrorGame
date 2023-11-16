@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 993021986bb03964c9e7ecb21d0ee689, type: 3}
   m_Name: Camera
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1394990789689852786, guid: 87be44b6112767e40986930d91825372, type: 3}
+  groundItemPrefab: {fileID: 1394990789689852786, guid: 87be44b6112767e40986930d91825372,
+    type: 3}
+  inHandItemPrefab: {fileID: 1394990789689852786, guid: 20c0fcc285636674f9e492b1c4fb61ab,
+    type: 3}
   sprite: {fileID: 21300000, guid: 7ed79b06e1ccd264aab628ea57e4ebe9, type: 3}
   stackable: 0
   itemName: Camera

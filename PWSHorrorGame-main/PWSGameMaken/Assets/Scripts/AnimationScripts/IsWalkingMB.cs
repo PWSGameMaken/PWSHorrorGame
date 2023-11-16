@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class IsWalking : MonoBehaviour
+public class IsWalkingMB : MonoBehaviour
 {
     [SerializeField] private Animator _Anim;
     private bool _isWalking = false;

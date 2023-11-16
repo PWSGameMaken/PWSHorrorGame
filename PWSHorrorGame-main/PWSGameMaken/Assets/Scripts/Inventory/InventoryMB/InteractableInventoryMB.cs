@@ -81,18 +81,23 @@ namespace Inventory
 
 				else if (itemToInteract.TryGetComponent(out CollectionPoint collectionPoint))
 				{
-					var collidedparentSlotsMB = itemToInteract.GetComponent<UninteractableInventoryMB>().inventoryUI.GetComponent<ParentSlotsMB>();
-					
-					var parentSlotsMB = inventoryUI.GetComponent<ParentSlotsMB>();
-					var selectedItemSO = parentSlotsMB.slots[parentSlotsMB.slotIndex].ItemObject?.Item.ItemSO;
-
-					if (selectedItemSO == null) return;
-
-					if(collectionPoint.CanAddItemToCollectionPoint(selectedItemSO))
-					{
-						MoveItem(collidedparentSlotsMB);
-					}
+					InteractWithCollectionPoint(itemToInteract, collectionPoint);
 				}
+			}
+		}
+
+		private void InteractWithCollectionPoint(GameObject itemToInteract, CollectionPoint collectionPoint)
+		{
+			var collidedparentSlotsMB = itemToInteract.GetComponent<UninteractableInventoryMB>().inventoryUI.GetComponent<ParentSlotsMB>();
+
+			var parentSlotsMB = inventoryUI.GetComponent<ParentSlotsMB>();
+			var selectedItemSO = parentSlotsMB.slots[parentSlotsMB.slotIndex].ItemObject?.Item.ItemSO;
+
+			if (selectedItemSO == null) return;
+
+			if (collectionPoint.CanAddItemToCollectionPoint(selectedItemSO))
+			{
+				MoveItem(collidedparentSlotsMB);
 			}
 		}
 
@@ -155,7 +160,10 @@ namespace Inventory
 
 			var isMoved = slotsToBeMoved.AddItem(selectedSlot.ItemObject);
 
-			if(isMoved) parentSlotsMB.ClearSelectedSlot();
+			if (isMoved)
+			{
+				parentSlotsMB.ClearSelectedSlot();
+			}
 		}
 	}
 }

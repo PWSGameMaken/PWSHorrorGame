@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 993021986bb03964c9e7ecb21d0ee689, type: 3}
   m_Name: Artifact
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6298199603819093617, guid: 3ea5fb10e94294047bacfa83868d1763, type: 3}
+  groundItemPrefab: {fileID: 6298199603819093617, guid: 3ea5fb10e94294047bacfa83868d1763,
+    type: 3}
+  inHandItemPrefab: {fileID: 6298199603819093617, guid: 3bd0bbf1e46e0984f8dfefc7091ed2b9,
+    type: 3}
   sprite: {fileID: 21300000, guid: 6ea81be8f3ec457479d74a19aad9af64, type: 3}
   stackable: 0
   itemName: Artifact

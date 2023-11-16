@@ -15,7 +15,6 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 	#region Variables
 	private bool _dragging = false;
 
-	
 	[HideInInspector] public InventorySlot selectedSlot;
 	[HideInInspector] public int slotIndex = 0;
 
@@ -25,9 +24,11 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 	[SerializeField] protected int _slotAmount = 20;
 	[SerializeField] protected ItemDatabaseSO itemDatabaseSO;
 
-	protected Dictionary<GameObject, InventorySlot> slots_dict = new();
-	public InventorySlot[] slots;
+	[SerializeField] private ObjectInHandMB _objectInHandMB;
 
+	protected Dictionary<GameObject, InventorySlot> slots_dict = new();
+	
+	public InventorySlot[] slots;
 	#endregion
 
 	#region Unity Methods
@@ -44,7 +45,9 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 	{
 		CreateGroundItems(selectedSlot);
 		slots[slotIndex].ClearSlot();
+		_objectInHandMB.Despawn();
 	}
+
 	public void OnEnter(GameObject slotGO)
 	{
 		MouseObject.OnEnterSlot(slotGO, this);
@@ -67,7 +70,7 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 	{
 		MouseObject.OnExitSlot();
 
-		if ((slots_dict[slotGO].ItemObject?.Item.Id?? -1) >= 0)
+		if ((slots_dict[slotGO].ItemObject?.Item.Id ?? -1) >= 0)
 		{
 			Description.DeleteDescription();
 		}
@@ -161,6 +164,10 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 			if (slots[i].ItemObject == null)
 			{
 				slots[i].UpdateSlot(itemObject, amount);
+				if (slots[i] == selectedSlot)
+				{
+					_objectInHandMB.Spawn(slots[i].ItemObject.Item.ItemSO);
+				}
 				return slots[i];
 			}
 		}
@@ -218,7 +225,7 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 			FillNewSlot(itemObject, amount);
 			return true;
 		}
-		else if (stackableItem)  //als er ooit een maximum op het aantal stackable objecten komt moet hier de voorwaarde aangepast worden.
+		else if (stackableItem && slot != null)  //als er ooit een maximum op het aantal stackable objecten komt moet hier de voorwaarde aangepast worden.
 		{
 			slot.AddAmount(amount);
 			return true;
@@ -284,14 +291,22 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 				return;
 		}
 
+		_objectInHandMB.Despawn();
+
 		selectedSlot.slotGO.GetComponent<Image>().color = _slotColor;
 		selectedSlot = slots[slotIndex];
 		selectedSlot.slotGO.GetComponent<Image>().color = _selectedSlotColor;
+
+		if(selectedSlot.ItemObject != null)
+		{
+			_objectInHandMB.Spawn(selectedSlot.ItemObject.Item.ItemSO);
+		}
 	}
 
 	public void ClearSelectedSlot()
 	{
 		slots[slotIndex].ClearSlot();
+		_objectInHandMB.Despawn();
 	}
 	#endregion
 }
