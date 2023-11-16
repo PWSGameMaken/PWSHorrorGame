@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 4279855562218200967}
   - component: {fileID: 5528652767311943951}
   - component: {fileID: 5269995552130282828}
-  - component: {fileID: 8495698963426555171}
+  - component: {fileID: 3230456335006467205}
   - component: {fileID: 3315855029158424397}
+  - component: {fileID: 7152313967702466345}
   m_Layer: 0
   m_Name: Ladder
   m_TagString: Untagged
@@ -29,13 +30,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9123080685102209700}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.41342098, y: 0.5669029, z: 0.39537758, w: 0.59277385}
-  m_LocalPosition: {x: -28.82, y: 3.5, z: -109.98}
-  m_LocalScale: {x: 2.6446748, y: 2.6446745, z: 2.6446745}
+  m_LocalRotation: {x: -0.40557975, y: 0.579228, z: 0.40557975, w: 0.579228}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -69.787, y: 87.444, z: 0}
+  m_LocalEulerAnglesHint: {x: -70, y: 90, z: 0}
 --- !u!33 &4279855562218200967
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -105,9 +106,9 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.47433606, y: 0.087822884, z: 1.9211879}
-  m_Center: {x: -0.017428169, y: -0.0000000828947, z: 0.9648508}
---- !u!65 &8495698963426555171
+  m_Size: {x: 1.2, y: 0.25, z: 5.1}
+  m_Center: {x: -0.03, y: 0, z: 2.5499997}
+--- !u!65 &3230456335006467205
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,8 +127,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.47433606, y: 0.087822884, z: 1.9211879}
-  m_Center: {x: -0.017428169, y: -0.0000000828947, z: 0.9648508}
+  m_Size: {x: 1.2, y: 0.25, z: 5.1}
+  m_Center: {x: -0.03, y: 0, z: 2.55}
 --- !u!114 &3315855029158424397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,3 +142,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemSO: {fileID: 11400000, guid: e785b9ea179b3ff47af8c2714d5c52a0, type: 2}
+--- !u!54 &7152313967702466345
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9123080685102209700}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

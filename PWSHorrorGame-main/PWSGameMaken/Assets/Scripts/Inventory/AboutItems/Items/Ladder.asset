@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 993021986bb03964c9e7ecb21d0ee689, type: 3}
   m_Name: Ladder
   m_EditorClassIdentifier: 
-  prefab: {fileID: 8852352907259833035, guid: f2362d832c0fe0344b12caa17774011b, type: 3}
+  groundItemPrefab: {fileID: 9123080685102209700, guid: f2362d832c0fe0344b12caa17774011b,
+    type: 3}
+  inHandItemPrefab: {fileID: 9123080685102209700, guid: ffec2d5ce3830504083ad632e260b289,
+    type: 3}
   sprite: {fileID: 0}
   stackable: 0
   itemName: Ladder

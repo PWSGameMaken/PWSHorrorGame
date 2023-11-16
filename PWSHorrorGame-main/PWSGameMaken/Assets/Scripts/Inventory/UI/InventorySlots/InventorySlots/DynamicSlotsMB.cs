@@ -9,11 +9,11 @@ using UnityEngine;
 public class DynamicSlotsMB : ParentSlotsMB
 {
 	public GameObject slotPrefab;
-	[SerializeField] private int X_START = -90;
-	[SerializeField] private int Y_START = 160;
-	[SerializeField] private int X_SPACE_BETWEEN_ITEM = 60;
-	[SerializeField] private int NUMBER_OF_COLUMN = 4;
-	[SerializeField] private int Y_SPACE_BETWEEN_ITEM = 60;
+	[SerializeField] private int X_START = 0;
+	[SerializeField] private int Y_START = 0;
+	[SerializeField] private int X_SPACE_BETWEEN_ITEM = 0;
+	[SerializeField] private int NUMBER_OF_COLUMN = 1;
+	[SerializeField] private int Y_SPACE_BETWEEN_ITEM = 0;
 
 	public override void CreateSlots()
 	{

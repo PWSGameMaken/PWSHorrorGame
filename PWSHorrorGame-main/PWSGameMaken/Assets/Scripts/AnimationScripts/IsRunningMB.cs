@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class IsRunning : MonoBehaviour
+public class IsRunningMB : MonoBehaviour
 {
     [SerializeField] private Animator _Anim;
     private bool _isRunning = false;
