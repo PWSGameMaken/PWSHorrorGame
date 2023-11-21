@@ -13,16 +13,21 @@ public class CollectionPoint : MonoBehaviour
     public ItemSO[] acceptedItemSO;
 
     [HideInInspector] public bool isFull = false;
+    [SerializeField] private bool canCollectItems;
 
 
 	private void Start()
 	{
-		_parentSlotsMB = GetComponent<UninteractableInventoryMB>().inventoryUI.GetComponent<ParentSlotsMB>();
+        if(canCollectItems)
+        {
+		    _parentSlotsMB = GetComponent<UninteractableInventoryMB>().inventoryUI.GetComponent<ParentSlotsMB>();
+        }
+
 	}
 
 	private void Update()
 	{
-        if (isFull == false)
+        if (isFull == false && canCollectItems)
         {
             if (_parentSlotsMB.CountEmptySlots() == 0) isFull = true;
             if (isFull) ObjectiveCompleted();
@@ -41,7 +46,7 @@ public class CollectionPoint : MonoBehaviour
         return false;
     }
 
-    private void ObjectiveCompleted()
+    public void ObjectiveCompleted()
     {
         for (int i = 0; i < itemsToSpawn.Length; i++)
         {
