@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PuzzleLightSource : MonoBehaviour
 {
@@ -31,10 +27,21 @@ public class PuzzleLightSource : MonoBehaviour
 
 		Ray ray = new Ray(position, direction);
 		RaycastHit hit;
-		if(Physics.Raycast(ray, out hit, maxStepDistance) && hit.collider.gameObject.CompareTag("Mirror"))
+		if(Physics.Raycast(ray, out hit, maxStepDistance))
 		{
-			direction = Vector3.Reflect(direction, hit.normal);
+			GameObject hitGO = hit.collider.gameObject;
 			position = hit.point;
+            if (hitGO.CompareTag("Mirror"))
+            {
+				direction = Vector3.Reflect(direction, hit.normal);
+				//position = hit.point;                
+            }
+			else if (hitGO.CompareTag("CollectionPoint"))
+			{
+				hitGO.GetComponent<CollectionPoint>().ObjectiveCompleted();
+				direction = Vector3.Reflect(direction, hit.normal);
+				//position = hit.point;
+			}
 		}
 		else
 		{

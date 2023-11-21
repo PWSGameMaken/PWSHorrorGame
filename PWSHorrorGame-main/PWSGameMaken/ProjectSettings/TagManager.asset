@@ -7,6 +7,8 @@ TagManager:
   - SlotPrefab
   - CinemachineTarget
   - DescriptionPrefab
+  - Mirror
+  - CollectionPoint
   layers:
   - Default
   - TransparentFX
