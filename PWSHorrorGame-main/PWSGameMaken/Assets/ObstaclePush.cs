@@ -15,7 +15,7 @@ public class ObstaclePush : MonoBehaviour
 			forceDirection.y = 0;
 			forceDirection.Normalize();
 
-			rb.AddForceAtPosition(forceDirection * _forceMagnitude, transform.position, ForceMode.Impulse);
+			rb.AddForceAtPosition(forceDirection * _forceMagnitude, transform.position, ForceMode.Force);
 		}
 	}
 }
