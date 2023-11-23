@@ -5,7 +5,7 @@ public class PuzzleLightSource : MonoBehaviour
 {
 	public int maxReflectionCount = 5;
 	public float maxReflectionDistance = 100;
-	public GameObject lightRayPrefab;
+	public GameObject lightRay;
 
 	private void OnDrawGizmos()
 	{
@@ -35,14 +35,19 @@ public class PuzzleLightSource : MonoBehaviour
 		{
 			GameObject hitGO = hit.collider.gameObject;
 			position = hit.point;
+
 			if (hitGO.CompareTag("Mirror"))
 			{
+				ActivateLightRay(hitGO);
+
 				direction = Vector3.Reflect(direction, hit.normal);              
 			}
 			else if (hitGO.CompareTag("CollectionPoint"))
 			{
 				hitGO.GetComponent<CollectionPoint>().ObjectiveCompleted();
 				direction = Vector3.Reflect(direction, hit.normal);
+
+				//lightRay.transform.position = (position + ray.origin) / 2;
 			}
 		}
 		else
@@ -53,6 +58,16 @@ public class PuzzleLightSource : MonoBehaviour
 		Debug.DrawLine(startingPos, position, Color.yellow);
 
 		DrawPredictedReflectionPattern(position, direction, reflectionsRemaining - 1);
+	}
+
+	private void ActivateLightRay(GameObject hitGO)
+	{
+		var mirror = hitGO.GetComponent<Mirror>();
+
+		if(mirror.isActivated == false)
+		{
+			mirror.ActivateLightRay();
+		}
 	}
 }
 
