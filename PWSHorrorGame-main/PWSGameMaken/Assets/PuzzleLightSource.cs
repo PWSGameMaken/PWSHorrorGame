@@ -1,11 +1,14 @@
+using System;
+using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PuzzleLightSource : MonoBehaviour
 {
 	public int maxReflectionCount = 5;
 	public float maxReflectionDistance = 100;
-	public GameObject lightRay;
+	public LightRayMB[] lightRayMBs = new LightRayMB[5];
 
 	private void OnDrawGizmos()
 	{
@@ -17,57 +20,91 @@ public class PuzzleLightSource : MonoBehaviour
 
 	private void Update()
 	{
-		DrawPredictedReflectionPattern(this.transform.position + this.transform.forward * 0.75f, this.transform.forward, maxReflectionCount);
+		DrawPredictedReflectionPattern(
+			gameObject, 
+			transform.position + transform.forward * 0.75f, 
+			transform.forward, 
+			maxReflectionCount, 
+			0);
 	}
 
-	private void DrawPredictedReflectionPattern(Vector3 position, Vector3 direction, int reflectionsRemaining)
+	private void DrawPredictedReflectionPattern(GameObject originalGO, Vector3 position, Vector3 direction, int reflectionsRemaining, int index)
 	{
-		if (reflectionsRemaining == 0)
-		{
-			return;
-		}
+		if (reflectionsRemaining == 0) return;
 
+		GameObject hitGO = new();
 		Vector3 startingPos = position;
-
 		Ray ray = new Ray(position, direction);
-		RaycastHit hit;
-		if (Physics.Raycast(ray, out hit, maxReflectionDistance))
+		var hasHit = Physics.Raycast(ray, out RaycastHit hit, maxReflectionDistance);
+
+		if (hasHit)
 		{
-			GameObject hitGO = hit.collider.gameObject;
-			position = hit.point;
-
-			if (hitGO.CompareTag("Mirror"))
-			{
-				ActivateLightRay(hitGO);
-
-				direction = Vector3.Reflect(direction, hit.normal);              
-			}
-			else if (hitGO.CompareTag("CollectionPoint"))
-			{
-				hitGO.GetComponent<CollectionPoint>().ObjectiveCompleted();
-				direction = Vector3.Reflect(direction, hit.normal);
-
-				//lightRay.transform.position = (position + ray.origin) / 2;
-			}
+			OnHit(ref hitGO, originalGO, hit, startingPos, ref position, ref direction, index);
 		}
 		else
 		{
-			position += direction * maxReflectionDistance;
+			OnMis(ref hitGO, ref originalGO, ref position, ref direction);
 		}
 
 		Debug.DrawLine(startingPos, position, Color.yellow);
 
-		DrawPredictedReflectionPattern(position, direction, reflectionsRemaining - 1);
+		DrawPredictedReflectionPattern(hitGO, position, direction, reflectionsRemaining - 1, ++index);
 	}
 
-	private void ActivateLightRay(GameObject hitGO)
+	private void OnHit(ref GameObject hitGO, GameObject originalGO, RaycastHit hit, Vector3 startPos, ref Vector3 position, ref Vector3 direction, int index)
 	{
-		var mirror = hitGO.GetComponent<Mirror>();
+		hitGO = hit.collider.gameObject;
+		position = hit.point;
 
-		if(mirror.isActivated == false)
+		var lightRayMB = MakeLightRay(originalGO, startPos, position);
+
+		if (lightRayMBs[index] == null)
 		{
-			mirror.ActivateLightRay();
+			lightRayMBs[index] = lightRayMB;
 		}
+
+		var tag =
+			hitGO.CompareTag("Mirror") ? "Mirror"
+			: hitGO.CompareTag("CollectionPoint") ? "CollectionPoint"
+			: "None";
+
+		switch (tag)
+		{
+			case "Mirror":
+				direction = Vector3.Reflect(direction, hit.normal);
+				break;
+
+			case "CollectionPoint":
+				hitGO.GetComponent<CollectionPoint>().ObjectiveCompleted();
+				break;
+
+			default:
+				DestroyLightRays(index);
+				break;
+		}
+	}
+
+	private void OnMis(ref GameObject hitGO, ref GameObject originalGO, ref Vector3 position, ref Vector3 direction)
+	{
+		position += direction * maxReflectionDistance;
+		hitGO = originalGO;
+	}
+
+	private LightRayMB MakeLightRay(GameObject originalGO, Vector3 startPos, Vector3 position)
+	{
+		if(originalGO.TryGetComponent<LightRayMB>(out var lightRayMB))
+		{
+			lightRayMB.SetActive(true);
+			lightRayMB.SetTransform(startPos, position);
+
+			return lightRayMB;
+		}
+		return null;
+	}
+
+	private void DestroyLightRays(int index)
+	{
+		
 	}
 }
 
