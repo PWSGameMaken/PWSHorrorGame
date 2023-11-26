@@ -9,6 +9,7 @@ public class PuzzleLightSource : MonoBehaviour
 	public int maxReflectionCount = 5;
 	public float maxReflectionDistance = 100;
 	public LightRayMB[] lightRayMBs = new LightRayMB[5];
+	private GameObject hitGO;
 
 	private void OnDrawGizmos()
 	{
@@ -32,18 +33,17 @@ public class PuzzleLightSource : MonoBehaviour
 	{
 		if (reflectionsRemaining == 0) return;
 
-		GameObject hitGO = new();
 		Vector3 startingPos = position;
 		Ray ray = new Ray(position, direction);
 		var hasHit = Physics.Raycast(ray, out RaycastHit hit, maxReflectionDistance);
 
 		if (hasHit)
 		{
-			OnHit(ref hitGO, originalGO, hit, startingPos, ref position, ref direction, index);
+			OnHit(originalGO, hit, startingPos, ref position, ref direction, index);
 		}
 		else
 		{
-			OnMis(ref hitGO, ref originalGO, ref position, ref direction);
+			OnMis(ref originalGO, ref position, ref direction);
 		}
 
 		Debug.DrawLine(startingPos, position, Color.yellow);
@@ -51,7 +51,7 @@ public class PuzzleLightSource : MonoBehaviour
 		DrawPredictedReflectionPattern(hitGO, position, direction, reflectionsRemaining - 1, ++index);
 	}
 
-	private void OnHit(ref GameObject hitGO, GameObject originalGO, RaycastHit hit, Vector3 startPos, ref Vector3 position, ref Vector3 direction, int index)
+	private void OnHit(GameObject originalGO, RaycastHit hit, Vector3 startPos, ref Vector3 position, ref Vector3 direction, int index)
 	{
 		hitGO = hit.collider.gameObject;
 		position = hit.point;
@@ -84,7 +84,7 @@ public class PuzzleLightSource : MonoBehaviour
 		}
 	}
 
-	private void OnMis(ref GameObject hitGO, ref GameObject originalGO, ref Vector3 position, ref Vector3 direction)
+	private void OnMis(ref GameObject originalGO, ref Vector3 position, ref Vector3 direction)
 	{
 		position += direction * maxReflectionDistance;
 		hitGO = originalGO;
@@ -104,7 +104,11 @@ public class PuzzleLightSource : MonoBehaviour
 
 	private void DestroyLightRays(int index)
 	{
-		
+		for (int i = index + 1; i < lightRayMBs.Length; i++)
+		{
+			if (lightRayMBs[i] != null)
+				lightRayMBs[i].SetActive(false);
+		}
 	}
 }
 
