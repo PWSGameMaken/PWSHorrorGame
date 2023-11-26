@@ -7,7 +7,7 @@ public class LightRayMB : MonoBehaviour
 
 	public void SetActive(bool status)
 	{
-		if (isActivated) { return; }
+		//if (isActivated) { return; }
 
 		lightRay.SetActive(status);
 		isActivated = status;
@@ -29,8 +29,8 @@ public class LightRayMB : MonoBehaviour
 
 	private void SetScale(Vector3 beginPos, Vector3 endPos)
 	{
-		var lenghtOfRay = Vector3.Distance(beginPos, endPos);
-		lightRay.transform.localScale = new Vector3(1, 1, lenghtOfRay);
+		var lengthOfRay = Vector3.Distance(beginPos, endPos);
+		lightRay.transform.localScale = new Vector3(1, 1, lengthOfRay);
 	}
 
 	private void SetRotation(Vector3 endPos)
