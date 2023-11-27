@@ -30,6 +30,7 @@ namespace Inventory
 
 
 			if (Input.GetKeyDown(KeyCode.E)) Interact(collidedGO);
+			if (Input.GetKeyUp(KeyCode.E)) UnInteract(collidedGO);
 			if (Input.GetKeyDown(KeyCode.Q)) inventoryUI.GetComponent<ParentSlotsMB>().DropItems();
 		}
 		
@@ -74,7 +75,7 @@ namespace Inventory
 		{
 			if(itemToInteract != null)
 			{
-				if (itemToInteract.TryGetComponent<GroundItemMB>(out var groundItem))
+				if (itemToInteract.TryGetComponent(out GroundItemMB groundItemMB))
 				{
 					MoveGroundItemToInventorySlot(itemToInteract);
 				}
@@ -82,6 +83,22 @@ namespace Inventory
 				else if (itemToInteract.TryGetComponent(out CollectionPoint collectionPoint))
 				{
 					InteractWithCollectionPoint(itemToInteract, collectionPoint);
+				}
+
+				else if (itemToInteract.TryGetComponent(out RotatableMirrorMB rotatableMirror))
+				{
+					rotatableMirror.ActivateMirror();
+				}
+			}
+		}
+
+		private void UnInteract(GameObject itemToUnInteract)
+		{
+			if(itemToUnInteract != null)
+			{
+				if (itemToUnInteract.TryGetComponent(out RotatableMirrorMB rotatableMirror))
+				{
+					rotatableMirror.DeActivateMirror();
 				}
 			}
 		}
@@ -103,8 +120,6 @@ namespace Inventory
 
 		private void MoveGroundItemToInventorySlot(GameObject groundItem)
 		{
-			//voor nu is amount altijd hetzelfde want ieder in-game item komt overeen met 1 inventory-item.
-			//als dit niet meer het geval is moet dit systeem aangepast worden.
 			if (_isMoving) return;
 
 			var itemSO = groundItem.GetComponent<GroundItemMB>().itemSO;

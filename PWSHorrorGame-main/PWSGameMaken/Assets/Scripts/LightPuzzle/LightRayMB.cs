@@ -7,7 +7,7 @@ public class LightRayMB : MonoBehaviour
 
 	public void SetActive(bool status)
 	{
-		//if (isActivated) { return; }
+		if (isActivated == status) { return; }
 
 		lightRay.SetActive(status);
 		isActivated = status;
