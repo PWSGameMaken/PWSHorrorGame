@@ -15,6 +15,7 @@ namespace Inventory
 		[SerializeField] private Transform _firePoint;
 		[SerializeField] private float _interactionDistanceLimit;
 		[SerializeField] private GameObject pickUpHintUI;
+		[SerializeField] private GameObject _lastSelectedGO;
 
 		private bool _isMoving = false;
 		#endregion
@@ -30,7 +31,7 @@ namespace Inventory
 
 
 			if (Input.GetKeyDown(KeyCode.E)) Interact(collidedGO);
-			if (Input.GetKeyUp(KeyCode.E)) UnInteract(collidedGO);
+			if (Input.GetKeyUp(KeyCode.E)) UnInteract(_lastSelectedGO);
 			if (Input.GetKeyDown(KeyCode.Q)) inventoryUI.GetComponent<ParentSlotsMB>().DropItems();
 		}
 		
@@ -73,6 +74,7 @@ namespace Inventory
 
 		private void Interact(GameObject itemToInteract)
 		{
+			_lastSelectedGO = itemToInteract;	
 			if(itemToInteract != null)
 			{
 				if (itemToInteract.TryGetComponent(out GroundItemMB groundItemMB))
