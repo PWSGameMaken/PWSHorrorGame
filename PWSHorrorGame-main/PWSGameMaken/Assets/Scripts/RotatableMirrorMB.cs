@@ -1,3 +1,4 @@
+using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine;
 public class RotatableMirrorMB : MonoBehaviour
 {
 	private bool _isRotating = false;
+	[SerializeField] private int _rotateSpeed;
+	[SerializeField] private FirstPersonController _firstPersonController;
 
 	private void FixedUpdate()
 	{
@@ -17,20 +20,22 @@ public class RotatableMirrorMB : MonoBehaviour
 	public void ActivateMirror()
 	{
 		_isRotating = true;
+		_firstPersonController.enabled = false;
 	}
 
 	public void DeActivateMirror()
 	{
 		_isRotating = false;
+		_firstPersonController.enabled = true;
 	}
 
 	private void RotateObject()
 	{
-		if(Input.GetKeyDown(KeyCode.A))
+		if(Input.GetKey(KeyCode.A))
 		{
 			RotateLeft();
 		}
-		else if(Input.GetKeyDown(KeyCode.D))
+		else if(Input.GetKey(KeyCode.D))
 		{
 			RotateRight();
 		}
@@ -38,11 +43,11 @@ public class RotatableMirrorMB : MonoBehaviour
 
 	private void RotateLeft()
 	{
-		transform.Rotate(Time.deltaTime * 10, 0, 0);
+		transform.Rotate(0, Time.deltaTime * _rotateSpeed, 0);
 	}
 
 	private void RotateRight()
 	{
-		transform.Rotate(Time.deltaTime * 10, 0, 0);
+		transform.Rotate(0, Time.deltaTime * -_rotateSpeed, 0);
 	}
 }

@@ -8,8 +8,13 @@ public class PuzzleLightSource : MonoBehaviour
 {
 	public int maxReflectionCount = 5;
 	public float maxReflectionDistance = 100;
-	public LightRayMB[] lightRayMBs = new LightRayMB[5];
+	public LightRayMB[] lightRayMBs;
 	private GameObject hitGO;
+
+	private void Start()
+	{
+		lightRayMBs = new LightRayMB[maxReflectionCount];
+	}
 
 	private void OnDrawGizmos()
 	{
@@ -17,6 +22,11 @@ public class PuzzleLightSource : MonoBehaviour
 		Handles.ArrowHandleCap(0, this.transform.position + this.transform.forward * 0.25f, this.transform.rotation, 0.5f, EventType.Repaint);
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireSphere(this.transform.position, 0.25f);
+
+		if(!Application.isPlaying)
+		{
+			DrawPredictedGizmos(this.transform.position + this.transform.forward * 0.75f, this.transform.forward, maxReflectionCount);
+		}
 	}
 
 	private void Update()
@@ -27,6 +37,33 @@ public class PuzzleLightSource : MonoBehaviour
 			transform.forward, 
 			maxReflectionCount, 
 			0);
+	}
+
+	private void DrawPredictedGizmos(Vector3 position, Vector3 direction, int reflectionsRemaining)
+	{
+		if(reflectionsRemaining == 0)
+		{
+			return;
+		}
+
+		Vector3 startingPosition = position;
+
+		Ray ray = new Ray(position, direction);
+		RaycastHit hit;
+		if(Physics.Raycast(ray, out hit, maxReflectionDistance))
+		{
+			direction = Vector3.Reflect(direction, hit.normal);
+			position = hit.point;
+		}
+		else
+		{
+			position += direction * maxReflectionDistance;
+		}
+
+		Gizmos.color = Color.red;
+		Gizmos.DrawLine(startingPosition, position);
+
+		DrawPredictedGizmos(position, direction, reflectionsRemaining - 1);
 	}
 
 	private void DrawPredictedReflectionPattern(GameObject originalGO, Vector3 position, Vector3 direction, int reflectionsRemaining, int index)
