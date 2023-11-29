@@ -25,6 +25,8 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 	[SerializeField] protected ItemDatabaseSO itemDatabaseSO;
 
 	[SerializeField] private ObjectInHandMB _objectInHandMB;
+	[SerializeField] private Animator _Anim;
+
 
 	protected Dictionary<GameObject, InventorySlot> slots_dict = new();
 	
@@ -291,6 +293,19 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 				return;
 		}
 
+		if (selectedSlot.ItemObject != null)
+		{
+			if (selectedSlot.ItemObject.Item.ItemSO.type == ItemType.Steen)
+			{
+				_Anim.SetBool("HasStone", false);
+			}
+            if (selectedSlot.ItemObject.Item.ItemSO.type == ItemType.Artifact)
+            {
+                _Anim.SetBool("HasVase", false);
+            }
+        }
+
+		
 		_objectInHandMB.Despawn();
 
 		selectedSlot.slotGO.GetComponent<Image>().color = _slotColor;
@@ -300,7 +315,16 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 		if(selectedSlot.ItemObject != null)
 		{
 			_objectInHandMB.Spawn(selectedSlot.ItemObject.Item.ItemSO);
-		}
+
+            if (selectedSlot.ItemObject.Item.ItemSO.type == ItemType.Steen)
+            {
+                _Anim.SetBool("HasStone", true);
+            }
+            if (selectedSlot.ItemObject.Item.ItemSO.type == ItemType.Artifact)
+            {
+                _Anim.SetBool("HasVase", true);
+            }
+        }
 	}
 
 	public void ClearSelectedSlot()

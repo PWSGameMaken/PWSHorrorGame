@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxReflectionCount: 5
   maxReflectionDistance: 100
-  mirrorObject: {fileID: 0}
+  lightRayMBs: []
 --- !u!1 &3408176125720272652
 GameObject:
   m_ObjectHideFlags: 0
