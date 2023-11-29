@@ -5,6 +5,21 @@ public class IsWalkingMB : MonoBehaviour
     [SerializeField] private Animator _Anim;
     private bool _isWalking = false;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     void Start()
     {
         _Anim = gameObject.GetComponent<Animator>();

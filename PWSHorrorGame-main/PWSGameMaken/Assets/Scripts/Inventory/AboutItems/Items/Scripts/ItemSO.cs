@@ -13,11 +13,9 @@ public enum ItemType
 	Mushroom,
 	PoisenousMushroom,
 	Food,
-	Artefact,
+	Artifact,
 	Camera,
-	steenCirkel,
-	steenDriehoek,
-	steenVierkant,
+	Steen,
 	ladder,
 	Default
 }
