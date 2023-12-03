@@ -3,9 +3,7 @@
 * https://github.com/GroBro-s/MorbidMarshmallow
 */
 
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Inventory
 {

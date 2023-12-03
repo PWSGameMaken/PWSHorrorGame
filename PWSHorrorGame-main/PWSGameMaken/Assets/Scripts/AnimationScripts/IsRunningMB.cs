@@ -5,13 +5,14 @@ public class IsRunningMB : MonoBehaviour
     [SerializeField] private Animator _Anim;
     private bool _isRunning = false;
 
-    void Start()
+
+    private void Start()
     {
         _Anim = gameObject.GetComponent<Animator>();
         _Anim.SetBool("IsRunning", false);
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A)  || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S))
         {

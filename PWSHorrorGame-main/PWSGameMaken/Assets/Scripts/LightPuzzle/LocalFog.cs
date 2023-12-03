@@ -1,39 +1,48 @@
 using UnityEngine;
 
-public class LocalFogS : MonoBehaviour
+public class LocalFogMB : MonoBehaviour
 {
-	public float maxFogDensity;
-	public float minFogDensity;
+	[SerializeField] private float minFogDensity;
+	[SerializeField] private float maxFogDensity;
 
-	public Collider colliderToMeasure;
-	public Transform objectToMeasure;
+	[SerializeField] private Collider colliderToMeasure;
+	[SerializeField] private Transform objectToMeasure;
 
-	public int maxObjectDistance;
-	public int minObjectDistance;
+	[SerializeField] private int maxObjectDistance;
+	[SerializeField] private int minObjectDistance;
 
 	private void Update()
 	{
 		var closestColliderPoint = colliderToMeasure.ClosestPoint(objectToMeasure.position);
-
 		float distance = Vector3.Distance(objectToMeasure.position, closestColliderPoint);
 
 		if (distance < maxObjectDistance)
 		{
-			var totalRange = maxObjectDistance - minObjectDistance;
-			var newDensity = maxFogDensity * (distance / totalRange);
-
-			if (newDensity >= minFogDensity)
-			{
-				RenderSettings.fogDensity = newDensity;
-			}
-			else
-			{
-				RenderSettings.fogDensity = 0;
-			}
+			ChangeFogDensity(distance);
 		}
 		else
 		{
-			RenderSettings.fogDensity = maxFogDensity;
+			SetFogDensity(maxFogDensity);
 		}
+	}
+
+	private void ChangeFogDensity(float distance)
+	{
+		var totalRange = maxObjectDistance - minObjectDistance;
+		var newDensity = maxFogDensity * (distance / totalRange);
+
+		if (newDensity >= minFogDensity)
+		{
+			SetFogDensity(newDensity);
+		}
+		else
+		{
+			SetFogDensity(0f);
+		}
+	}
+
+	private void SetFogDensity(float newDensity)
+	{
+		RenderSettings.fogDensity = newDensity;
 	}
 }

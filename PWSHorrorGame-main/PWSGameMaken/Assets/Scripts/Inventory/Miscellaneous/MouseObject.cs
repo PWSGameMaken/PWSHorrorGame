@@ -7,7 +7,7 @@ using UnityEngine;
 public static class MouseObject
 {
 	public static UserInterfaceMB interfaceMouseIsOver;
-	public static ParentSlotsMB parentSlotsMB;
+	public static VisibleSlotsMB visibleSlotsMB;
 	public static GameObject slotHoveredOver;
 
 	public static Vector2 GetPosition()
@@ -20,16 +20,16 @@ public static class MouseObject
 		interfaceMouseIsOver = userInterface.GetComponent<UserInterfaceMB>();
 	}
 
-	public static void OnEnterSlot(GameObject slotGO, ParentSlotsMB parentSlotsMBInput)
+	public static void OnEnterSlot(GameObject slotGO, VisibleSlotsMB visibleSlotsMBInput)
 	{
 		slotHoveredOver = slotGO;
-		parentSlotsMB = parentSlotsMBInput;
+		visibleSlotsMB = visibleSlotsMBInput;
 	}
 
 	public static void OnExitSlot()
 	{
 		slotHoveredOver = null;
-		parentSlotsMB = null;
+		visibleSlotsMB = null;
 	}
 
 	public static void OnExitInterface()

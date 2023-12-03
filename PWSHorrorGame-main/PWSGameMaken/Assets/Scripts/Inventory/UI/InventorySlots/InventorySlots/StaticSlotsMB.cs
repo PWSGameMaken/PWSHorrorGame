@@ -2,9 +2,9 @@
 * Grobros
 * https://github.com/GroBro-s
 */
-public class StaticSlotsMB : ParentSlotsMB
+public class StaticSlotsMB : VisibleSlotsMB
 {
-	public override void CreateSlots()
+	protected override void FillSlots()
 	{
 		foreach (var slot in slots)	
 		{

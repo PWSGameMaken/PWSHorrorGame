@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2311659161425410928}
   - component: {fileID: 6808184065333936607}
-  - component: {fileID: 1039104264447761172}
   - component: {fileID: 3838187925293559387}
   m_Layer: 0
   m_Name: MiniMonsterJS
@@ -56,19 +55,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 6, y: 6, z: 5}
   m_Center: {x: 0, y: 1.4250928, z: 0}
---- !u!114 &1039104264447761172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5682646489846173569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d067443957acca428fb000603ce5f6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playSound: {fileID: 821768320803347377}
 --- !u!114 &3838187925293559387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,6 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e29697f0e05e4fd4283f72c876bf73fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpScareSound: {fileID: 821768320803347377}
   _objectToMove: {fileID: 939056416622514391}
   _moveDirection: {x: 0, y: 0, z: 1}
   _moveSpeed: 15

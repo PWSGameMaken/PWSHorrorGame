@@ -31,8 +31,8 @@ namespace Inventory
 
 
 			if (Input.GetKeyDown(KeyCode.E)) Interact(collidedGO);
-			if (Input.GetKeyUp(KeyCode.E)) UnInteract(_lastSelectedGO);
-			if (Input.GetKeyDown(KeyCode.Q)) inventoryUI.GetComponent<ParentSlotsMB>().DropItems();
+			else if (Input.GetKeyUp(KeyCode.E)) UnInteract(_lastSelectedGO);
+			else if (Input.GetKeyDown(KeyCode.Q)) inventoryUI.GetComponent<VisibleSlotsMB>().DropItems();
 		}
 		
 		private void UpdateHintUI(GameObject collidedGO)
@@ -56,7 +56,7 @@ namespace Inventory
 		private void ScrollSlots()
 		{
 			var scrollDelta = (int)Input.mouseScrollDelta.y;
-			var slotsMB = inventoryUI.GetComponent<ParentSlotsMB>();
+			var slotsMB = inventoryUI.GetComponent<VisibleSlotsMB>();
 
 			if (scrollDelta != 0)
 			{
@@ -82,14 +82,14 @@ namespace Inventory
 					MoveGroundItemToInventorySlot(itemToInteract);
 				}
 
-				else if (itemToInteract.TryGetComponent(out CollectionPoint collectionPoint))
+				else if (itemToInteract.TryGetComponent(out CollectionPointMB collectionPoint))
 				{
 					InteractWithCollectionPoint(itemToInteract, collectionPoint);
 				}
 
 				else if (itemToInteract.TryGetComponent(out RotatableMirrorMB rotatableMirror))
 				{
-					rotatableMirror.ActivateMirror();
+					rotatableMirror.SetActive(true);
 				}
 			}
 		}
@@ -100,23 +100,23 @@ namespace Inventory
 			{
 				if (itemToUnInteract.TryGetComponent(out RotatableMirrorMB rotatableMirror))
 				{
-					rotatableMirror.DeActivateMirror();
+					rotatableMirror.SetActive(false);
 				}
 			}
 		}
 
-		private void InteractWithCollectionPoint(GameObject itemToInteract, CollectionPoint collectionPoint)
+		private void InteractWithCollectionPoint(GameObject itemToInteract, CollectionPointMB collectionPoint)
 		{
-			var collidedparentSlotsMB = itemToInteract.GetComponent<UninteractableInventoryMB>().inventoryUI.GetComponent<ParentSlotsMB>();
+			var collidedHiddenSlotsMB = itemToInteract.GetComponent<HiddenSlotsMB>();
 
-			var parentSlotsMB = inventoryUI.GetComponent<ParentSlotsMB>();
-			var selectedItemSO = parentSlotsMB.slots[parentSlotsMB.slotIndex].ItemObject?.Item.ItemSO;
+			var visibleSlotsMB = inventoryUI.GetComponent<VisibleSlotsMB>();
+			var selectedItemSO = visibleSlotsMB.slots[visibleSlotsMB.slotIndex].ItemObject?.Item.ItemSO;
 
 			if (selectedItemSO == null) return;
 
 			if (collectionPoint.CanAddItemToCollectionPoint(selectedItemSO))
 			{
-				MoveItem(collidedparentSlotsMB);
+				MoveItem(collidedHiddenSlotsMB);
 			}
 		}
 
@@ -128,7 +128,7 @@ namespace Inventory
 
 			var itemObject = new ItemObject(itemSO);
 
-			var isMoved = inventoryUI.GetComponent<ParentSlotsMB>().AddItem(itemObject);
+			var isMoved = inventoryUI.GetComponent<VisibleSlotsMB>().AddItem(itemObject);
 
 			if (isMoved)
 			{
@@ -170,16 +170,16 @@ namespace Inventory
 			_isMoving = false;
 		}
 
-		private void MoveItem(ParentSlotsMB slotsToBeMoved)
+		private void MoveItem(HiddenSlotsMB slotsToBeMoved)
 		{	
-			var parentSlotsMB = inventoryUI.GetComponent<ParentSlotsMB>();
-			var selectedSlot = parentSlotsMB.selectedSlot;
+			var visibleSlotsMB = inventoryUI.GetComponent<VisibleSlotsMB>();
+			var selectedSlot = visibleSlotsMB.selectedSlot;
 
 			var isMoved = slotsToBeMoved.AddItem(selectedSlot.ItemObject);
 
 			if (isMoved)
 			{
-				parentSlotsMB.ClearSelectedSlot();
+				visibleSlotsMB.ClearSelectedSlot();
 			}
 		}
 	}
