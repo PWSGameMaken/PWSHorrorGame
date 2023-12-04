@@ -20,8 +20,8 @@ namespace Inventory
 		public ItemObject ItemObject { get; set; }
 		public int amount;
 
-		public InventorySlot() {
-		}
+		public InventorySlot() { }
+
 		public InventorySlot(ItemObject itemObject, int amount)
 		{
 			UpdateSlot(itemObject, amount);

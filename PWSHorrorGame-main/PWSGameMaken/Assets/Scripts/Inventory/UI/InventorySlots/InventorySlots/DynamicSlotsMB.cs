@@ -6,20 +6,20 @@
 using Inventory;
 using UnityEngine;
 
-public class DynamicSlotsMB : ParentSlotsMB
+public class DynamicSlotsMB : VisibleSlotsMB
 {
-	public GameObject slotPrefab;
+	[SerializeField] private GameObject _slotPrefab;
 	[SerializeField] private int X_START = 0;
 	[SerializeField] private int Y_START = 0;
 	[SerializeField] private int X_SPACE_BETWEEN_ITEM = 0;
 	[SerializeField] private int NUMBER_OF_COLUMN = 1;
 	[SerializeField] private int Y_SPACE_BETWEEN_ITEM = 0;
 
-	public override void CreateSlots()
+	protected override void FillSlots()
 	{
 		for (int i = 0; i < slots.Length; i++)
 		{
-			var slotGO = Instantiate(slotPrefab, Vector3.zero, Quaternion.identity, transform);
+			var slotGO = Instantiate(_slotPrefab, Vector3.zero, Quaternion.identity, transform);
 			slotGO.GetComponent<RectTransform>().localPosition = GetPosition(i);
 			AddEvents(slotGO);
 

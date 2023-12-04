@@ -3,7 +3,7 @@ using UnityEngine;
 public class LightRayMB : MonoBehaviour
 {
 	[SerializeField] private GameObject lightRay;
-	public bool isActivated;
+	[SerializeField] private bool isActivated;
 
 	public void SetActive(bool status)
 	{

@@ -137,7 +137,7 @@ namespace StarterAssets
 
 		private void CameraRotation()
 		{
-			if(gameController.GetComponent<FullScreenInventory>().inventoryIsActivated == false)
+			if(gameController.GetComponent<FullScreenInventoryMB>().inventoryIsActivated == false)
 			{
 				// if there is an input
 				if (_input.look.sqrMagnitude >= _threshold)

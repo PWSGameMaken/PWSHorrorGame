@@ -1,14 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RumbleSound : MonoBehaviour
 {
-    public AudioSource source;
-    public AudioClip clip; 
+    [SerializeField] private AudioSource source;
+    [SerializeField] private AudioClip clip; 
 
-    void Update()
+    private void Update()
     {
-        source.PlayOneShot(clip);
+        if(!source.isPlaying)
+        {
+			source.PlayOneShot(clip);
+		}
     }
 }

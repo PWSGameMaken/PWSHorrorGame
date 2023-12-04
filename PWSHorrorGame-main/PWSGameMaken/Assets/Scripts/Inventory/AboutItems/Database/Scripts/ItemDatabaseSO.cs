@@ -12,7 +12,7 @@ public class ItemDatabaseSO : ScriptableObject, ISerializationCallbackReceiver
 
 	//checkt of de Id's nogsteeds overeenkomen
 	[ContextMenu("Update ID's")]
-	public void UpdateID()
+	private void UpdateID()
 	{
 		for (int i = 0; i < ItemSOlist.Length; i++)
 		{
@@ -21,16 +21,6 @@ public class ItemDatabaseSO : ScriptableObject, ISerializationCallbackReceiver
 				ItemSOlist[i].id = i;
 			}
 		}
-	}
-
-	public ItemSO GetItemObject(int id)
-	{
-		foreach (var itemSO in ItemSOlist)
-		{
-			if(itemSO.id == id)
-				return itemSO;
-		}
-		return null;
 	}
 
 	public void OnAfterDeserialize()
@@ -43,3 +33,15 @@ public class ItemDatabaseSO : ScriptableObject, ISerializationCallbackReceiver
 
 	}
 }
+
+
+
+//public ItemSO GetItemObject(int id)
+//{
+//	foreach (var itemSO in ItemSOlist)
+//	{
+//		if(itemSO.id == id)
+//			return itemSO;
+//	}
+//	return null;
+//}

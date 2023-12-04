@@ -9,7 +9,6 @@ public class CinemachineShake : MonoBehaviour
 	private float _shakeTimerTotal = 0;
 	private float _shakeTimer = 0;
 	private float _startingIntensity = 0;
-	private GameStatsMB gameStatsMB;
 
 	private float defaultIntensity;
 	private float defaultFrequency;
@@ -22,7 +21,6 @@ public class CinemachineShake : MonoBehaviour
 	{
 		Instance = this;
 		cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
-		gameStatsMB = GameObject.Find("GameController").GetComponent<GameStatsMB>();
 	}
 
 	public void ShakeCamera(float intensity, float frequency, float time)
@@ -60,7 +58,6 @@ public class CinemachineShake : MonoBehaviour
 	private void Climax()
 	{
 		_hasClimaxed = true;
-		//gameStatsMB.CollapseWallAndStones();
 	}
 
 	private float GetAmplitude()
