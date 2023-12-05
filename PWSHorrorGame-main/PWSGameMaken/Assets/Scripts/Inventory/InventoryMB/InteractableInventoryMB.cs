@@ -4,6 +4,7 @@
 */
 
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 namespace Inventory
@@ -14,7 +15,7 @@ namespace Inventory
 		[Header("Interaction With Items")]
 		[SerializeField] private Transform _firePoint;
 		[SerializeField] private float _interactionDistanceLimit;
-		[SerializeField] private GameObject pickUpHintUI;
+		[SerializeField] private TextMeshProUGUI hintText;
 		[SerializeField] private GameObject _lastSelectedGO;
 
 		private bool _isMoving = false;
@@ -39,17 +40,21 @@ namespace Inventory
 		{
 			if(collidedGO == null)
 			{
-				pickUpHintUI.SetActive(false);
+				hintText.text = "";
 				return;
 			}
 
 			if (collidedGO.TryGetComponent(out GroundItemMB groundItemMB))
 			{
-				pickUpHintUI.SetActive(true);
+				hintText.text = groundItemMB.itemSO.hintText;
+			}
+			else if(collidedGO.TryGetComponent(out CollectionPointMB collectionPointMB))
+			{
+				hintText.text = collectionPointMB.hintText;
 			}
 			else
 			{
-				pickUpHintUI.SetActive(false);
+				hintText.text = "";
 			}
 		}
 

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CollectionPointMB : MonoBehaviour
 {
+    public string hintText;
     [SerializeField] private GameObject[] itemsToSpawn;
     [SerializeField] private GameObject[] itemsToDespawn;
 
