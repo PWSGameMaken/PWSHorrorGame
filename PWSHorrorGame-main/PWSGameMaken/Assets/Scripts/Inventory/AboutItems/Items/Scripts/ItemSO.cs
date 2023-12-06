@@ -21,7 +21,6 @@ public enum ItemType
 	Default
 }
 
-
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory System/Items/item")]
 [System.Serializable]
 public class ItemSO : ScriptableObject
@@ -36,4 +35,5 @@ public class ItemSO : ScriptableObject
 	[TextArea(15, 20)]
 	public string description;
 	public string hintText;
-}
+	public AnimTag animTag;
+} 

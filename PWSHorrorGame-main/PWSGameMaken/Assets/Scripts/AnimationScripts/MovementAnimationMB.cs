@@ -1,51 +1,43 @@
 using UnityEngine;
 
+public enum AnimTag
+{
+    NoAnimation,
+    IsWalking,
+    HasVase,
+    HasStone
+}
+
 public class MovementAnimationMB : MonoBehaviour
 {
     [SerializeField] private Animator _Anim;
-    private bool _isWalking = false;
+    private bool _walking = false;
 
     private void Start()
     {
         _Anim = gameObject.GetComponent<Animator>();
-        _Anim.SetBool("IsWalking", _isWalking);
+        _Anim.SetBool(AnimTag.IsWalking.ToString(), _walking);
     }
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)) 
-        {
-			if (!_isWalking)
-            {
-                ChangeMovementState("IsWalking", !_isWalking);
-            }
-        }
-        else
-        {
-            if (_isWalking) ChangeMovementState("IsWalking", !_isWalking);
-        }
+        var isWalking = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
+        var toggleWalking =
+            !_walking && isWalking
+            || _walking && !isWalking
+            || _walking && Input.GetKey(KeyCode.LeftShift);
 
-        if(_isWalking && Input.GetKey(KeyCode.LeftShift))
-        {
-            ChangeMovementState("IsWalking", !_isWalking);
-        }
+		if (toggleWalking) ChangeMovementState(AnimTag.IsWalking, !_walking);
     }
 
-    private void ChangeMovementState(string nameOfBool, bool isWalking)
+    private void ChangeMovementState(AnimTag activity, bool isWalking)
     {
-		_Anim.SetBool(nameOfBool, isWalking);
-		_isWalking = isWalking;
+		_Anim.SetBool(activity.ToString(), isWalking);
+		_walking = isWalking;
 	}
 
-    public void ChangeHandAnimationState(ItemSO itemSO, bool state)
+    public void ChangeHandAnimationState(AnimTag animTag, bool state)
     {
-		if (itemSO.type == ItemType.Steen)
-		{
-			_Anim.SetBool("HasStone", state);
-		}
-		else if (itemSO.type == ItemType.Artifact)
-		{
-			_Anim.SetBool("HasVase", state);
-		}
+		_Anim.SetBool(animTag.ToString(), state);
 	}
 }

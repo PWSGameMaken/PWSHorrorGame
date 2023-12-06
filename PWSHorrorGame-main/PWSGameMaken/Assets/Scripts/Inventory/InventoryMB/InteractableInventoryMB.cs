@@ -17,6 +17,7 @@ namespace Inventory
 		[SerializeField] private float _interactionDistanceLimit;
 		[SerializeField] private TextMeshProUGUI hintText;
 		[SerializeField] private GameObject _lastSelectedGO;
+		[SerializeField] private VisibleSlotsMB _visibleSlotsMB;
 
 		private bool _isMoving = false;
 		#endregion
@@ -33,9 +34,14 @@ namespace Inventory
 
 			if (Input.GetKeyDown(KeyCode.E)) Interact(collidedGO);
 			else if (Input.GetKeyUp(KeyCode.E)) UnInteract(_lastSelectedGO);
-			else if (Input.GetKeyDown(KeyCode.Q)) inventoryUI.GetComponent<VisibleSlotsMB>().DropItems();
+			else if (Input.GetKeyDown(KeyCode.Q)) DropItems();
 		}
 		
+		private void DropItems()
+		{
+			_visibleSlotsMB.DropItems();
+		}
+
 		private void UpdateHintUI(GameObject collidedGO)
 		{
 			if(collidedGO == null)
@@ -61,11 +67,10 @@ namespace Inventory
 		private void ScrollSlots()
 		{
 			var scrollDelta = (int)Input.mouseScrollDelta.y;
-			var slotsMB = inventoryUI.GetComponent<VisibleSlotsMB>();
 
 			if (scrollDelta != 0)
 			{
-				slotsMB.ChangeSelectedSlot(scrollDelta);
+				_visibleSlotsMB.ChangeSelectedSlot(scrollDelta);
 			}
 		}
 
@@ -79,7 +84,8 @@ namespace Inventory
 
 		private void Interact(GameObject itemToInteract)
 		{
-			_lastSelectedGO = itemToInteract;	
+			_lastSelectedGO = itemToInteract;
+			
 			if(itemToInteract != null)
 			{
 				if (itemToInteract.TryGetComponent(out GroundItemMB groundItemMB))
@@ -89,7 +95,7 @@ namespace Inventory
 
 				else if (itemToInteract.TryGetComponent(out CollectionPointMB collectionPoint))
 				{
-					InteractWithCollectionPoint(itemToInteract, collectionPoint);
+					InteractWithCollectionPoint(itemToInteract.GetComponent<HiddenSlotsMB>(), collectionPoint);
 				}
 
 				else if (itemToInteract.TryGetComponent(out RotatableMirrorMB rotatableMirror))
@@ -110,18 +116,15 @@ namespace Inventory
 			}
 		}
 
-		private void InteractWithCollectionPoint(GameObject itemToInteract, CollectionPointMB collectionPoint)
+		private void InteractWithCollectionPoint(HiddenSlotsMB hiddenSlotsMB, CollectionPointMB collectionPoint)
 		{
-			var collidedHiddenSlotsMB = itemToInteract.GetComponent<HiddenSlotsMB>();
-
-			var visibleSlotsMB = inventoryUI.GetComponent<VisibleSlotsMB>();
-			var selectedItemSO = visibleSlotsMB.slots[visibleSlotsMB.slotIndex].ItemObject?.Item.ItemSO;
+			var selectedItemSO = _visibleSlotsMB.selectedSlot.ItemObject?.Item.ItemSO;
 
 			if (selectedItemSO == null) return;
 
 			if (collectionPoint.CanAddItemToCollectionPoint(selectedItemSO))
 			{
-				MoveItem(collidedHiddenSlotsMB);
+				MoveItem(hiddenSlotsMB);
 			}
 		}
 
@@ -133,7 +136,7 @@ namespace Inventory
 
 			var itemObject = new ItemObject(itemSO);
 
-			var isMoved = inventoryUI.GetComponent<VisibleSlotsMB>().AddItem(itemObject);
+			var isMoved = _visibleSlotsMB.AddItem(itemObject);
 
 			if (isMoved)
 			{
@@ -177,14 +180,13 @@ namespace Inventory
 
 		private void MoveItem(HiddenSlotsMB slotsToBeMoved)
 		{	
-			var visibleSlotsMB = inventoryUI.GetComponent<VisibleSlotsMB>();
-			var selectedSlot = visibleSlotsMB.selectedSlot;
+			var selectedSlot = _visibleSlotsMB.selectedSlot;
 
 			var isMoved = slotsToBeMoved.AddItem(selectedSlot.ItemObject);
 
 			if (isMoved)
 			{
-				visibleSlotsMB.ClearSelectedSlot();
+				_visibleSlotsMB.ClearSelectedSlot();
 			}
 		}
 	}

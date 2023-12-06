@@ -42,8 +42,11 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 	public void DropItems()
 	{
 		CreateGroundItems(selectedSlot);
-		slots[slotIndex].ClearSlot();
+
+		_movementAnimation.ChangeHandAnimationState(selectedSlot.ItemObject.Item.ItemSO.animTag, false);
 		_objectInHandMB.Despawn();
+
+		slots[slotIndex].ClearSlot();	
 	}
 
 	private void OnEnter(GameObject slotGO)
@@ -152,6 +155,7 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 				if (slots[i] == selectedSlot)
 				{
 					_objectInHandMB.Spawn(slots[i].ItemObject.Item.ItemSO);
+					_movementAnimation.ChangeHandAnimationState(slots[i].ItemObject.Item.ItemSO.animTag, true);
 				}
 				return slots[i];
 			}
@@ -225,7 +229,7 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 
 		if (selectedSlot.ItemObject != null)
 		{
-			_movementAnimation.ChangeHandAnimationState(selectedSlot.ItemObject.Item.ItemSO, false);
+			_movementAnimation.ChangeHandAnimationState(selectedSlot.ItemObject.Item.ItemSO.animTag, false);
 		}
 
 		_objectInHandMB.Despawn();
@@ -238,7 +242,7 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 		{
 			_objectInHandMB.Spawn(selectedSlot.ItemObject.Item.ItemSO);
 
-			_movementAnimation.ChangeHandAnimationState(selectedSlot.ItemObject.Item.ItemSO, true);
+			_movementAnimation.ChangeHandAnimationState(selectedSlot.ItemObject.Item.ItemSO.animTag, true);
 		}
 	}
 
