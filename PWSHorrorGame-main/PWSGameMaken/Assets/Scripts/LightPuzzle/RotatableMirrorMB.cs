@@ -20,17 +20,6 @@ public class RotatableMirrorMB : MonoBehaviour
 		_isRotating = status;
 		_firstPersonController.enabled = !status;
 	}
-	public void ActivateMirror()
-	{
-		_isRotating = true;
-		_firstPersonController.enabled = false;
-	}
-
-	public void DeActivateMirror()
-	{
-		_isRotating = false;
-		_firstPersonController.enabled = true;
-	}
 
 	private void RotateObject()
 	{

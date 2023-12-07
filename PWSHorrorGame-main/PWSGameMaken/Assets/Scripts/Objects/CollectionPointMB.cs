@@ -21,18 +21,7 @@ public class CollectionPointMB : MonoBehaviour
         }
 	}
 
-	private void Update()
-	{
-        if (canCollectItems)
-        {
-            if (_hiddenSlotsMB.CountEmptySlots() == 0)
-            {
-                ObjectiveCompleted();
-            }
-        }
-	}
-
-	public bool CanAddItemToCollectionPoint(ItemSO itemSO)
+	public bool CanAddItem(ItemSO itemSO)
     {
         for (int i = 0; i < acceptedItemSO.Length; i++)
         {
@@ -43,6 +32,14 @@ public class CollectionPointMB : MonoBehaviour
         }
         return false;
     }
+
+    public void CheckForCompletion()
+    {
+		if (_hiddenSlotsMB.CountEmptySlots() == 0)
+		{
+			ObjectiveCompleted();
+		}
+	}
 
     public void ObjectiveCompleted()
     {
