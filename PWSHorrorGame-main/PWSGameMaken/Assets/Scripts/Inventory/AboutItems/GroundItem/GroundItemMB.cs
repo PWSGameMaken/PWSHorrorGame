@@ -11,6 +11,7 @@ public class GroundItemMB : MonoBehaviour
 	private static Transform _collectables;
 	public ItemSO itemSO;
 	private static readonly int _power = 100;
+	public bool isMoving;
 
 	private void Start()
 	{
@@ -40,16 +41,10 @@ public class GroundItemMB : MonoBehaviour
 		return new Vector3(playerPos.x, playerPos.y + 1.8f, playerPos.z);
 	}
 
-	public void DestroyGroundItem(GameObject groundItem, EarthQuakeMB earthQuakeMB)
+	public void DestroyGroundItem(GameObject groundItem, float destoryDelay)
 	{
-		earthQuakeMB.EarthQuake();
 		groundItem.GetComponent<MeshRenderer>().enabled = false;
-		DestroyGroundItem(groundItem, earthQuakeMB.shakeTime / 2);
-	}
-
-	public void DestroyGroundItem(GameObject groundItem, float delayTime = 0f)
-	{
-		StartCoroutine(DestroyExec(groundItem, delayTime));
+		StartCoroutine(DestroyExec(groundItem, destoryDelay));
 	}
 
 	private IEnumerator DestroyExec(GameObject groundItem, float delayTime)
