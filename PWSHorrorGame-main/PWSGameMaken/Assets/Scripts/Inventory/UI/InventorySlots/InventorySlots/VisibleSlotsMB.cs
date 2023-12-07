@@ -41,12 +41,15 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 
 	public void DropItems()
 	{
-		CreateGroundItems(selectedSlot);
+		if(selectedSlot.ItemObject != null)
+		{
+			CreateGroundItems(selectedSlot);
 
-		_movementAnimation.ChangeHandAnimationState(selectedSlot.ItemObject.Item.ItemSO.animTag, false);
-		_objectInHandMB.Despawn();
+			_movementAnimation.ChangeHandAnimationState(selectedSlot.ItemObject.Item.ItemSO.animTag, false);
+			_objectInHandMB.Despawn();
 
-		slots[slotIndex].ClearSlot();	
+			slots[slotIndex].ClearSlot();	
+		}
 	}
 
 	private void OnEnter(GameObject slotGO)

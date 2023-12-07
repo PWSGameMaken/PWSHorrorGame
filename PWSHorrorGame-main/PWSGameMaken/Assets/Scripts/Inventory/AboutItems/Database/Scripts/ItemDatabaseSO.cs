@@ -33,15 +33,3 @@ public class ItemDatabaseSO : ScriptableObject, ISerializationCallbackReceiver
 
 	}
 }
-
-
-
-//public ItemSO GetItemObject(int id)
-//{
-//	foreach (var itemSO in ItemSOlist)
-//	{
-//		if(itemSO.id == id)
-//			return itemSO;
-//	}
-//	return null;
-//}

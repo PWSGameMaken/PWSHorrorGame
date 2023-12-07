@@ -16,10 +16,8 @@ namespace Inventory
 		[SerializeField] private Transform _firePoint;
 		[SerializeField] private float _interactionDistanceLimit;
 		[SerializeField] private TextMeshProUGUI hintText;
-		[SerializeField] private GameObject _lastSelectedGO;
 		[SerializeField] private VisibleSlotsMB _visibleSlotsMB;
-
-		private bool _isMoving = false;
+		private GameObject _lastSelectedGO;
 		#endregion
 
 		private void Update()
@@ -34,14 +32,9 @@ namespace Inventory
 
 			if (Input.GetKeyDown(KeyCode.E)) Interact(collidedGO);
 			else if (Input.GetKeyUp(KeyCode.E)) UnInteract(_lastSelectedGO);
-			else if (Input.GetKeyDown(KeyCode.Q)) DropItems();
+			else if (Input.GetKeyDown(KeyCode.Q)) _visibleSlotsMB.DropItems();
 		}
 		
-		private void DropItems()
-		{
-			_visibleSlotsMB.DropItems();
-		}
-
 		private void UpdateHintUI(GameObject collidedGO)
 		{
 			if(collidedGO == null)
@@ -90,7 +83,7 @@ namespace Inventory
 			{
 				if (itemToInteract.TryGetComponent(out GroundItemMB groundItemMB))
 				{
-					MoveGroundItemToInventorySlot(itemToInteract);
+					MoveGroundItemToInventorySlot(itemToInteract, groundItemMB);
 				}
 
 				else if (itemToInteract.TryGetComponent(out CollectionPointMB collectionPoint))
@@ -116,66 +109,37 @@ namespace Inventory
 			}
 		}
 
+		private void MoveGroundItemToInventorySlot(GameObject groundItem, GroundItemMB groundItemMB)
+		{
+			if(groundItemMB.isMoving == true) { return; }
+
+			var itemObject = new ItemObject(groundItemMB.itemSO);
+			var isAdded = _visibleSlotsMB.AddItem(itemObject);
+
+			if (isAdded)
+			{
+				groundItemMB.isMoving = true;
+				if (groundItem.TryGetComponent(out EarthQuakeMB earthQuakeMB))
+				{
+					earthQuakeMB.EarthQuake();
+				}
+
+				var destroyDelay = earthQuakeMB != null ? earthQuakeMB.shakeTime/2 : 0;
+				groundItemMB.DestroyGroundItem(groundItem, destroyDelay);
+			}
+		}
+
 		private void InteractWithCollectionPoint(HiddenSlotsMB hiddenSlotsMB, CollectionPointMB collectionPoint)
 		{
 			var selectedItemSO = _visibleSlotsMB.selectedSlot.ItemObject?.Item.ItemSO;
 
 			if (selectedItemSO == null) return;
 
-			if (collectionPoint.CanAddItemToCollectionPoint(selectedItemSO))
+			if (collectionPoint.CanAddItem(selectedItemSO))
 			{
 				MoveItem(hiddenSlotsMB);
+				collectionPoint.CheckForCompletion();
 			}
-		}
-
-		private void MoveGroundItemToInventorySlot(GameObject groundItem)
-		{
-			if (_isMoving) return;
-
-			var itemSO = groundItem.GetComponent<GroundItemMB>().itemSO;
-
-			var itemObject = new ItemObject(itemSO);
-
-			var isMoved = _visibleSlotsMB.AddItem(itemObject);
-
-			if (isMoved)
-			{
-				_isMoving = true;
-				
-				if (groundItem.TryGetComponent<EarthQuakeMB>(out var earthQuake))
-					DestroyGroundItem(groundItem, earthQuake);
-				else
-					DestroyGroundItem(groundItem);
-			}
-		}
-
-		private void DestroyGroundItem(GameObject groundItem, EarthQuakeMB earthQuakeMB)
-		{
-			earthQuakeMB.EarthQuake();
-			groundItem.GetComponent<MeshRenderer>().enabled = false;
-			DestroyGroundItem(groundItem, earthQuakeMB.shakeTime/2);
-		}
-
-		private void DestroyGroundItem(GameObject groundItem, float delayTime = 0f)
-		{
-			StartCoroutine(DestroyExec(groundItem, delayTime));
-		}
-
-		private IEnumerator DestroyExec(GameObject groundItem, float delayTime)
-		{
-			yield return new WaitForSeconds(delayTime);
-
-			if(groundItem.TryGetComponent<SpawnObjectsInScene>(out var spawnObjectsInSceneMB))
-			{
-				spawnObjectsInSceneMB.SpawnObjects();
-			}
-			if (groundItem.TryGetComponent<DespawnObjectsInScene>(out var despawnObjectsInSceneMB))
-			{	
-				despawnObjectsInSceneMB.DespawnObjects();
-			}
-
-			Destroy(groundItem);
-			_isMoving = false;
 		}
 
 		private void MoveItem(HiddenSlotsMB slotsToBeMoved)

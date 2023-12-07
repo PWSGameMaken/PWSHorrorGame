@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5886781534061808501}
   - component: {fileID: 5229626040986580034}
   - component: {fileID: 8121116163262423967}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ZWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7587738308628817849}
   - component: {fileID: 8318952313369333797}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SpiegelObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8259923939621859534}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MoveableMirror
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 3669474583223645614}
   - component: {fileID: 7852713690615115099}
   - component: {fileID: 6193192258035097438}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: -XWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -316,7 +316,7 @@ GameObject:
   - component: {fileID: 9008501507770997908}
   - component: {fileID: 3040077449645598298}
   - component: {fileID: 221427107610976333}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bodem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -418,7 +418,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9078679341637918221}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BewegingsBak
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -457,7 +457,7 @@ GameObject:
   - component: {fileID: 5911227825842158485}
   - component: {fileID: 8427015539099476112}
   - component: {fileID: 1843771712983093614}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: -ZWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -562,7 +562,7 @@ GameObject:
   - component: {fileID: 27751459186449381}
   - component: {fileID: 4552302701698257563}
   - component: {fileID: 3498924360154028397}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: XWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -668,6 +668,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: MirrorTripod
       objectReference: {fileID: 0}
+    - target: {fileID: 370725695870872998, guid: 26db35a21afe37e4abbcfe331558b6bb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4777698793718985709, guid: 26db35a21afe37e4abbcfe331558b6bb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 8259923939621859534, guid: 26db35a21afe37e4abbcfe331558b6bb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -742,10 +752,45 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -2
       objectReference: {fileID: 0}
+    - target: {fileID: 564348605177076581, guid: 684b543f1c5a450489f6a872e1b5024c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 843568950686217733, guid: 684b543f1c5a450489f6a872e1b5024c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1034707778925345934, guid: 684b543f1c5a450489f6a872e1b5024c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1702912391540524693, guid: 684b543f1c5a450489f6a872e1b5024c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 2584898115220002549, guid: 684b543f1c5a450489f6a872e1b5024c,
         type: 3}
       propertyPath: m_Name
       value: Static Mirror
+      objectReference: {fileID: 0}
+    - target: {fileID: 2584898115220002549, guid: 684b543f1c5a450489f6a872e1b5024c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3334821342873479581, guid: 684b543f1c5a450489f6a872e1b5024c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3603285130364804338, guid: 684b543f1c5a450489f6a872e1b5024c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4974232791550476317, guid: 684b543f1c5a450489f6a872e1b5024c,
         type: 3}
@@ -796,6 +841,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5965519149232904413, guid: 684b543f1c5a450489f6a872e1b5024c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5992888791064968115, guid: 684b543f1c5a450489f6a872e1b5024c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468691974486926053, guid: 684b543f1c5a450489f6a872e1b5024c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471558032612458034, guid: 684b543f1c5a450489f6a872e1b5024c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7597985220399559180, guid: 684b543f1c5a450489f6a872e1b5024c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 734183978855998357, guid: 684b543f1c5a450489f6a872e1b5024c, type: 3}
