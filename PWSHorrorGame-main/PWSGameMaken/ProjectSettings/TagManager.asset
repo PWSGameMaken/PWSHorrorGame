@@ -19,7 +19,7 @@ TagManager:
   - Camera
   - Map
   - Player
-  - 
+  - MoveableObject
   - 
   - 
   - 

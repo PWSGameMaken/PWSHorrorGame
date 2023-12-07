@@ -7,5 +7,7 @@ public class StoneSO : ItemSO
 	public StoneSO()
 	{
 		animTag = AnimTag.HasVase;
+		stackable = false;
+		itemName = "Stone";
 	}
 }
