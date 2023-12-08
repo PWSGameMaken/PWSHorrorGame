@@ -24,7 +24,7 @@ public class GroundItemMB : MonoBehaviour
 		var player = GameObject.FindGameObjectWithTag("Player");
 		Vector3 forward = player.transform.TransformDirection(Vector3.forward);
 
-		var newGroundItem = Instantiate(itemSO.groundItemPrefab, GetSpawnPosition() + forward * 0.75f, player.transform.rotation, _collectables); //itemSO.groundItemPrefab.transform.rotation
+		var newGroundItem = Instantiate(itemSO.groundItemPrefab, GetSpawnPosition() + forward * 0.75f, player.transform.rotation * itemSO.groundItemPrefab.transform.rotation, _collectables); //itemSO.groundItemPrefab.transform.rotation
 		newGroundItem.GetComponent<GroundItemMB>().itemSO = itemSO;
 
 
@@ -41,10 +41,11 @@ public class GroundItemMB : MonoBehaviour
 		return new Vector3(playerPos.x, playerPos.y + 1.8f, playerPos.z);
 	}
 
-	public void DestroyGroundItem(GameObject groundItem, float destoryDelay)
+	public void DestroyGroundItem(GameObject groundItem, float destroyDelay)
 	{
-		groundItem.GetComponent<MeshRenderer>().enabled = false;
-		StartCoroutine(DestroyExec(groundItem, destoryDelay));
+		if(destroyDelay > 0) { groundItem.GetComponent<MeshRenderer>().enabled = false; }
+
+		StartCoroutine(DestroyExec(groundItem, destroyDelay));
 	}
 
 	private IEnumerator DestroyExec(GameObject groundItem, float delayTime)

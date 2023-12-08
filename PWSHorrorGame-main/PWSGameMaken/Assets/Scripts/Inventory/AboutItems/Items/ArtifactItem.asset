@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b0ad63547bdfc43a6e98fcbb5fff5d, type: 3}
   m_Name: ArtifactItem
   m_EditorClassIdentifier: 
-  groundItemPrefab: {fileID: 6298199603819093617, guid: 3ea5fb10e94294047bacfa83868d1763,
+  groundItemPrefab: {fileID: 2082093228977159249, guid: b67ab608407c1324fb66df48de03bf60,
     type: 3}
   inHandItemPrefab: {fileID: 6298199603819093617, guid: 3bd0bbf1e46e0984f8dfefc7091ed2b9,
     type: 3}

@@ -18,7 +18,6 @@ public class SpawnObjectsInScene : MonoBehaviour
 		{
 			if (!objectsToSpawn[i].activeSelf)
 			{
-				GetComponent<EarthQuakeMB>().EarthQuake();
 				objectsToSpawn[i].SetActive(true);
 			}
 		}
