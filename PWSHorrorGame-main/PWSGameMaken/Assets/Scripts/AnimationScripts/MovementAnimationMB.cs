@@ -27,7 +27,10 @@ public class MovementAnimationMB : MonoBehaviour
             || _walking && !isWalking
             || _walking && Input.GetKey(KeyCode.LeftShift);
 
-		if (toggleWalking) ChangeMovementState(AnimTag.IsWalking, !_walking);
+        if (toggleWalking)
+        {
+            ChangeMovementState(AnimTag.IsWalking, !_walking);
+        }
     }
 
     private void ChangeMovementState(AnimTag activity, bool isWalking)
