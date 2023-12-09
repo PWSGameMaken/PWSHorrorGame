@@ -46,7 +46,7 @@ public class LightFlickerEffect : MonoBehaviour {
          }
     }
 
-    void Update() {
+    void FixedUpdate() {
         if (light == null)
             return;
 
