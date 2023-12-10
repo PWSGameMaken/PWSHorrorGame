@@ -9,7 +9,7 @@ using UnityEngine;
 public abstract class ParentSlotsMB : UserInterfaceMB
 {
 	#region Variables
-	[SerializeField] protected int _slotAmount = 20;
+	[SerializeField] protected int _slotAmount = 1;
 	[SerializeField] protected ItemDatabaseSO itemDatabaseSO;
 	
 	public InventorySlot[] slots;

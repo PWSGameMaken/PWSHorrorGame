@@ -1,0 +1,35 @@
+# Blender MTL File: 'Objects.blend'
+# Material Count: 3
+
+newmtl Stone_Display_Body
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Stone_.jpg
+
+newmtl Stone_Display_Ornament_1
+Ns 633.333333
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.078571 0.078571 0.078571
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Ornament.jpg
+
+newmtl Stone_Display_Ornament_2
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.164286 0.164286 0.164286
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Ornament_.jpg
