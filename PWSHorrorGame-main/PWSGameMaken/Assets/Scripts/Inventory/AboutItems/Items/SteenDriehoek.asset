@@ -24,3 +24,4 @@ MonoBehaviour:
   description: It's the eye! I have been seeing it in my dreams! No... I've been
     feeling it... yes... Feeling it... Following me... Devouring!
   hintText: Press E to pickup
+  animTag: 3

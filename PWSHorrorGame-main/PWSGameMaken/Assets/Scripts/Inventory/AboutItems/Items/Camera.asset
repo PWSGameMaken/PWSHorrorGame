@@ -24,3 +24,4 @@ MonoBehaviour:
   description: The camera we found near the dead body. Seems quite a modern camera,
     maybe it still works?
   hintText: Press E to pickup
+  animTag: 3

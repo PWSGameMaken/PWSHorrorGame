@@ -24,3 +24,4 @@ MonoBehaviour:
   description: Oh, Ooh! Such beauty I've never seen before. From the curves to the
     engravings, the beaty is stunning.
   hintText: Press E to pickup
+  animTag: 3
