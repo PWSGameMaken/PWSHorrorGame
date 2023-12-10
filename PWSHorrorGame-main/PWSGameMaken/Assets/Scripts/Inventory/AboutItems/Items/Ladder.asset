@@ -24,3 +24,4 @@ MonoBehaviour:
   description: A ladder, quite a lucky find! This will probably become handy in the
     future, better take it with me.
   hintText: Press E to pickup
+  animTag: 2
