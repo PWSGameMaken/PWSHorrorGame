@@ -5,6 +5,7 @@ public class CollectionPointMB : MonoBehaviour
     public string hintText;
     [SerializeField] private GameObject[] itemsToSpawn;
     [SerializeField] private GameObject[] itemsToDespawn;
+    [SerializeField] private GameObject[] itemsToAnimate;
 
     private HiddenSlotsMB _hiddenSlotsMB;
 
@@ -51,6 +52,16 @@ public class CollectionPointMB : MonoBehaviour
         for (int i = 0; i < itemsToDespawn.Length; i++)
         {
             itemsToDespawn[i].SetActive(false);
+        }
+
+        for (int i = 0; i < itemsToAnimate.Length; i++)
+        {
+			if (itemsToAnimate[i].tag == "Door")
+            {
+                var Anim = itemsToAnimate[i].GetComponent<Animator>();
+                Anim.SetBool("OpenL", true);
+                Anim.SetBool("OpenR", true);
+            }
         }
     }
 }
