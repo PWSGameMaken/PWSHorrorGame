@@ -1,37 +1,97 @@
 using UnityEngine.AI;
 using UnityEngine;
+using UnityEditor.Experimental.GraphView;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class MonsterController : MonoBehaviour
 {
-	public float huntRadius = 10f;
+	[SerializeField] private float _killRadius = 2f;
+	[SerializeField] private float _huntRadius = 10f;
+	[SerializeField] private float _rotationSpeed = 5f;
 
-	public Transform target;
-	public NavMeshAgent agent;
+	[SerializeField] private Transform _target;
+	[SerializeField] private NavMeshAgent _agent;
+
+	[SerializeField] private AnimationClip killAnimation;
+
+	[SerializeField] private Transform monsterHead;
+
+	[SerializeField] private Transform playerBody;
+	private bool isCaught = false;
+
+
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(transform.position, _huntRadius);
+
+		Gizmos.color = Color.blue;
+		Gizmos.DrawWireSphere(transform.position, _killRadius);
+	}
+
+	//private void OnCollisionEnter(Collision collision)
+	//{
+	//	if(collision.transform.CompareTag("Player"))
+	//	{
+	//		KillPlayer();
+	//	}
+	//}
+
 	private void Start()
 	{
-		target = PlayerManager.instance.player.transform;
-		agent = GetComponent<NavMeshAgent>();
-		agent.SetDestination(target.transform.position);
+		_agent = GetComponent<NavMeshAgent>();
 	}
 
 	private void Update()
 	{
-		agent.SetDestination(target.transform.position);
+		if(!isCaught)
+			_agent.SetDestination(_target.transform.position);
 
 		
-		float distance = Vector3.Distance(target.position, transform.position);
-		if(distance < huntRadius)
+		float distance = Vector3.Distance(_target.position, transform.position);
+		if(distance < _huntRadius)
 		{
-			print("The moster is close");
-			//Activeer jaag modus
-			FaceTarget();
+			HuntPlayer();
+		}
+
+		if(distance < _killRadius)
+		{
+			KillPlayer();
 		}
 	}
 
-	private void FaceTarget()
+	private void HuntPlayer()
 	{
-		Vector3 direction = (target.position - transform.position).normalized;
-		Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-		transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+		FaceTarget(_agent.transform, _target, _rotationSpeed);
+	}
+
+	private void KillPlayer()
+	{
+		isCaught = true;
+		//_target.LookAt(monsterHead);
+		_agent.SetDestination(transform.position);
+		
+		FaceTarget(_target, monsterHead, 100f);
+		//playerBody.transform.rotation = Quaternion.LookRotation(new Vector3(0, _target.transform.rotation.y, 0));
+
+		StartCoroutine(GameOver());
+	}
+
+	private void FaceTarget(Transform ObjectToRotate, Transform ObjectToFace, float rotationSpeed)
+	{
+		Vector3 direction = (ObjectToFace.position - ObjectToRotate.position).normalized;
+		Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, direction.y, direction.z));
+		ObjectToRotate.rotation = Quaternion.Slerp(ObjectToRotate.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+	}
+
+	private IEnumerator GameOver()
+	{
+		//Voor wanneer we een animatie hebben.
+		//yield return new WaitForSeconds(killAnimation.length);
+
+		yield return new WaitForSeconds(3);
+
+		SceneManager.LoadScene(1);
 	}
 }
