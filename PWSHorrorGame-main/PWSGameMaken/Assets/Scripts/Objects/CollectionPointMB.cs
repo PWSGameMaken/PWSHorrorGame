@@ -62,6 +62,11 @@ public class CollectionPointMB : MonoBehaviour
                 Anim.SetBool("OpenL", true);
                 Anim.SetBool("OpenR", true);
             }
+            if (itemsToAnimate[i].tag == "Plank")
+            {
+                var Anim = itemsToAnimate[i].GetComponent<Animator>();
+                Anim.SetBool("PlankStijg", true);
+            }
         }
     }
 }
