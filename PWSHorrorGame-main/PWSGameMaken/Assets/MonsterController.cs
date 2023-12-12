@@ -23,7 +23,8 @@ public class MonsterController : MonoBehaviour
 	[SerializeField] private GameObject KillLantern;
 	[SerializeField] private FirstPersonController FPSController;
 	[SerializeField] private StarterAssetsInputs inputScript;
-	private bool isCaught = false;
+    [SerializeField] private AudioSource AudioSource;
+    private bool isCaught = false;
 
 
 	private void OnDrawGizmosSelected()
@@ -55,7 +56,8 @@ public class MonsterController : MonoBehaviour
 		if(distance < _huntRadius)
 		{
 			HuntPlayer();
-		}
+            AudioSource.Play();
+        }
 
 		if(distance < _killRadius)
 		{

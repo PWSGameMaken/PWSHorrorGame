@@ -3,7 +3,8 @@ using UnityEngine;
 public class MiniMonsterTriggerMB : MonoBehaviour
 {
 	[SerializeField] private AudioSource jumpScareSound;
-	[SerializeField] private Transform _objectToMove;
+    [SerializeField] private AudioSource WalkSound;
+    [SerializeField] private Transform _objectToMove;
     [SerializeField] private Vector3 _moveDirection = new Vector3(0, 0, 1);
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _destroyDelay;
@@ -44,5 +45,6 @@ public class MiniMonsterTriggerMB : MonoBehaviour
     private void PlayAudio()
     {
         jumpScareSound.Play();
+        WalkSound.Play();
     }
 }
