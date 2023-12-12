@@ -10,6 +10,7 @@ using UnityEngine;
 namespace Inventory
 {
 	public class InteractableInventoryMB : ParentInventoryMB
+
 	{
 		#region variables
 		[Header("Interaction With Items")]
@@ -18,9 +19,12 @@ namespace Inventory
 		[SerializeField] private TextMeshProUGUI hintText;
 		[SerializeField] private VisibleSlotsMB _visibleSlotsMB;
 		private GameObject _lastSelectedGO;
-		#endregion
+        #endregion
+        [SerializeField] private AudioSource DropSound;
+		[SerializeField] private AudioClip Clip;
+		private bool soundPlayed = false;
 
-		private void Update()
+        private void Update()
 		{
 			RaycastHit raycastHit = MakeRaycast(_firePoint.position, _firePoint.transform.forward, _interactionDistanceLimit);
 			var collidedGO = raycastHit.transform?.gameObject;
@@ -32,7 +36,27 @@ namespace Inventory
 
 			if (Input.GetKeyDown(KeyCode.E)) Interact(collidedGO);
 			else if (Input.GetKeyUp(KeyCode.E)) UnInteract(_lastSelectedGO);
-			else if (Input.GetKeyDown(KeyCode.Q)) _visibleSlotsMB.DropItems();
+			else if (Input.GetKeyDown(KeyCode.Q))
+			{
+				_visibleSlotsMB.DropItems(); 
+            }
+			if (_visibleSlotsMB.drop)
+			{
+				if (!soundPlayed)
+				{
+                    DropSound.PlayOneShot(Clip);
+					soundPlayed = true;
+                }
+			}
+			if (!_visibleSlotsMB.drop)
+			{
+                if (soundPlayed)
+                {
+                    DropSound.Stop();
+                    soundPlayed = false;
+                }
+            }
+
 		}
 		
 		private void UpdateHintUI(GameObject collidedGO)

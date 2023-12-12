@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum AnimTag
@@ -11,7 +12,10 @@ public enum AnimTag
 public class MovementAnimationMB : MonoBehaviour
 {
     [SerializeField] private Animator _Anim;
+    [SerializeField] private AudioSource Sounds;
+    [SerializeField] public AudioClip WalkSound;
     private bool _walking = false;
+    private bool soundPlayed = false;
 
     private void Start()
     {
@@ -31,16 +35,38 @@ public class MovementAnimationMB : MonoBehaviour
         {
             ChangeMovementState(AnimTag.IsWalking, !_walking);
         }
+        if (isWalking)
+        {
+            if (!soundPlayed)
+            {
+                Sounds.PlayOneShot(WalkSound);
+                soundPlayed = true;
+            }
+            
+        }
+        else 
+        {
+            if (!isWalking)
+            {
+                if (soundPlayed)
+                {
+                    Sounds.Stop();
+                    soundPlayed = false;
+                }
+            }
+            
+        }
+
     }
 
     private void ChangeMovementState(AnimTag activity, bool isWalking)
     {
-		_Anim.SetBool(activity.ToString(), isWalking);
-		_walking = isWalking;
-	}
+        _Anim.SetBool(activity.ToString(), isWalking);
+        _walking = isWalking;
+    }
 
     public void ChangeHandAnimationState(AnimTag animTag, bool state)
     {
-		_Anim.SetBool(animTag.ToString(), state);
-	}
+        _Anim.SetBool(animTag.ToString(), state);
+    }
 }

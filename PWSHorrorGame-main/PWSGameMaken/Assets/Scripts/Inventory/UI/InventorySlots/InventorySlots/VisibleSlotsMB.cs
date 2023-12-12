@@ -18,10 +18,9 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 
 	[SerializeField] private ObjectInHandMB _objectInHandMB;
 	[SerializeField] private Animator _Anim;
-	
-	[SerializeField] private MovementAnimationMB _movementAnimation;
-
-	protected Dictionary<GameObject, InventorySlot> slots_dict = new();
+    [SerializeField] private MovementAnimationMB _movementAnimation;
+	public bool drop = false;
+    protected Dictionary<GameObject, InventorySlot> slots_dict = new();
 	#endregion
 
 	#region Unity Methods
@@ -48,7 +47,8 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 			_movementAnimation.ChangeHandAnimationState(selectedSlot.ItemObject.Item.ItemSO.animTag, false);
 			_objectInHandMB.Despawn();
 
-			slots[slotIndex].ClearSlot();	
+            slots[slotIndex].ClearSlot();
+			drop = true;
 		}
 	}
 
