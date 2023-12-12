@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
+using StarterAssets;
 
 public class MonsterController : MonoBehaviour
 {
@@ -17,7 +19,10 @@ public class MonsterController : MonoBehaviour
 
 	[SerializeField] private Transform monsterHead;
 
-	[SerializeField] private Transform playerBody;
+	[SerializeField] private GameObject playerBody;
+	[SerializeField] private GameObject KillLantern;
+	[SerializeField] private FirstPersonController FPSController;
+	[SerializeField] private StarterAssetsInputs inputScript;
 	private bool isCaught = false;
 
 
@@ -30,14 +35,6 @@ public class MonsterController : MonoBehaviour
 		Gizmos.DrawWireSphere(transform.position, _killRadius);
 	}
 
-	//private void OnCollisionEnter(Collision collision)
-	//{
-	//	if(collision.transform.CompareTag("Player"))
-	//	{
-	//		KillPlayer();
-	//	}
-	//}
-
 	private void Start()
 	{
 		_agent = GetComponent<NavMeshAgent>();
@@ -45,8 +42,13 @@ public class MonsterController : MonoBehaviour
 
 	private void Update()
 	{
-		if(!isCaught)
-			_agent.SetDestination(_target.transform.position);
+		if(isCaught)
+		{
+			FaceTarget(_target, monsterHead, 100f);
+			return;
+		}
+
+		_agent.SetDestination(_target.transform.position);
 
 		
 		float distance = Vector3.Distance(_target.position, transform.position);
@@ -69,10 +71,11 @@ public class MonsterController : MonoBehaviour
 	private void KillPlayer()
 	{
 		isCaught = true;
-		//_target.LookAt(monsterHead);
 		_agent.SetDestination(transform.position);
 		
-		FaceTarget(_target, monsterHead, 100f);
+		playerBody.SetActive(false);
+		KillLantern.SetActive(true);
+		BlockPlayerMovement();
 		//playerBody.transform.rotation = Quaternion.LookRotation(new Vector3(0, _target.transform.rotation.y, 0));
 
 		StartCoroutine(GameOver());
@@ -91,7 +94,19 @@ public class MonsterController : MonoBehaviour
 		//yield return new WaitForSeconds(killAnimation.length);
 
 		yield return new WaitForSeconds(3);
-
+		UnblockPlayerMovement();
 		SceneManager.LoadScene(1);
+	}
+
+	private void BlockPlayerMovement()
+	{
+		inputScript.cursorInputForLook = false;
+		FPSController.MoveSpeed = 0;
+	}
+
+	private void UnblockPlayerMovement()
+	{
+		inputScript.cursorInputForLook = true;
+		FPSController.MoveSpeed = 4;
 	}
 }
