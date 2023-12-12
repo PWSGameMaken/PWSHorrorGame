@@ -23,7 +23,10 @@ public class MonsterController : MonoBehaviour
 	[SerializeField] private GameObject KillLantern;
 	[SerializeField] private FirstPersonController FPSController;
 	[SerializeField] private StarterAssetsInputs inputScript;
-    [SerializeField] private AudioSource AudioSource;
+	[SerializeField] private AudioSource AudioSource;
+	[SerializeField] private Animator _anim;
+
+
     private bool isCaught = false;
 
 
@@ -45,7 +48,7 @@ public class MonsterController : MonoBehaviour
 	{
 		if(isCaught)
 		{
-			FaceTarget(_target, monsterHead, 100f);
+			FaceTarget(_target, monsterHead, 20f);
 			return;
 		}
 
@@ -53,32 +56,42 @@ public class MonsterController : MonoBehaviour
 
 		
 		float distance = Vector3.Distance(_target.position, transform.position);
-		if(distance < _huntRadius)
-		{
-			HuntPlayer();
-            AudioSource.Play();
-        }
-
-		if(distance < _killRadius)
+		if (distance < _killRadius)
 		{
 			KillPlayer();
+		}
+		else if (distance < _huntRadius)
+		{
+			HuntPlayer();
+			//Er is geen audio geselecteerd, dus uitgezet anders error
+			//AudioSource.Play();
+		}
+		else
+		{
+			_anim.SetBool("Run", false);
+			_anim.SetBool("Walk", true);
 		}
 	}
 
 	private void HuntPlayer()
 	{
 		FaceTarget(_agent.transform, _target, _rotationSpeed);
+		_anim.SetBool("Walk", false);
+		_anim.SetBool("Run", true);
+
 	}
 
 	private void KillPlayer()
 	{
 		isCaught = true;
 		_agent.SetDestination(transform.position);
+
+		_anim.SetBool("Run", false);
+		_anim.SetBool("Slash", true);
 		
 		playerBody.SetActive(false);
 		KillLantern.SetActive(true);
 		BlockPlayerMovement();
-		//playerBody.transform.rotation = Quaternion.LookRotation(new Vector3(0, _target.transform.rotation.y, 0));
 
 		StartCoroutine(GameOver());
 	}
@@ -95,7 +108,7 @@ public class MonsterController : MonoBehaviour
 		//Voor wanneer we een animatie hebben.
 		//yield return new WaitForSeconds(killAnimation.length);
 
-		yield return new WaitForSeconds(3);
+		yield return new WaitForSeconds(1.5f);
 		UnblockPlayerMovement();
 		SceneManager.LoadScene(1);
 	}
