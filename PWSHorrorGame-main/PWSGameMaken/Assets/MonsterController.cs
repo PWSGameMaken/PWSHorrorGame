@@ -1,9 +1,6 @@
 using UnityEngine.AI;
 using UnityEngine;
-using UnityEditor.Experimental.GraphView;
 using System.Collections;
-using UnityEngine.SceneManagement;
-using System;
 using StarterAssets;
 
 public class MonsterController : MonoBehaviour
@@ -110,7 +107,8 @@ public class MonsterController : MonoBehaviour
 
 		yield return new WaitForSeconds(1.5f);
 		UnblockPlayerMovement();
-		SceneManager.LoadScene(1);
+		RespawnSystem.instance.RespawnFromMonster();
+		//SceneManager.LoadScene(1);
 	}
 
 	private void BlockPlayerMovement()
