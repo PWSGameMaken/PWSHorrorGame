@@ -22,7 +22,6 @@ namespace Inventory
         #endregion
         [SerializeField] private AudioSource DropSound;
 		[SerializeField] private AudioClip Clip;
-		private bool soundPlayed = false;
 
         private void Update()
 		{
@@ -36,27 +35,7 @@ namespace Inventory
 
 			if (Input.GetKeyDown(KeyCode.E)) Interact(collidedGO);
 			else if (Input.GetKeyUp(KeyCode.E)) UnInteract(_lastSelectedGO);
-			else if (Input.GetKeyDown(KeyCode.Q))
-			{
-				_visibleSlotsMB.DropItems(); 
-            }
-			if (_visibleSlotsMB.drop)
-			{
-				if (!soundPlayed)
-				{
-                    DropSound.PlayOneShot(Clip);
-					soundPlayed = true;
-                }
-			}
-			if (!_visibleSlotsMB.drop)
-			{
-                if (soundPlayed)
-                {
-                    DropSound.Stop();
-                    soundPlayed = false;
-                }
-            }
-
+			else if (Input.GetKeyDown(KeyCode.Q)) _visibleSlotsMB.DropItems(); 
 		}
 		
 		private void UpdateHintUI(GameObject collidedGO)

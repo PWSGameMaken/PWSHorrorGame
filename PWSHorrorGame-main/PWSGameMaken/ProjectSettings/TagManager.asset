@@ -11,6 +11,7 @@ TagManager:
   - CollectionPoint
   - Door
   - Plank
+  - Ground
   layers:
   - Default
   - TransparentFX

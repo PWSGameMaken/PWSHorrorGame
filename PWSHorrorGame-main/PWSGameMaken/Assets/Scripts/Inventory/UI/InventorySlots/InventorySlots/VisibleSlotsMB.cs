@@ -19,7 +19,6 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 	[SerializeField] private ObjectInHandMB _objectInHandMB;
 	[SerializeField] private Animator _Anim;
     [SerializeField] private MovementAnimationMB _movementAnimation;
-	public bool drop = false;
     protected Dictionary<GameObject, InventorySlot> slots_dict = new();
 	#endregion
 
@@ -48,7 +47,6 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 			_objectInHandMB.Despawn();
 
             slots[slotIndex].ClearSlot();
-			drop = true;
 		}
 	}
 

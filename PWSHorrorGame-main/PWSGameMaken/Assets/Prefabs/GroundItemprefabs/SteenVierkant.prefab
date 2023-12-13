@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8758935619171874281}
   - component: {fileID: 72199772766091333}
   - component: {fileID: 459928376282131827}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,9 @@ GameObject:
   - component: {fileID: -466795451311596862}
   - component: {fileID: 2121069187794713746}
   - component: {fileID: -4228103102517336592}
-  m_Layer: 0
+  - component: {fileID: 6945755018266019078}
+  - component: {fileID: -1133701355700403588}
+  m_Layer: 11
   m_Name: SteenVierkant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,6 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemSO: {fileID: 11400000, guid: 300d849787ad57b46960f27ff6f150e7, type: 2}
+  isMoving: 0
 --- !u!65 &-466795451311596862
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -237,6 +240,114 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!82 &6945755018266019078
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6320035328214705818}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 1e98d7bf35d61b949b5b61f6099debc1, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &-1133701355700403588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6320035328214705818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7a0f3e225e6424b94f0c4368e03eb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8092640522984825288
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,7 +359,7 @@ GameObject:
   - component: {fileID: 7674984132039067597}
   - component: {fileID: 8689578948393342904}
   - component: {fileID: 5829934683081441227}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Stone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,7 +443,7 @@ GameObject:
   - component: {fileID: 6546954529193228994}
   - component: {fileID: 222337206902914923}
   - component: {fileID: 8986163928417686853}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Symbol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
