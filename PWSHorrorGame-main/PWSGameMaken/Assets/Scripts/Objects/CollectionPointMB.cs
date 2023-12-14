@@ -44,16 +44,6 @@ public class CollectionPointMB : MonoBehaviour
 
     public void ObjectiveCompleted()
     {
-        for (int i = 0; i < itemsToSpawn.Length; i++)
-        {
-            itemsToSpawn[i].SetActive(true);
-        }
-
-        for (int i = 0; i < itemsToDespawn.Length; i++)
-        {
-            itemsToDespawn[i].SetActive(false);
-        }
-
         for (int i = 0; i < itemsToAnimate.Length; i++)
         {
 			if (itemsToAnimate[i].tag == "Door")
@@ -68,5 +58,17 @@ public class CollectionPointMB : MonoBehaviour
                 Anim.SetBool("PlankStijg", true);
             }
         }
+        
+        for (int i = 0; i < itemsToSpawn.Length; i++)
+        {
+            itemsToSpawn[i].SetActive(true);
+        }
+
+        for (int i = 0; i < itemsToDespawn.Length; i++)
+        {
+            itemsToDespawn[i].SetActive(false);
+        }
+
+
     }
 }
