@@ -16,7 +16,7 @@ MonoBehaviour:
     type: 3}
   inHandItemPrefab: {fileID: 6642811999651541296, guid: f2768e9dce47e5e4890175f65ad7a8c4,
     type: 3}
-  sprite: {fileID: 21300000, guid: 1c32e7e319456e14f89a0d623b24adff, type: 3}
+  sprite: {fileID: 0}
   stackable: 0
   itemName: SteenDriehoek
   id: 10

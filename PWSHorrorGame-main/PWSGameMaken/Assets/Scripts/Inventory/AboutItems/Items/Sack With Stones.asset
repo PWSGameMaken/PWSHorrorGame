@@ -16,7 +16,7 @@ MonoBehaviour:
     type: 3}
   inHandItemPrefab: {fileID: 2258342252708886887, guid: a46c329a562e6904fb9890c6a65b88fa,
     type: 3}
-  sprite: {fileID: 21300000, guid: 3427aa36ea46bd24c82d63180067a86a, type: 3}
+  sprite: {fileID: 0}
   stackable: 0
   itemName: SackWithStones
   id: 13
@@ -24,4 +24,3 @@ MonoBehaviour:
   description: Now that the have removed the net, i figured i could just as well
     take it with me on my journey! Could come in handy...
   hintText: Press E to pickup
-  animTag: 0

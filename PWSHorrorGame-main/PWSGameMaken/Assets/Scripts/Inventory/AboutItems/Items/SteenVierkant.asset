@@ -16,7 +16,7 @@ MonoBehaviour:
     type: 3}
   inHandItemPrefab: {fileID: 6320035328214705818, guid: b14cccdac784b944083859aec4e0f8ef,
     type: 3}
-  sprite: {fileID: 21300000, guid: c01689805b87b1b4080f7ba766789a37, type: 3}
+  sprite: {fileID: 0}
   stackable: 0
   itemName: SteenVierkant
   id: 11
