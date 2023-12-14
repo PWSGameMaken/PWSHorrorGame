@@ -31,11 +31,6 @@ public class RespawnSystem : MonoBehaviour
 		Respawn(player, weightPuzzleRespawnPos);
 	}
 
-	//public void SpawnFromDespawnMonsterArea(GameObject monster, Transform[] spawnPos)
-	//{
-	//	Respawn()
-	//}
-
 	private void Respawn(GameObject objectToSpawn, Transform spawnPos)
 	{
 		objectToSpawn.transform.position = spawnPos.position;
