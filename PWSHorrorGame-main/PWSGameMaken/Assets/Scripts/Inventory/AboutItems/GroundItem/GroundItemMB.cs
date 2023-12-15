@@ -11,7 +11,7 @@ public class GroundItemMB : MonoBehaviour
 	private static Transform _collectables;
 	public ItemSO itemSO;
 	private static readonly int _power = 100;
-	public bool isMoving;
+	[HideInInspector] public bool isMoving;
 
 	private void Start()
 	{
