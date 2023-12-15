@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8308828551129535120}
   - component: {fileID: 2189653397189987619}
   - component: {fileID: 6659274655607865739}
-  - component: {fileID: -5561784496719215744}
+  - component: {fileID: 3320716724526855964}
   m_Layer: 0
   m_Name: DoosBreed
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &-5561784496719215744
+--- !u!65 &3320716724526855964
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,5 +103,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.0064163143, y: 0.006709391, z: 0.008226414}
-  m_Center: {x: 0.0000000031432137, y: 0.0033637995, z: 0.0000000037252903}
+  m_Size: {x: 2.64, y: 2.76, z: 3.38}
+  m_Center: {x: 0, y: 1.38, z: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1253186794469226380}
   - component: {fileID: 6893910848405871129}
   - component: {fileID: 1193596178658927855}
-  - component: {fileID: -376118482974697456}
+  - component: {fileID: 1288879699906369727}
   m_Layer: 0
   m_Name: DoosVierkant
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &-376118482974697456
+--- !u!65 &1288879699906369727
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,5 +103,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.0063932706, y: 0.0066230646, z: 0.0060593775}
-  m_Center: {x: 0.0000000016298145, y: 0.0033927814, z: -0.0000000015133992}
+  m_Size: {x: 2.63, y: 2.72, z: 2.49}
+  m_Center: {x: 0, y: 1.39, z: 0}
