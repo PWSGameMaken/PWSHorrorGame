@@ -16,7 +16,7 @@ MonoBehaviour:
     type: 3}
   inHandItemPrefab: {fileID: 4906466458697759600, guid: 11658134ca1432a4bab2bebf3339c397,
     type: 3}
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: a0764916bda0e0a4997aee2dbded8961, type: 3}
   stackable: 0
   itemName: Ladder
   id: 12
