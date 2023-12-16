@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FallRespawn : MonoBehaviour
 {
-	private void OnCollisionEnter(Collision collision)
+	private void OnTriggerStay(Collider other)
 	{
-		if(collision.gameObject.CompareTag("Player"))
+		if(other.gameObject.CompareTag("Player"))
 		{
 			RespawnSystem.instance.RespawnFromWeightPuzzle();
 		}
