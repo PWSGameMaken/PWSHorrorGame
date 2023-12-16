@@ -348,3 +348,4 @@ MonoBehaviour:
   minIntensity: 5
   maxIntensity: 8
   smoothing: 5
+  lanternRenderDistance: 40

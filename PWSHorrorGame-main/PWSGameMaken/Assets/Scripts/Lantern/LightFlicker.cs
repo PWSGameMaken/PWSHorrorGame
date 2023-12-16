@@ -23,6 +23,7 @@ public class LightFlickerEffect : MonoBehaviour {
     public int smoothing = 5;
 
     private GameObject _player;
+    [SerializeField] private int lanternRenderDistance = 30;
 
     // Continuous average calculation via FIFO queue
     // Saves us iterating every time we update, we just change by the delta
@@ -54,7 +55,7 @@ public class LightFlickerEffect : MonoBehaviour {
         if (light == null)
             return;
 
-        if (Vector3.Distance(_player.transform.position, transform.position) < 30)
+        if (Vector3.Distance(_player.transform.position, transform.position) < lanternRenderDistance)
         {
             light.enabled = true;
         }
