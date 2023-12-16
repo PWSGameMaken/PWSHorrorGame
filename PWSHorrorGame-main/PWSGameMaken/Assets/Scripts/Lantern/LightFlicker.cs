@@ -22,6 +22,8 @@ public class LightFlickerEffect : MonoBehaviour {
     [Range(1, 50)]
     public int smoothing = 5;
 
+    private GameObject _player;
+
     // Continuous average calculation via FIFO queue
     // Saves us iterating every time we update, we just change by the delta
     Queue<float> smoothQueue;
@@ -44,11 +46,23 @@ public class LightFlickerEffect : MonoBehaviour {
          if (light == null) {
             light = GetComponent<Light>();
          }
+
+        _player = Player.instance.playerBody;
     }
 
     void FixedUpdate() {
         if (light == null)
             return;
+
+        if (Vector3.Distance(_player.transform.position, transform.position) < 30)
+        {
+            light.enabled = true;
+        }
+        else
+        {
+            light.enabled = false;
+            return;
+        }
 
         // pop off an item if too big
         while (smoothQueue.Count >= smoothing) {    
