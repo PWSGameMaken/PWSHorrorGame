@@ -55,15 +55,18 @@ public class LightFlickerEffect : MonoBehaviour {
         if (light == null)
             return;
 
-        if (Vector3.Distance(_player.transform.position, transform.position) < lanternRenderDistance)
+        if(_player != null)
         {
-            light.enabled = true;
-        }
-        else
-        {
-            light.enabled = false;
-            return;
-        }
+			if (Vector3.Distance(_player.transform.position, transform.position) < lanternRenderDistance)
+			{
+				light.enabled = true;
+			}
+			else
+			{
+				light.enabled = false;
+				return;
+			}
+		}
 
         // pop off an item if too big
         while (smoothQueue.Count >= smoothing) {    
