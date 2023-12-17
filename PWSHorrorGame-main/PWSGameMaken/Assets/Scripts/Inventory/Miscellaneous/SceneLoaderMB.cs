@@ -11,6 +11,16 @@ using TMPro;
 
 public class SceneLoaderMB : MonoBehaviour
 {
+	#region Singleton
+
+	public static SceneLoaderMB instance;
+
+	private void Awake()
+	{
+		instance = this;
+	}
+	#endregion
+
 	[SerializeField] private GameObject loadingScreen;
 	[SerializeField] private Slider slider;
 	[SerializeField] private TextMeshProUGUI progressText;
