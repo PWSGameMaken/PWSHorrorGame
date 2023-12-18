@@ -122,8 +122,8 @@ public class MonsterController2 : Creature
 		_anim.SetBool("Slash", state);
 		_anim.SetBool("Run", !state);
 
-		_playerBody.SetActive(state);
-		_KillLantern.SetActive(!state);
+		_playerBody.SetActive(!state);
+		_KillLantern.SetActive(state);
 	}
 
 }

@@ -17,7 +17,6 @@ public class RespawnSystem : MonoBehaviour
 	public Transform[] PlayerRespawnPos;
 	public Transform[] MonsterRespawnPos;
 
-	private float minSpawnDistance = 10000f;
 	private Transform preferredSpawnPoint;
 
 	public void RespawnFromMonsterCollision(GameObject objectToSpawn)
@@ -51,6 +50,7 @@ public class RespawnSystem : MonoBehaviour
 
 	private void GetPointFromArray(GameObject objectToSpawn, Transform[] arrayToCheck)
 	{
+		float minSpawnDistance = 10000f;
 		foreach (Transform spawnPos in arrayToCheck)
 		{
 			var distanceToSpawn = Vector3.Distance(objectToSpawn.transform.position, spawnPos.position);
