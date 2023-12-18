@@ -63,7 +63,7 @@ public class LightFlickerEffect : MonoBehaviour {
 			}
 			else
 			{
-				light.enabled = false;
+				light.enabled = true;
 				return;
 			}
 		}
