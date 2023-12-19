@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class RespawnSystem : MonoBehaviour
+public class RespawnSystemMB : MonoBehaviour
 {
 	#region Singleton
 
-	public static RespawnSystem instance;
+	public static RespawnSystemMB instance;
 
 	private void Awake()
 	{

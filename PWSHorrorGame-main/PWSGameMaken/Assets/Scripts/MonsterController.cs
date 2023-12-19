@@ -44,7 +44,7 @@ public class MonsterController : Creature
 		_inputScript = _playerCapsule.GetComponent<StarterAssetsInputs>();
 	}
 
-	private void Update()
+	private void FixedUpdate()
 	{
 		if(_isCaught)
 		{
@@ -111,8 +111,8 @@ public class MonsterController : Creature
 
 		_agent.SetDestination(_target.transform.position);
 
-		RespawnSystem.instance.RespawnFromMonsterCollision(_playerCapsule);
-		RespawnSystem.instance.RespawnFromMonsterCollision(_agent.gameObject);
+		RespawnSystemMB.instance.RespawnFromMonsterCollision(_playerCapsule);
+		RespawnSystemMB.instance.RespawnFromMonsterCollision(_agent.gameObject);
 	}
 
 	private void IsDead(bool state)
