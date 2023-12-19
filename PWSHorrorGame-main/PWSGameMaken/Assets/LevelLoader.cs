@@ -17,7 +17,7 @@ public class LevelLoader : MonoBehaviour
 	public Slider slider;
 	public TextMeshProUGUI progressText;
 
-	public void LoadScene()
+	public void LoadPlayground()
 	{
 		StartCoroutine(LoadAsynchronously(LevelName.Playground));
 	}
@@ -43,6 +43,8 @@ public class LevelLoader : MonoBehaviour
 
 	IEnumerator LoadAsynchronously (LevelName sceneToLoad)
 	{
+		Time.timeScale = 1;
+
 		AsyncOperation operation = SceneManager.LoadSceneAsync(sceneToLoad.ToString());
 
 		loadingScreen.SetActive(true);

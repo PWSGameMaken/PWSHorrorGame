@@ -22,6 +22,11 @@ public class CollectionPointMB : MonoBehaviour
         }
 	}
 
+    public void Interact()
+    {
+
+    }
+
 	public bool CanAddItem(ItemSO itemSO)
     {
         for (int i = 0; i < acceptedItemSO.Length; i++)
@@ -68,7 +73,5 @@ public class CollectionPointMB : MonoBehaviour
         {
             itemsToDespawn[i].SetActive(false);
         }
-
-
     }
 }

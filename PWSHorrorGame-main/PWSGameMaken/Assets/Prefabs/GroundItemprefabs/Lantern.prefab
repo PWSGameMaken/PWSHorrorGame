@@ -9,13 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1817305563855096651}
-  - component: {fileID: 4707583101147864247}
   m_Layer: 0
   m_Name: Lantern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1817305563855096651
 Transform:
@@ -35,18 +34,6 @@ Transform:
   - {fileID: 15545595851541993}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4707583101147864247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1329561778851205617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 620ed422f9cd5a74582b36620310c9fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2700172758264327330
 GameObject:
   m_ObjectHideFlags: 0
@@ -63,7 +50,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8631299616058378483
 Transform:
@@ -146,7 +133,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &15545595851541993
 Transform:
@@ -224,13 +211,12 @@ GameObject:
   - component: {fileID: 6399008296324500647}
   - component: {fileID: 3614578637657960341}
   - component: {fileID: 642761870146858765}
-  - component: {fileID: 7929734377290728003}
   m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6399008296324500647
 Transform:
@@ -260,7 +246,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 0.7891218, b: 0.5707547, a: 1}
   m_Intensity: 15
-  m_Range: 20
+  m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -332,20 +318,3 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!114 &7929734377290728003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7532105205158905171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33375d48f2c30d941a0fb90c4cc54a54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  light: {fileID: 3614578637657960341}
-  minIntensity: 5
-  maxIntensity: 8
-  smoothing: 5
-  lanternRenderDistance: 40

@@ -21,17 +21,16 @@ public class PauseMenu : MonoBehaviour
 	{
 		if(Input.GetKeyDown(KeyCode.Escape))
 		{
-			isActivated = !isActivated;
 			SetActivePauseMenu(isActivated);
 		}
 	}
 
 	public void SetActivePauseMenu(bool state)
 	{
+		isActivated = !isActivated;
+		Time.timeScale = state == true ? 0 : 1;
 		UI.SetActive(state);
-
 		input.cursorInputForLook = !state;
 		Cursor.visible = state;
-		//Cursor.lockState = state == true ? CursorLockMode.None : CursorLockMode.Locked;
 	}
 }

@@ -111,8 +111,8 @@ public class MonsterController2 : Creature
 
 		_agent.SetDestination(_target.transform.position);
 
-		RespawnSystem.instance.RespawnFromMonsterCollision(_playerCapsule);
-		RespawnSystem.instance.RespawnFromMonsterCollision(_agent.gameObject);
+		RespawnSystemMB.instance.RespawnFromMonsterCollision(_playerCapsule);
+		RespawnSystemMB.instance.RespawnFromMonsterCollision(_agent.gameObject);
 	}
 
 	private void IsDead(bool state)
