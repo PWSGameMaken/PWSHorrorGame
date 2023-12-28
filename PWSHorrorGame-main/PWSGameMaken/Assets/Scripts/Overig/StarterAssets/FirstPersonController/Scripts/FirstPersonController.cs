@@ -137,26 +137,23 @@ namespace StarterAssets
 
 		private void CameraRotation()
 		{
-			if(gameController.GetComponent<FullScreenInventoryMB>().inventoryIsActivated == false)
+			// if there is an input
+			if (_input.look.sqrMagnitude >= _threshold)
 			{
-				// if there is an input
-				if (_input.look.sqrMagnitude >= _threshold)
-				{
-					//Don't multiply mouse input by Time.deltaTime
-					float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
+				//Don't multiply mouse input by Time.deltaTime
+				float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-					_cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
-					_rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier;
+				_cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
+				_rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier;
 
-					// clamp our pitch rotation
-					_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
+				// clamp our pitch rotation
+				_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
-					// Update Cinemachine camera target pitch
-					CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
+				// Update Cinemachine camera target pitch
+				CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
 
-					// rotate the player left and right
-					transform.Rotate(Vector3.up * _rotationVelocity);
-				}
+				// rotate the player left and right
+				transform.Rotate(Vector3.up * _rotationVelocity);
 			}
 		}
 

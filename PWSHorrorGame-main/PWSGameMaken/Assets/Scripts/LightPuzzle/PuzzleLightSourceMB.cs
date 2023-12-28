@@ -13,18 +13,18 @@ public class PuzzleLightSourceMB : MonoBehaviour
 		lightRayMBs = new LightRayMB[maxReflectionCount];
 	}
 
-	private void OnDrawGizmos()
-	{
-		Handles.color = Color.red;
-		Handles.ArrowHandleCap(0, this.transform.position + this.transform.forward * 0.25f, this.transform.rotation, 0.5f, EventType.Repaint);
-		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(this.transform.position, 0.25f);
+	//private void OnDrawGizmos()
+	//{
+	//	Handles.color = Color.red;
+	//	Handles.ArrowHandleCap(0, this.transform.position + this.transform.forward * 0.25f, this.transform.rotation, 0.5f, EventType.Repaint);
+	//	Gizmos.color = Color.red;
+	//	Gizmos.DrawWireSphere(this.transform.position, 0.25f);
 
-		if (!Application.isPlaying)
-		{
-			DrawPredictedGizmos(this.transform.position + this.transform.forward * 0.75f, this.transform.forward, maxReflectionCount);
-		}
-	}
+	//	if (!Application.isPlaying)
+	//	{
+	//		DrawPredictedGizmos(this.transform.position + this.transform.forward * 0.75f, this.transform.forward, maxReflectionCount);
+	//	}
+	//}
 
 	private void Update()
 	{

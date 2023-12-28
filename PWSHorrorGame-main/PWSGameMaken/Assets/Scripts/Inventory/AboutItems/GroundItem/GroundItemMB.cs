@@ -6,17 +6,49 @@
 using System.Collections;
 using UnityEngine;
 
-public class GroundItemMB : MonoBehaviour
+public class GroundItemMB : InteractableObjectMB
 {
 	private static Transform _collectables;
 	public ItemSO itemSO;
 	private static readonly int _power = 100;
-	[HideInInspector] public bool isMoving;
+	private bool isMoving = false;
 
 	private void Start()
 	{
 		var gameStatsMB = GameObject.Find("GameController").GetComponent<GameStatsMB>();
 		_collectables = gameStatsMB.collectables;
+	}
+
+	public override string GetHintUIText()
+	{
+		return itemSO.hintText;
+	}
+
+	public override void Interact(GameObject itemToInteract, VisibleSlotsMB visibleSlotsMB)
+	{
+		MoveGroundItemToInventorySlot(itemToInteract, visibleSlotsMB);
+	}
+
+	private void MoveGroundItemToInventorySlot(GameObject groundItem, VisibleSlotsMB visibleSlotsMB)
+	{
+		var groundItemMB = groundItem.GetComponent<GroundItemMB>();
+
+		if (groundItemMB.isMoving == true) { return; }
+
+		var itemObject = new ItemObject(groundItemMB.itemSO);
+		var isAdded = visibleSlotsMB.AddItem(itemObject);
+
+		if (isAdded)
+		{
+			groundItemMB.isMoving = true;
+			if (groundItem.TryGetComponent(out EarthQuakeMB earthQuakeMB))
+			{
+				earthQuakeMB.EarthQuake();
+			}
+
+			var destroyDelay = earthQuakeMB != null ? earthQuakeMB.shakeTime / 2 : 0;
+			groundItemMB.DestroyGroundItem(groundItem, destroyDelay);
+		}
 	}
 
 	public static GameObject Create(ItemSO itemSO)
