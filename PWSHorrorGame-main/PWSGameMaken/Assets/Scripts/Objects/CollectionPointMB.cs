@@ -1,15 +1,14 @@
 using UnityEngine;
 
-public class CollectionPointMB : MonoBehaviour
+public class CollectionPointMB : InteractableObjectMB
 {
-    public string hintText;
     [SerializeField] private GameObject[] itemsToSpawn;
     [SerializeField] private GameObject[] itemsToDespawn;
     [SerializeField] private GameObject[] itemsToAnimate;
 
     private HiddenSlotsMB _hiddenSlotsMB;
-
-    public ItemSO[] acceptedItemSO;
+	public string hintText;
+	public ItemSO[] acceptedItemSO;
 
     [SerializeField] private bool canCollectItems;
 
@@ -22,10 +21,40 @@ public class CollectionPointMB : MonoBehaviour
         }
 	}
 
-    public void Interact()
-    {
+	public override string GetHintUIText()
+	{
+        return hintText;
+	}
 
-    }
+	public override void Interact(GameObject itemToInteract, VisibleSlotsMB visibleSlotsMB)
+    {
+		InteractWithCollectionPoint(itemToInteract.GetComponent<HiddenSlotsMB>(), itemToInteract.GetComponent<CollectionPointMB>(), visibleSlotsMB);
+	}
+
+	private void InteractWithCollectionPoint(HiddenSlotsMB hiddenSlotsMB, CollectionPointMB collectionPoint, VisibleSlotsMB playerSlots)
+	{
+		var selectedItemSO = playerSlots.selectedSlot.ItemObject?.Item.ItemSO;
+
+		if (selectedItemSO == null) return;
+
+		if (collectionPoint.CanAddItem(selectedItemSO))
+		{
+			MoveItemToCollectionPoint(hiddenSlotsMB, playerSlots);
+			collectionPoint.CheckForCompletion();
+		}
+	}
+
+	private void MoveItemToCollectionPoint(HiddenSlotsMB slotsToBeMoved, VisibleSlotsMB playerSlots)
+	{
+		var selectedSlot = playerSlots.selectedSlot;
+
+		var isMoved = slotsToBeMoved.AddItem(selectedSlot.ItemObject);
+
+		if (isMoved)
+		{
+			playerSlots.ClearSelectedSlot();
+		}
+	}
 
 	public bool CanAddItem(ItemSO itemSO)
     {
@@ -51,13 +80,13 @@ public class CollectionPointMB : MonoBehaviour
     {
         for (int i = 0; i < itemsToAnimate.Length; i++)
         {
-			if (itemsToAnimate[i].tag == "Door")
+			if (itemsToAnimate[i].CompareTag("Door"))
             {
                 var Anim = itemsToAnimate[i].GetComponent<Animator>();
                 Anim.SetBool("OpenL", true);
                 Anim.SetBool("OpenR", true);
             }
-            if (itemsToAnimate[i].tag == "Plank")
+            if (itemsToAnimate[i].CompareTag("Plank"))
             {
                 var Anim = itemsToAnimate[i].GetComponent<Animator>();
                 Anim.SetBool("PlankStijg", true);

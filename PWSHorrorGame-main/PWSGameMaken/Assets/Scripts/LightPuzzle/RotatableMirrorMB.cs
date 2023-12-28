@@ -1,9 +1,10 @@
 using StarterAssets;
 using UnityEngine;
 
-public class RotatableMirrorMB : MonoBehaviour
+public class RotatableMirrorMB : InteractableObjectMB
 {
 	private bool _isRotating = false;
+	[SerializeField] private string hintText;
 	[SerializeField] private int _rotateSpeed;
 	[SerializeField] private FirstPersonController _firstPersonController;
 
@@ -13,6 +14,16 @@ public class RotatableMirrorMB : MonoBehaviour
 		{
 			RotateObject();
 		}
+	}
+
+	public override string GetHintUIText()
+	{
+		return hintText;
+	}
+
+	public override void Interact(GameObject itemToInteract, VisibleSlotsMB visibleSlotsMB)
+	{
+		SetActive(true);
 	}
 
 	public void SetActive(bool status)
