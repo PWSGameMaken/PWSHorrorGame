@@ -84,11 +84,11 @@ public class GroundItemMB : InteractableObjectMB
 	{
 		yield return new WaitForSeconds(delayTime);
 
-		if (groundItem.TryGetComponent<SpawnObjectsInScene>(out var spawnObjectsInSceneMB))
+		if (groundItem.TryGetComponent<SpawnObjectsInSceneMB>(out var spawnObjectsInSceneMB))
 		{
 			spawnObjectsInSceneMB.SpawnObjects();
 		}
-		if (groundItem.TryGetComponent<DespawnObjectsInScene>(out var despawnObjectsInSceneMB))
+		if (groundItem.TryGetComponent<DespawnObjectsInSceneMB>(out var despawnObjectsInSceneMB))
 		{
 			despawnObjectsInSceneMB.DespawnObjects();
 		}
