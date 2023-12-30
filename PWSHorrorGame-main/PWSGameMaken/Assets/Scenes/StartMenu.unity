@@ -2359,7 +2359,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -700, y: -191}
-  m_SizeDelta: {x: 250, y: 150}
+  m_SizeDelta: {x: 250, y: 80.3675}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1197063974
 MonoBehaviour:
@@ -2492,7 +2492,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -700, y: -30}
-  m_SizeDelta: {x: 250, y: 150}
+  m_SizeDelta: {x: 250, y: 75.5653}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1208274232
 MonoBehaviour:
@@ -2625,7 +2625,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -700, y: 130}
-  m_SizeDelta: {x: 250, y: 150}
+  m_SizeDelta: {x: 250, y: 71.9344}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1209806325
 MonoBehaviour:
@@ -2672,8 +2672,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 542213962}
-        m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_TargetAssemblyTypeName: LevelLoaderMB, Assembly-CSharp
+        m_MethodName: LoadPlayground
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

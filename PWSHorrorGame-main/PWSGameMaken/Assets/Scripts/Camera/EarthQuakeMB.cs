@@ -16,7 +16,7 @@ public class EarthQuakeMB : MonoBehaviour
 
 	private void ShakeCamera()
 	{
-		CinemachineShake.Instance.ShakeCamera(shakeIntensity, shakeFrequency, shakeTime);	
+		CinemachineShakeMB.Instance.ShakeCamera(shakeIntensity, shakeFrequency, shakeTime);	
 	}
 
 	public void ActivateSounds()

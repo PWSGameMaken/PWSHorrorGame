@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RumbleSound : MonoBehaviour
+public class RumbleSoundMB : MonoBehaviour
 {
     [SerializeField] private AudioSource source;
     [SerializeField] private AudioClip clip; 

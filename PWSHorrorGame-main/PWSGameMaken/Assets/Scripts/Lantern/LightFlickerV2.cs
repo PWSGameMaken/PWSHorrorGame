@@ -11,7 +11,7 @@ using System.Collections.Generic;
 ///
 /// Just activate / deactivate this component as usual to pause / resume flicker
 /// </summary>
-public class LightFlickerEffectV2 : MonoBehaviour
+public class LightFlickerEffectV2MB : MonoBehaviour
 {
 	[Tooltip("External light to flicker; you can leave this null if you attach script to a light")]
 	public new Light light;
@@ -51,7 +51,7 @@ public class LightFlickerEffectV2 : MonoBehaviour
 			light = GetComponent<Light>();
 		}
 
-		_player = Player.instance.playerBody;
+		_player = PlayerMB.instance.playerBody;
 	}
 
 	void FixedUpdate()
