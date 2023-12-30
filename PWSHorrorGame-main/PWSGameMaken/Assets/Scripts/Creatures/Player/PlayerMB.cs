@@ -17,4 +17,5 @@ public class PlayerMB : CreatureMB
 	public Transform monsterFocusPoint;
 	public GameObject playerBody;
 	public GameObject killLantern;
+	public Transform weightPuzzleRespawnPos;
 }

@@ -8,5 +8,6 @@ public enum TypeOfCreature
 
 public class CreatureMB : MonoBehaviour
 {
+	public Transform[] respawnPoints;
 	public TypeOfCreature TypeOfCreature;
 }
