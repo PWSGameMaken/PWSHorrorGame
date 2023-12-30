@@ -12,54 +12,40 @@ public class RespawnSystemMB : MonoBehaviour
 	}
 	#endregion
 
-	public GameObject player;
-	public Transform weightPuzzleRespawnPos;
-	public Transform[] PlayerRespawnPos;
-	public Transform[] MonsterRespawnPos;
+	public void RespawnFromMonsterCollision(Transform CreatureToRespawn)
+	{	
+		Transform[] spawnPoints = CreatureToRespawn.GetComponent<CreatureMB>().respawnPoints;
 
-	private Transform preferredSpawnPoint;
-
-	public void RespawnFromMonsterCollision(GameObject objectToSpawn)
-	{
-		GetClosestSpawnPoint(objectToSpawn);
-		Respawn(objectToSpawn, preferredSpawnPoint);
+		Transform preferredSpawnPoint = GetClosestRespawnPoint(CreatureToRespawn, spawnPoints);
+		Respawn(CreatureToRespawn, preferredSpawnPoint);
 	}
 
-	public void RespawnFromWeightPuzzle()
+	public void RespawnFromWeightPuzzle(Transform CreatureToRespawn)
 	{
-		Respawn(player, weightPuzzleRespawnPos);
+		Transform respawnPoint = CreatureToRespawn.GetComponent<PlayerMB>().weightPuzzleRespawnPos;
+		Respawn(CreatureToRespawn, respawnPoint);
 	}
 
-	private void Respawn(GameObject objectToSpawn, Transform spawnPos)
+	private void Respawn(Transform CreatureToRespawn, Transform spawnPos)
 	{
-		objectToSpawn.transform.position = spawnPos.position;
+		CreatureToRespawn.position = spawnPos.position;
 	}
 
-	private void GetClosestSpawnPoint(GameObject objectToSpawn, Transform[] spawnPositions = null)
-	{
-		var typeOfCreature = objectToSpawn.GetComponent<CreatureMB>().TypeOfCreature;
-        if (typeOfCreature == TypeOfCreature.Player)
-        {
-			GetPointFromArray(objectToSpawn, PlayerRespawnPos);
-        }
-		else if (typeOfCreature == TypeOfCreature.Monster)
-		{
-			GetPointFromArray(objectToSpawn, MonsterRespawnPos);
-		}
-	}
-
-	private void GetPointFromArray(GameObject objectToSpawn, Transform[] arrayToCheck)
+	private Transform GetClosestRespawnPoint(Transform CreatureToRespawn, Transform[] arrayToCheck)
 	{
 		float minSpawnDistance = 10000f;
+		Transform preferredSpawnPoint = null;
+
 		foreach (Transform spawnPos in arrayToCheck)
 		{
-			var distanceToSpawn = Vector3.Distance(objectToSpawn.transform.position, spawnPos.position);
+			var distanceToSpawnPoint = Vector3.Distance(CreatureToRespawn.position, spawnPos.position);
 
-			if (distanceToSpawn < minSpawnDistance)
+			if (distanceToSpawnPoint < minSpawnDistance)
 			{
-				minSpawnDistance = distanceToSpawn;
+				minSpawnDistance = distanceToSpawnPoint;
 				preferredSpawnPoint = spawnPos;
 			}
 		}
+		return preferredSpawnPoint;
 	}
 }

@@ -19,6 +19,8 @@ public class MonsterMB : CreatureMB
 	public float rotationSpeed = 5f;
 	public float huntRadius = 10f;
 	public float killRadius = 2f;
+	public int walkingSpeed = 4;
+	public int runningSpeed = 6;
 	public AnimationClip killAnimation;
 	public AudioSource audioSource;
 

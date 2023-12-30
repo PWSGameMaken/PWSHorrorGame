@@ -4,16 +4,14 @@ using UnityEngine;
 public class UIControllerMB : MonoBehaviour
 {
 	#region Singleton
-
 	public static UIControllerMB instance;
-
 	private void Awake()
 	{
 		instance = this;
 	}
 	#endregion
-	[SerializeField] private GameObject _gameOverUI;
-	[SerializeField] private GameObject _pauseMenuUI;
+	[SerializeField] private GameObject _gameOverMenu;
+	[SerializeField] private GameObject _pauseMenu;
 	[SerializeField] private StarterAssetsInputs input;
 
 	private bool isActivated = false;
@@ -22,34 +20,36 @@ public class UIControllerMB : MonoBehaviour
 	{
 		if(Input.GetKeyDown(KeyCode.I))
 		{
-			SetActivePauseUI(isActivated);
+			SetActiveMenu(_pauseMenu, isActivated);
 		}
 	}
 	
-	public void SetActiveGameOverUI(bool state)
+	public void SetActiveGameOverMenu(bool activeState)
 	{
-		SetActiveMenuSettings(state);
-		SetActiveMenu(_gameOverUI, state);
+		SetActiveMenu(_gameOverMenu, activeState);
 	}
 
-	public void SetActivePauseUI(bool state)
+	public void SetActivePauseMenu(bool activeState)
 	{
-		SetActiveMenuSettings(state);
-		SetActiveMenu(_pauseMenuUI, state);
+		SetActiveMenu(_pauseMenu, activeState);
 	}
 
-	public void SetActiveMenuSettings(bool state)
+	public void SetActiveMenu(GameObject menuToActivate, bool activeState)
 	{
-		Cursor.lockState = state == true ? CursorLockMode.Confined : CursorLockMode.Locked;
+		SetActiveMenuSettings(activeState);
+		menuToActivate.SetActive(activeState);
+	}
+
+	private void SetActiveMenuSettings(bool state)
+	{
 		isActivated = !isActivated;
+
+		Cursor.lockState = state == true ? CursorLockMode.Confined : CursorLockMode.Locked;
+		Cursor.visible = state;
+
 		Time.timeScale = state == true ? 0 : 1;
+
 		input.cursorInputForLook = !state;
 		input.cursorLocked = !state;
-		Cursor.visible = state;
-	}
-
-	public void SetActiveMenu(GameObject menuToSetActive, bool activeState)
-	{
-		menuToSetActive.SetActive(activeState);
 	}
 }

@@ -6,7 +6,7 @@ public class FallRespawnMB : MonoBehaviour
 	{
 		if(other.gameObject.CompareTag("Player"))
 		{
-			RespawnSystemMB.instance.RespawnFromWeightPuzzle();
+			RespawnSystemMB.instance.RespawnFromWeightPuzzle(other.gameObject.transform);
 		}
 	}
 }
