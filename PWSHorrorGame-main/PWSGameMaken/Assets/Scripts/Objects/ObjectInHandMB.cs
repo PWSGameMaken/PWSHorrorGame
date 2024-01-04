@@ -2,17 +2,22 @@ using UnityEngine;
 
 public class ObjectInHandMB : MonoBehaviour
 {
-	[SerializeField] private GameObject _currentObjectInHand;
-	public void Spawn(ItemSO itemSO)
+	[SerializeField] private MovementAnimationMB _movementAnimationMB;
+	private GameObject _currentObjectInHand;
+
+	public void SetActive(ItemSO selectedItemSO, bool activeState)
 	{
-		_currentObjectInHand = Instantiate(itemSO.inHandItemPrefab, this.gameObject.transform);
+		if (activeState) { Spawn(selectedItemSO); }
+		if (!activeState) { Despawn(); }
 	}
 
-	public void Despawn()
+	private void Spawn(ItemSO itemSO)
 	{
-		if( _currentObjectInHand != null )
-		{
-			Destroy(_currentObjectInHand);
-		}
+		_currentObjectInHand = Instantiate(itemSO.inHandItemPrefab, transform);
+	}
+
+	private void Despawn()
+	{
+		Destroy(_currentObjectInHand);
 	}
 }

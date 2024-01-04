@@ -51,8 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d94305fd5f1dbd4b9b9b168b8154a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hintText: Press E to pickup!
   itemSO: {fileID: 11400000, guid: 39325e71ca257624f861f4bdafaecc0d, type: 2}
-  isMoving: 0
 --- !u!65 &4372004910398004602
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -143,7 +143,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

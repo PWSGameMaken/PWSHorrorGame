@@ -2,6 +2,14 @@ using UnityEngine;
 
 public abstract class InteractableObjectMB : MonoBehaviour
 {
-	public abstract void Interact(GameObject itemToInteract, VisibleSlotsMB visibleSlotsMB);
-	public abstract string GetHintUIText();
+	public string hintText;
+
+	public void ObjectiveCompleted()
+	{
+		var _actionObjects = GetComponents<ActionObjectMB>();
+		foreach (var _object in _actionObjects)
+		{
+			_object.Action();
+		}
+	}
 }

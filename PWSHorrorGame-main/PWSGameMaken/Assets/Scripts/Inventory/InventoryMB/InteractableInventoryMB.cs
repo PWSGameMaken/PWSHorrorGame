@@ -5,6 +5,16 @@
 
 using UnityEngine;
 
+public interface IInteractWithSlot
+{
+	void Interact(VisibleSlotsMB visibleSlotsMB);
+}
+
+public interface IInteractWithoutSlot
+{
+	void Interact();
+}
+
 namespace Inventory
 {
 	public class InteractableInventoryMB : ParentInventoryMB
@@ -15,9 +25,9 @@ namespace Inventory
 		[SerializeField] private HintTextMB _hintTextMB;
 		[SerializeField] private VisibleSlotsMB _visibleSlotsMB;
 		private GameObject _lastSelectedGO;
-        #endregion
+		#endregion
 
-        private void Update()
+		private void Update()
 		{
 			RaycastHit raycastHit = MakeRaycast(_interactionFirePoint.position, _interactionFirePoint.transform.forward, _interactionDistanceLimit);
 			var collidedGO = raycastHit.transform?.gameObject;
@@ -57,24 +67,35 @@ namespace Inventory
 		private void Interact(GameObject itemToInteract)
 		{
 			_lastSelectedGO = itemToInteract;
-			
-			if(itemToInteract != null)
+
+			if (itemToInteract != null && itemToInteract.TryGetComponent(out InteractableObjectMB interactableObjectMB))
 			{
-				if(itemToInteract.TryGetComponent(out InteractableObjectMB interactableObjectMB))
+				if (interactableObjectMB is IInteractWithSlot withSlot)
 				{
-					interactableObjectMB.Interact(itemToInteract, _visibleSlotsMB);
+					Interact(withSlot);
+				}
+				else if (interactableObjectMB is IInteractWithoutSlot withoutSlot)
+				{
+					Interact(withoutSlot);
 				}
 			}
 		}
 
+		private void Interact(IInteractWithSlot interactableObjectMB)
+		{
+			interactableObjectMB.Interact(_visibleSlotsMB);
+		}
+
+		private void Interact(IInteractWithoutSlot interactableObjectMB)
+		{
+			interactableObjectMB.Interact();
+		}
+
 		private void UnInteract(GameObject itemToUnInteract)
 		{
-			if(itemToUnInteract != null)
+			if (itemToUnInteract != null && itemToUnInteract.TryGetComponent(out RotatableMirrorMB rotatableMirror))
 			{
-				if (itemToUnInteract.TryGetComponent(out RotatableMirrorMB rotatableMirror))
-				{
-					rotatableMirror.SetActive(false);
-				}
+				rotatableMirror.Interact();
 			}
 		}
 	}

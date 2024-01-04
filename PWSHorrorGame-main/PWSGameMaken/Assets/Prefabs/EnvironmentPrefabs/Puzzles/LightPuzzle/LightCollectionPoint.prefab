@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2282582115828407264}
   - component: {fileID: 8775453026069089468}
   - component: {fileID: 2036517843236610499}
-  - component: {fileID: 8991627130763821685}
   - component: {fileID: 6658274981129208167}
+  - component: {fileID: 6569773042275006145}
   m_Layer: 0
   m_Name: Base
   m_TagString: CollectionPoint
@@ -85,25 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8991627130763821685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4269224834397963795}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adef343e2dba5664ea1973962b15a899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hintText: Needs light!
-  itemsToSpawn: []
-  itemsToDespawn:
-  - {fileID: 0}
-  itemsToAnimate: []
-  acceptedItemSO: []
-  canCollectItems: 0
 --- !u!65 &6658274981129208167
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -125,6 +106,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5, y: 0.9, z: 1.5}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &6569773042275006145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4269224834397963795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4458403a8b15bb4ba08534eaca6e8c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hintText: Needs light!
 --- !u!1 &7279010632445914711
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,7 +128,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2990657317550309875}
-  - component: {fileID: 8479788491755373056}
   m_Layer: 0
   m_Name: LightCollectionPoint
   m_TagString: Untagged
@@ -159,26 +152,6 @@ Transform:
   - {fileID: 1348642597493163427}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8479788491755373056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7279010632445914711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adef343e2dba5664ea1973962b15a899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hintText: 
-  itemsToSpawn: []
-  itemsToDespawn:
-  - {fileID: 0}
-  itemsToAnimate: []
-  acceptedItemSO:
-  - {fileID: 0}
-  canCollectItems: 0
 --- !u!1001 &1530641344579969608
 PrefabInstance:
   m_ObjectHideFlags: 0

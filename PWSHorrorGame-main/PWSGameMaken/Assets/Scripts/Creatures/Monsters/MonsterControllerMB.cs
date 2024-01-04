@@ -13,7 +13,7 @@ public class MonsterControllerMB : MonoBehaviour
 	private FirstPersonController _fPSController;
 	private StarterAssetsInputs _inputScript;
 	private NavMeshAgent _navMeshAgent;
-	[SerializeField] private UIControllerMB _uiControllerMB;
+	[SerializeField] private GameOverMenu gameOverMenu;
 
 
 	private void Start()
@@ -36,6 +36,11 @@ public class MonsterControllerMB : MonoBehaviour
 
 		_monsterMB.navMeshAgent.SetDestination(_playerMB.playerCameraRoot.transform.position);
 
+		CheckDistanceToPlayer();
+	}
+
+	private void CheckDistanceToPlayer()
+	{
 		float distance = Vector3.Distance(_playerMB.playerCameraRoot.position, transform.position);
 		if (distance < _monsterMB.killRadius)
 		{
@@ -53,7 +58,6 @@ public class MonsterControllerMB : MonoBehaviour
 
 	private void HuntPlayer()
 	{
-		//Er is geen audio geselecteerd, dus uitgezet anders error
 		if(_monsterMB.audioSource.isPlaying == false)
 		{
 			_monsterMB.audioSource.PlayOneShot(_monsterMB.audioSource.clip);
@@ -86,7 +90,7 @@ public class MonsterControllerMB : MonoBehaviour
 
 		yield return new WaitForSeconds(_monsterMB.killAnimation.length);
 
-		_uiControllerMB.SetActiveGameOverMenu(true);
+		gameOverMenu.SetActive();
 	}
 
 	private void BlockPlayerMovement(bool state)
@@ -100,16 +104,21 @@ public class MonsterControllerMB : MonoBehaviour
 		IsDead(false);
 		BlockPlayerMovement(false);
 
-		RespawnSystemMB.instance.RespawnFromMonsterCollision(_playerMB.playerCapsuleGO.transform);
-		RespawnSystemMB.instance.RespawnFromMonsterCollision(_monsterMB.monsterGO.transform);
+		StartCoroutine(RespawnCreatures());
 
 		_monsterMB.navMeshAgent.SetDestination(_playerMB.playerCameraRoot.transform.position);
+	}
+
+	private IEnumerator RespawnCreatures()
+	{
+		RespawnSystemMB.instance.RespawnFromMonsterCollision(_monsterMB.monsterGO.transform);
+		yield return new WaitForSeconds(0.1f);
+		RespawnSystemMB.instance.RespawnFromMonsterCollision(_playerMB.playerCapsuleGO.transform);
 	}
 
 	private void IsDead(bool state)
 	{
 		_isCaught = state;
-
 		_monsterMB.anim.SetBool("Slash", state);
 		_monsterMB.anim.SetBool("Run", !state);
 
