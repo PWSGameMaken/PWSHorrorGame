@@ -29,7 +29,7 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 		InventorySlot slot = FindItemOnInventory(itemId_object);
 		var stackableItem = itemDatabaseSO.ItemSOlist[itemId_object].stackable;
 
-		if ((!stackableItem || (stackableItem && slot == null)) && CountEmptySlots() > 0)
+		if ((!stackableItem || (stackableItem && slot == null)) && HasEmptySlots())
 		{
 			FillEmptySlot(itemObject, amount);
 			return true;
@@ -42,17 +42,16 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 		return false;
 	}
 
-	public int CountEmptySlots()
+	public bool HasEmptySlots()
 	{
-		var emptySlots = 0;
-		for (int i = 0; i < slots.Length; i++)
+		foreach (var slot in slots)
 		{
-			if (slots[i].ItemObject == null)
+			if(slot.ItemObject == null)
 			{
-				emptySlots++;
+				return true;
 			}
 		}
-		return emptySlots;
+		return false;
 	}
 
 	protected void CreateSlots()
@@ -62,35 +61,25 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 
 	private InventorySlot FindItemOnInventory(int itemId_object)
 	{
-		for (int i = 0; i < slots.Length; i++)
+		foreach (var slot in slots)
 		{
-			var itemId_slot = slots[i].ItemObject?.Item.Id;
+			var itemId_slot = slot.ItemObject?.Item.Id;
 			if (itemId_slot == itemId_object) // slot moet null zijn maar de editor laat 0 zien. alsnog wordt hij hier als ongelijk weergegeven, wat klopt. Wij hebben geen verklaring kan later errors opleveren.
 			{
-				return slots[i];
+				return slot;
 			}
 		}
 		return null;
 	}
 
-	//public void RemoveItem(ItemObject itemObject)
-	//{
-	//	for (int i = 0; i < slots.Length; i++)
-	//	{
-	//		if (slots[i].ItemObject == itemObject)
-	//		{
-	//			slots[i].ClearSlot();
-	//		}
-	//	}
-	//}
-
-	//public void ClearSlots()
-	//{
-	//	for (int i = 0; i < slots.Length; i++)
-	//	{
-	//		slots[i].ClearSlot();
-	//	}
-	//}
+	protected void CreateGroundItems(InventorySlot slot)
+	{
+		for (int i = 0; i < slot.amount; i++)
+		{
+			var itemSO = slot.ItemObject.Item.ItemSO;
+			GroundItemMB.Create(itemSO);
+		}
+	}
 
 	protected abstract void FillSlots();
 	#endregion

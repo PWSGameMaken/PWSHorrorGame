@@ -22,18 +22,25 @@ namespace Inventory
 		#region variables
 		[SerializeField] private Transform _interactionFirePoint;
 		[SerializeField] private float _interactionDistanceLimit;
-		[SerializeField] private HintTextMB _hintTextMB;
+
 		[SerializeField] private VisibleSlotsMB _visibleSlotsMB;
-		private GameObject _lastSelectedGO;
+
+		private HintTextMB _hintTextMB;
+		private GameObject _selectedGO;
 		#endregion
+
+		private void Start()
+		{
+			_hintTextMB = HintTextMB.instance;
+		}
 
 		private void Update()
 		{
-			RaycastHit raycastHit = MakeRaycast(_interactionFirePoint.position, _interactionFirePoint.transform.forward, _interactionDistanceLimit);
+			RaycastHit raycastHit = MakeRaycast(_interactionFirePoint.position, _interactionFirePoint.forward, _interactionDistanceLimit);
 			var collidedGO = raycastHit.transform?.gameObject;
 
 			ScrollSlots();
-
+			
 			_hintTextMB.UpdateHintUI(collidedGO);
 
 			CheckInputs(collidedGO);
@@ -60,13 +67,18 @@ namespace Inventory
 		private void CheckInputs(GameObject collidedGO)
 		{
 			if (Input.GetKeyDown(KeyCode.E)) Interact(collidedGO);
-			else if (Input.GetKeyUp(KeyCode.E)) UnInteract(_lastSelectedGO);
-			else if (Input.GetKeyDown(KeyCode.Q)) _visibleSlotsMB.DropItems();
+			else if (Input.GetKeyUp(KeyCode.E)) UnInteract();
+			else if (Input.GetKeyDown(KeyCode.Q)) DropItems();
+		}
+
+		private void DropItems()
+		{
+			_visibleSlotsMB.DropItems(_visibleSlotsMB.selectedSlot);
 		}
 
 		private void Interact(GameObject itemToInteract)
 		{
-			_lastSelectedGO = itemToInteract;
+			_selectedGO = itemToInteract;
 
 			if (itemToInteract != null && itemToInteract.TryGetComponent(out InteractableObjectMB interactableObjectMB))
 			{
@@ -91,9 +103,9 @@ namespace Inventory
 			interactableObjectMB.Interact();
 		}
 
-		private void UnInteract(GameObject itemToUnInteract)
+		private void UnInteract()
 		{
-			if (itemToUnInteract != null && itemToUnInteract.TryGetComponent(out RotatableMirrorMB rotatableMirror))
+			if (_selectedGO != null && _selectedGO.TryGetComponent(out RotatableMirrorMB rotatableMirror))
 			{
 				rotatableMirror.Interact();
 			}

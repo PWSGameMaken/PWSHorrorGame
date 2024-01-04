@@ -10,7 +10,7 @@ namespace Inventory
 	[System.Serializable]
 	public class InventorySlot
 	{
-		public ItemType[] AllowedItems = new ItemType[0];
+		//public ItemType[] AllowedItems = new ItemType[0];
 		[System.NonSerialized]
 		public GameObject slotGO;
 		[System.NonSerialized]
@@ -48,23 +48,23 @@ namespace Inventory
 			UpdateSlot(ItemObject, amount += value);
 		}
 
-		public bool IsAllowedInSlot(ItemObject itemObject)
-		{
-			var hasItem = AllowedItems.Length > 0 || itemObject != null || itemObject.Item.Id >= 0;
+		//public bool IsAllowedInSlot(ItemObject itemObject)
+		//{
+		//	var hasItem = AllowedItems.Length > 0 || itemObject != null || itemObject.Item.Id >= 0;
 			
-			return !hasItem || CheckAllowedItems(itemObject);
-		}
+		//	return !hasItem || CheckAllowedItems(itemObject);
+		//}
 
-		private bool CheckAllowedItems(ItemObject itemObject)
-		{
-			for (int i = 0; i < AllowedItems.Length; i++)
-			{
-				if (itemObject.Item.Type == AllowedItems[i])
-				{
-					return true;
-				}
-			}
-			return false;
-		}
+		//private bool CheckAllowedItems(ItemObject itemObject)
+		//{
+		//	for (int i = 0; i < AllowedItems.Length; i++)
+		//	{
+		//		if (itemObject.Item.Type == AllowedItems[i])
+		//		{
+		//			return true;
+		//		}
+		//	}
+		//	return false;
+		//}
 	}
 }

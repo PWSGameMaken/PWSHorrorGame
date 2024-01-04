@@ -10,15 +10,13 @@ public class ItemCollectionPoint : CollectionPointMB, IInteractWithSlot
 		_hiddenSlotsMB = GetComponent<HiddenSlotsMB>();
 	}
 
-	public void CheckForCompletion()
+	public void Interact(VisibleSlotsMB visibleSlotsMB)
 	{
-		if (_hiddenSlotsMB.CountEmptySlots() == 0)
-		{
-			ObjectiveCompleted();
-		}
+		if (!isFull) { CollectItems(visibleSlotsMB); }
+		else if (isFull) { DropItems(visibleSlotsMB); }
 	}
 
-	public void Interact(VisibleSlotsMB visibleSlotsMB)
+	private void CollectItems(VisibleSlotsMB visibleSlotsMB)
 	{
 		var selectedItemSO = visibleSlotsMB.selectedSlot.ItemObject?.Item.ItemSO;
 
@@ -31,6 +29,18 @@ public class ItemCollectionPoint : CollectionPointMB, IInteractWithSlot
 		}
 	}
 
+	private void DropItems(VisibleSlotsMB visibleSlotsMB)
+	{
+		isFull = false;
+		var isMoved = visibleSlotsMB.AddItem(_hiddenSlotsMB.slots[0].ItemObject);
+
+		if(isMoved)
+		{
+			_hiddenSlotsMB.slots[0].ClearSlot();
+			ObjectiveCompleted();
+		}
+	}
+
 	private void MoveItemToCollectionPoint(VisibleSlotsMB visibleSlotsMB)
 	{
 		var selectedSlot = visibleSlotsMB.selectedSlot;
@@ -40,19 +50,30 @@ public class ItemCollectionPoint : CollectionPointMB, IInteractWithSlot
 
 		if (isMoved)
 		{
-			visibleSlotsMB.ClearSelectedSlot();
+			visibleSlotsMB.SetActiveObjectInHand(false);
+			selectedSlot.ClearSlot();
 		}
 	}
 
-	public bool CanAddItem(ItemSO itemSO)
+	private bool CanAddItem(ItemSO itemSO)
 	{
-		for (int i = 0; i < _acceptedItemSO.Length; i++)
+		foreach (var acceptedItemSO in _acceptedItemSO)
 		{
-			if (_acceptedItemSO[i] == itemSO)
+			if (itemSO == acceptedItemSO)
 			{
 				return true;
 			}
 		}
 		return false;
 	}
+
+	private void CheckForCompletion()
+	{
+		if (!_hiddenSlotsMB.HasEmptySlots())
+		{
+			isFull = true;
+			ObjectiveCompleted();
+		}
+	}
+
 }
