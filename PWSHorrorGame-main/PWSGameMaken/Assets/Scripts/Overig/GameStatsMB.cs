@@ -6,7 +6,18 @@ using UnityEngine;
 
 public class GameStatsMB : MonoBehaviour
 {
-    #region Variables
-    public Transform collectables;
+	#region Singleton
+
+	public static GameStatsMB instance;
+
+	private void Awake()
+	{
+		instance = this;
+	}
+	#endregion
+
+	#region Variables
+	public Transform collectables;
+	public ItemDatabaseSO itemDatabaseSO;
     #endregion
 }

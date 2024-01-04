@@ -1,10 +1,9 @@
 using StarterAssets;
 using UnityEngine;
 
-public class RotatableMirrorMB : InteractableObjectMB
+public class RotatableMirrorMB : InteractableObjectMB, IInteractWithoutSlot
 {
 	private bool _isRotating = false;
-	[SerializeField] private string hintText;
 	[SerializeField] private int _rotateSpeed;
 	[SerializeField] private FirstPersonController _firstPersonController;
 
@@ -16,17 +15,12 @@ public class RotatableMirrorMB : InteractableObjectMB
 		}
 	}
 
-	public override string GetHintUIText()
+	public void Interact()
 	{
-		return hintText;
+		SetActive(!_isRotating);
 	}
 
-	public override void Interact(GameObject itemToInteract, VisibleSlotsMB visibleSlotsMB)
-	{
-		SetActive(true);
-	}
-
-	public void SetActive(bool status)
+	private void SetActive(bool status)
 	{
 		_isRotating = status;
 		_firstPersonController.enabled = !status;
@@ -34,23 +28,8 @@ public class RotatableMirrorMB : InteractableObjectMB
 
 	private void RotateObject()
 	{
-		if(Input.GetKey(KeyCode.A))
-		{
-			RotateLeft();
-		}
-		else if(Input.GetKey(KeyCode.D))
-		{
-			RotateRight();
-		}
-	}
+		var input = Input.GetAxis("Horizontal");
 
-	private void RotateLeft()
-	{
-		transform.Rotate(0, Time.deltaTime * _rotateSpeed, 0);
-	}
-
-	private void RotateRight()
-	{
-		transform.Rotate(0, Time.deltaTime * -_rotateSpeed, 0);
+		transform.Rotate(0, Time.deltaTime * _rotateSpeed * input, 0);
 	}
 }

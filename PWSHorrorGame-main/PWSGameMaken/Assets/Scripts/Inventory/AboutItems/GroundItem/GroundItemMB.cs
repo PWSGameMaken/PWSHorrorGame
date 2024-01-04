@@ -6,59 +6,52 @@
 using System.Collections;
 using UnityEngine;
 
-public class GroundItemMB : InteractableObjectMB
+public class GroundItemMB : InteractableObjectMB, IInteractWithSlot
 {
 	private static Transform _collectables;
 	public ItemSO itemSO;
 	private static readonly int _power = 100;
 	private bool isMoving = false;
+	private static Transform _player;
 
 	private void Start()
 	{
-		var gameStatsMB = GameObject.Find("GameController").GetComponent<GameStatsMB>();
-		_collectables = gameStatsMB.collectables;
+		_player = GameObject.FindGameObjectWithTag("Player").transform;
+		_collectables = GameStatsMB.instance.collectables;
 	}
 
-	public override string GetHintUIText()
+
+	public void Interact(VisibleSlotsMB visibleSlotsMB)
 	{
-		return itemSO.hintText;
+		if (!isMoving && AddToSlot(visibleSlotsMB)) { Destroy(); }
 	}
 
-	public override void Interact(GameObject itemToInteract, VisibleSlotsMB visibleSlotsMB)
+	private bool AddToSlot(VisibleSlotsMB visibleSlotsMB)
 	{
-		MoveGroundItemToInventorySlot(itemToInteract, visibleSlotsMB);
+		var itemObject = new ItemObject(itemSO);
+		
+		return visibleSlotsMB.AddItem(itemObject);
 	}
 
-	private void MoveGroundItemToInventorySlot(GameObject groundItem, VisibleSlotsMB visibleSlotsMB)
+	private void Destroy()
 	{
-		var groundItemMB = groundItem.GetComponent<GroundItemMB>();
-
-		if (groundItemMB.isMoving == true) { return; }
-
-		var itemObject = new ItemObject(groundItemMB.itemSO);
-		var isAdded = visibleSlotsMB.AddItem(itemObject);
-
-		if (isAdded)
+		isMoving = true;
+		
+		if (TryGetComponent(out EarthQuakeMB earthQuakeMB))
 		{
-			groundItemMB.isMoving = true;
-			if (groundItem.TryGetComponent(out EarthQuakeMB earthQuakeMB))
-			{
-				earthQuakeMB.EarthQuake();
-			}
-
-			var destroyDelay = earthQuakeMB != null ? earthQuakeMB.shakeTime / 2 : 0;
-			groundItemMB.DestroyGroundItem(groundItem, destroyDelay);
+			earthQuakeMB.EarthQuake();
 		}
+
+		var destroyDelay = earthQuakeMB != null ? earthQuakeMB.shakeTime / 2 : 0;
+		StartCoroutine(DestroyExec(destroyDelay));
 	}
 
 	public static GameObject Create(ItemSO itemSO)
 	{
-		var player = GameObject.FindGameObjectWithTag("Player");
-		Vector3 forward = player.transform.TransformDirection(Vector3.forward);
+		Vector3 forward = _player.TransformDirection(Vector3.forward);
 
-		var newGroundItem = Instantiate(itemSO.groundItemPrefab, GetSpawnPosition() + forward * 0.75f, player.transform.rotation * itemSO.groundItemPrefab.transform.rotation, _collectables); //itemSO.groundItemPrefab.transform.rotation
+		var newGroundItem = Instantiate(itemSO.groundItemPrefab, GetSpawnPosition() + forward * 0.75f, _player.rotation * itemSO.groundItemPrefab.transform.rotation, _collectables);
 		newGroundItem.GetComponent<GroundItemMB>().itemSO = itemSO;
-
 
 		newGroundItem.GetComponent<Rigidbody>().AddForce(forward * _power);
 
@@ -67,32 +60,18 @@ public class GroundItemMB : InteractableObjectMB
 
 	private static Vector3 GetSpawnPosition()
 	{
-		var player = GameObject.FindGameObjectWithTag("Player");
-		var playerPos = player.transform.position;
+		var playerPos = _player.position;
 
 		return new Vector3(playerPos.x, playerPos.y + 1.8f, playerPos.z);
 	}
 
-	public void DestroyGroundItem(GameObject groundItem, float destroyDelay)
+	private IEnumerator DestroyExec(float destroyDelay)
 	{
-		if(destroyDelay > 0) { groundItem.GetComponent<MeshRenderer>().enabled = false; }
+		if (destroyDelay > 0) { GetComponent<MeshRenderer>().enabled = false; }
 
-		StartCoroutine(DestroyExec(groundItem, destroyDelay));
-	}
+		yield return new WaitForSeconds(destroyDelay);
 
-	private IEnumerator DestroyExec(GameObject groundItem, float delayTime)
-	{
-		yield return new WaitForSeconds(delayTime);
-
-		if (groundItem.TryGetComponent<SpawnObjectsInSceneMB>(out var spawnObjectsInSceneMB))
-		{
-			spawnObjectsInSceneMB.SpawnObjects();
-		}
-		if (groundItem.TryGetComponent<DespawnObjectsInSceneMB>(out var despawnObjectsInSceneMB))
-		{
-			despawnObjectsInSceneMB.DespawnObjects();
-		}
-
-		Destroy(groundItem);
+		ObjectiveCompleted();
+		Destroy(gameObject);
 	}
 }
