@@ -17,8 +17,8 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 	[SerializeField] private Color _slotColor;
 
 	[SerializeField] private ObjectInHandMB _objectInHandMB;
-    [SerializeField] private MovementAnimationMB _movementAnimation;
-    protected Dictionary<GameObject, InventorySlot> slots_dict = new();
+	[SerializeField] private MovementAnimationMB _movementAnimation;
+	protected Dictionary<GameObject, InventorySlot> slots_dict = new();
 	#endregion
 
 	#region Unity Methods
@@ -31,22 +31,69 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 		SetSelectedSlot();
 	}
 
+	public void ChangeSelectedSlot(int scrollDelta)
+	{
+		switch (scrollDelta)
+		{
+			case -1:
+				slotIndex = (slotIndex < (_slotAmount - 1)) ? slotIndex + 1 : 0;
+				break;
+			case 1:
+				slotIndex = (slotIndex > 0) ? slotIndex - 1 : _slotAmount - 1;
+				break;
+			default:
+				return;
+		}
+
+		if (selectedSlot.ItemObject != null) { SetActiveObjectInHand(false); }
+
+		selectedSlot.slotGO.GetComponent<Image>().color = _slotColor;
+		selectedSlot = slots[slotIndex];
+		selectedSlot.slotGO.GetComponent<Image>().color = _selectedSlotColor;
+
+		if (selectedSlot.ItemObject != null) { SetActiveObjectInHand(true); }
+	}
+
+	public void DropItems(InventorySlot slot)
+	{
+		if (slot == selectedSlot) { SetActiveObjectInHand(false); }
+
+		CreateGroundItems(slot);
+		slot.ClearSlot();
+	}
+
+	public override InventorySlot FillEmptySlot(ItemObject itemObject, int amount)
+	{
+		foreach (var slot in slots)
+		{
+			if (slot.ItemObject == null)
+			{
+				slot.UpdateSlot(itemObject, amount);
+
+				if (slot == selectedSlot) { SetActiveObjectInHand(true); }
+
+				return slot;
+			}
+		}
+		//negeer item als de inventory vol is.
+		return null;
+	}
+
+	public void SetActiveObjectInHand(bool activeState)
+	{
+		if (selectedSlot.ItemObject == null) { return; }
+
+		var selectedItemSO = selectedSlot.ItemObject.Item.ItemSO;
+
+		_movementAnimation.ChangeHandAnimationState(selectedItemSO.animTag, activeState);
+		_objectInHandMB.SetActive(selectedItemSO, activeState);
+	}
+
 	private void SetSelectedSlot()
 	{
 		selectedSlot = slots[slotIndex];
 		selectedSlot.slotGO.GetComponent<Image>().color = _selectedSlotColor;
 	}
-
-	public void DropItems()
-	{
-		if(selectedSlot.ItemObject != null)
-		{
-			CreateGroundItems(selectedSlot);
-
-			ClearSelectedSlot();
-		}
-	}
-
 
 	private void OnEnter(GameObject slotGO)
 	{
@@ -98,9 +145,7 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 
 			if (MouseObject.interfaceMouseIsOver == null && itemObject.Item.Id >= 0)
 			{
-				CreateGroundItems(slot);
-
-				slot.ClearSlot();
+				DropItems(slot);
 				return;
 			}
 
@@ -108,15 +153,6 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 			{
 				SwapItems(slot);
 			}
-		}
-	}
-
-	private void CreateGroundItems(InventorySlot slot)
-	{
-		for (int i = 0; i < slot.amount; i++)
-		{
-			var itemSO = slot.ItemObject.Item.ItemSO;
-			GroundItemMB.Create(itemSO);
 		}
 	}
 
@@ -140,24 +176,6 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 		AddEvent(slot, EventTriggerType.Drag, delegate { OnDrag(); });
 
 		return slot;
-	}
-
-	public override InventorySlot FillEmptySlot(ItemObject itemObject, int amount)
-	{
-		for (int i = 0; i < slots.Length; i++)
-		{
-			if (slots[i].ItemObject == null)
-			{
-				slots[i].UpdateSlot(itemObject, amount);
-				if (slots[i] == selectedSlot)
-				{
-					SetActiveObjectInHand(true);
-				}
-				return slots[i];
-			}
-		}
-		//negeer item als de inventory vol is.
-		return null;
 	}
 
 	protected void OnSlotUpdate(InventorySlot slot)
@@ -207,50 +225,6 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 		InventorySlot temp = new InventorySlot(slot2.ItemObject, slot2.amount);
 		slot2.UpdateSlot(slot1.ItemObject, slot1.amount);
 		slot1.UpdateSlot(temp.ItemObject, temp.amount);
-	}
-
-	public void ChangeSelectedSlot(int scrollDelta)
-	{
-		switch (scrollDelta)
-		{
-			case -1:
-				slotIndex = (slotIndex < (_slotAmount - 1)) ? slotIndex + 1 : 0;
-				break;
-			case 1:
-				slotIndex = (slotIndex > 0) ? slotIndex - 1 : _slotAmount - 1;
-				break;
-			default:
-				return;
-		}
-
-		if (selectedSlot.ItemObject != null)
-		{
-			SetActiveObjectInHand(false);
-		}
-
-		selectedSlot.slotGO.GetComponent<Image>().color = _slotColor;
-		selectedSlot = slots[slotIndex];
-		selectedSlot.slotGO.GetComponent<Image>().color = _selectedSlotColor;
-
-		if (selectedSlot.ItemObject != null)
-		{
-			SetActiveObjectInHand(true);
-		}
-	}
-
-	public void ClearSelectedSlot()
-	{
-		SetActiveObjectInHand(false);
-
-		selectedSlot.ClearSlot();
-	}
-
-	private void SetActiveObjectInHand(bool activeState)
-	{
-		var selectedItemSO = selectedSlot.ItemObject.Item.ItemSO;
-
-		_movementAnimation.ChangeHandAnimationState(selectedItemSO.animTag, activeState);
-		_objectInHandMB.SetActive(selectedItemSO, activeState);
 	}
 	#endregion
 }

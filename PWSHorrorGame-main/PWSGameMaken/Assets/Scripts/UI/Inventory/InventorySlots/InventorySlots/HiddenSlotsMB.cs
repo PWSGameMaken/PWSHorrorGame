@@ -1,5 +1,4 @@
 using Inventory;
-using UnityEngine;
 
 public class HiddenSlotsMB : ParentSlotsMB
 {

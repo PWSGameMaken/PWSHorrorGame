@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class ObjectInHandMB : MonoBehaviour
 {
-	[SerializeField] private MovementAnimationMB _movementAnimationMB;
 	private GameObject _currentObjectInHand;
 
 	public void SetActive(ItemSO selectedItemSO, bool activeState)
