@@ -17,8 +17,8 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 	[SerializeField] private Color _slotColor;
 
 	[SerializeField] private ObjectInHandMB _objectInHandMB;
-    [SerializeField] private MovementAnimationMB _movementAnimation;
-    protected Dictionary<GameObject, InventorySlot> slots_dict = new();
+	[SerializeField] private MovementAnimationMB _movementAnimation;
+	protected Dictionary<GameObject, InventorySlot> slots_dict = new();
 	#endregion
 
 	#region Unity Methods
@@ -39,7 +39,7 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 
 	public void DropItems()
 	{
-		if(selectedSlot.ItemObject != null)
+		if (selectedSlot.ItemObject != null)
 		{
 			CreateGroundItems(selectedSlot);
 
@@ -54,16 +54,19 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 
 		if (!_dragging)
 		{
-			var slot = slots_dict[slotGO];
-			var itemObject = slot?.ItemObject;
+			var itemObject = slots_dict[slotGO]?.ItemObject;
 
 			if ((itemObject?.Item.Id ?? -1) >= 0)
 			{
 				var slotPos = slotGO.transform.position;
+				var itemDescription = itemObject.Item.ItemSO.description;
 
-				Description.SetDescription(itemObject.Item, slotPos);
+				Description.SetDescription(itemDescription, slotPos);
 			}
 		}
+		//oude manier:
+		//var slot = slots_dict[slotGO];
+		//var itemObject = slot?.ItemObject;
 	}
 
 	private void OnExit(GameObject slotGO)
@@ -144,16 +147,16 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 
 	public override InventorySlot FillEmptySlot(ItemObject itemObject, int amount)
 	{
-		for (int i = 0; i < slots.Length; i++)
+		foreach (var slot in slots)
 		{
-			if (slots[i].ItemObject == null)
+			if (slot.ItemObject == null)
 			{
-				slots[i].UpdateSlot(itemObject, amount);
-				if (slots[i] == selectedSlot)
+				slot.UpdateSlot(itemObject, amount);
+				if (slot == selectedSlot)
 				{
 					SetActiveObjectInHand(true);
 				}
-				return slots[i];
+				return slot;
 			}
 		}
 		//negeer item als de inventory vol is.
@@ -165,12 +168,16 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 		slot.UpdateSlotDisplay();
 	}
 
+	//Kunnnen die else-statements niet samengevoegd worden?
 	private void SwapSlots(InventorySlot slot1, InventorySlot slot2)
 	{
 		var item1 = slot1.ItemObject.Item;
 		var item2 = slot2.ItemObject?.Item;
 
-		if (item1.Id == item2?.Id && slot1 != slot2)
+		bool identicalItemId = item1.Id == item2?.Id;
+		bool identicalSlot = slot1 != slot2;
+
+		if (identicalItemId && !identicalSlot)
 		{
 			var isStackable = item1.Stackable;
 

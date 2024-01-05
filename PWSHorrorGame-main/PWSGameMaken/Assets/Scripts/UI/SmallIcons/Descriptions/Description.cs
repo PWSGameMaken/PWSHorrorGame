@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public static class Description
 {
 	#region variables
-	public static GameObject item;
+	public static GameObject descriptionGO;
 
 	private static readonly int _xOffset = 110;
 	private static readonly int _yOffset = 0;
@@ -19,19 +19,19 @@ public static class Description
 	#endregion
 
 	#region unity functions
-	public static void SetDescription(IBaseItem item, Vector3 slotPos)
+	public static void SetDescription(string descriptionText, Vector3 slotPos)
 	{
-		Description.item = GameObject.FindGameObjectWithTag("DescriptionPrefab");
- 		Description.item.GetComponentInChildren<TextMeshProUGUI>().text = item.ItemSO.description;
+		descriptionGO = GameObject.FindGameObjectWithTag("DescriptionPrefab");
+ 		descriptionGO.GetComponentInChildren<TextMeshProUGUI>().text = descriptionText;
 
-		Description.item.GetComponentInChildren<Image>().color = opaque;
-		Description.item.GetComponentInChildren<RectTransform>().position = Move(slotPos);
+		descriptionGO.GetComponentInChildren<Image>().color = opaque;
+		descriptionGO.GetComponentInChildren<RectTransform>().position = Move(slotPos);
 	}
 
 	public static void DeleteDescription()
 	{
-		item.GetComponentInChildren<Image>().color = transparent;
-		item.GetComponentInChildren<TextMeshProUGUI>().text = null;
+		descriptionGO.GetComponentInChildren<Image>().color = transparent;
+		descriptionGO.GetComponentInChildren<TextMeshProUGUI>().text = null;
 	}
 
 	private static Vector2 Move(Vector2 slotPos)

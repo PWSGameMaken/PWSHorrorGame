@@ -4,6 +4,7 @@ public class ItemCollectionPoint : CollectionPointMB, IInteractWithSlot
 {
 	private HiddenSlotsMB _hiddenSlotsMB;
 	[SerializeField] private ItemSO[] _acceptedItemSO;
+	private bool _isFull = false;
 
 	private void Start()
 	{
@@ -12,13 +13,20 @@ public class ItemCollectionPoint : CollectionPointMB, IInteractWithSlot
 
 	public void CheckForCompletion()
 	{
-		if (_hiddenSlotsMB.CountEmptySlots() == 0)
+		if (!_hiddenSlotsMB.HasEmptySlots())
 		{
 			ObjectiveCompleted();
+			_isFull = true;
 		}
 	}
 
 	public void Interact(VisibleSlotsMB visibleSlotsMB)
+	{
+		if (!_isFull) { CollectItems(visibleSlotsMB); }
+		else if (_isFull) { GiveItems(visibleSlotsMB); }
+	}
+
+	private void CollectItems(VisibleSlotsMB visibleSlotsMB)
 	{
 		var selectedItemSO = visibleSlotsMB.selectedSlot.ItemObject?.Item.ItemSO;
 
@@ -31,12 +39,24 @@ public class ItemCollectionPoint : CollectionPointMB, IInteractWithSlot
 		}
 	}
 
+	private void GiveItems(VisibleSlotsMB visibleSlotsMB)
+	{
+		foreach (var slot in _hiddenSlotsMB.slots)
+		{
+			_isFull = false;
+
+			visibleSlotsMB.AddItem(slot.ItemObject, slot.amount);
+			ObjectiveCompleted();
+			slot.ClearSlot();
+		}
+	}
+
 	private void MoveItemToCollectionPoint(VisibleSlotsMB visibleSlotsMB)
 	{
 		var selectedSlot = visibleSlotsMB.selectedSlot;
 
 		var collectionPointSlots = GetComponent<HiddenSlotsMB>();
-		var isMoved = collectionPointSlots.AddItem(selectedSlot.ItemObject);
+		var isMoved = collectionPointSlots.AddItem(selectedSlot.ItemObject, selectedSlot.amount);
 
 		if (isMoved)
 		{
@@ -46,9 +66,9 @@ public class ItemCollectionPoint : CollectionPointMB, IInteractWithSlot
 
 	public bool CanAddItem(ItemSO itemSO)
 	{
-		for (int i = 0; i < _acceptedItemSO.Length; i++)
+		foreach (var acceptedItemSO in _acceptedItemSO)
 		{
-			if (_acceptedItemSO[i] == itemSO)
+			if(acceptedItemSO == itemSO)
 			{
 				return true;
 			}

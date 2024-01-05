@@ -729,9 +729,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a9935337bb07e4d8881bd1f60c505b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemsToAnimate: []
   hintText: Needs square!
-  acceptedItemSO:
+  _acceptedItemSO:
   - {fileID: 11400000, guid: 300d849787ad57b46960f27ff6f150e7, type: 2}
 --- !u!114 &1165729434754948028
 MonoBehaviour:
@@ -746,8 +745,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slotAmount: 1
-  itemDatabaseSO: {fileID: 11400000, guid: db9e470c6a4a1d04da18539225b705fa, type: 2}
-  slots: []
 --- !u!114 &8521282416817712757
 MonoBehaviour:
   m_ObjectHideFlags: 0

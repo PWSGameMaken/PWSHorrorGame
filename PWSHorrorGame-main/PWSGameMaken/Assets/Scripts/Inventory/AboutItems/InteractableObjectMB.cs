@@ -6,7 +6,7 @@ public abstract class InteractableObjectMB : MonoBehaviour
 
 	public void ObjectiveCompleted()
 	{
-		var _actionObjects = GetComponents<ActionObjectMB>();
+		var _actionObjects = GetComponents<ActionsMB>();
 		foreach (var _object in _actionObjects)
 		{
 			_object.Action();

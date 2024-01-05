@@ -10,15 +10,11 @@ namespace Inventory
 	[System.Serializable]
 	public class InventorySlot
 	{
-		public ItemType[] AllowedItems = new ItemType[0];
-		[System.NonSerialized]
-		public GameObject slotGO;
-		[System.NonSerialized]
-		public SlotUpdated OnAfterUpdate;
-		[System.NonSerialized]
-		public SlotUpdated OnBeforeUpdate;
+		[System.NonSerialized] public GameObject slotGO;
+		[System.NonSerialized] public SlotUpdated OnAfterUpdate;
+		[System.NonSerialized] public SlotUpdated OnBeforeUpdate;
+		[System.NonSerialized] public int amount;
 		public ItemObject ItemObject { get; set; }
-		public int amount;
 
 		public InventorySlot() { }
 
@@ -46,25 +42,6 @@ namespace Inventory
 		public void AddAmount(int value)
 		{
 			UpdateSlot(ItemObject, amount += value);
-		}
-
-		public bool IsAllowedInSlot(ItemObject itemObject)
-		{
-			var hasItem = AllowedItems.Length > 0 || itemObject != null || itemObject.Item.Id >= 0;
-			
-			return !hasItem || CheckAllowedItems(itemObject);
-		}
-
-		private bool CheckAllowedItems(ItemObject itemObject)
-		{
-			for (int i = 0; i < AllowedItems.Length; i++)
-			{
-				if (itemObject.Item.Type == AllowedItems[i])
-				{
-					return true;
-				}
-			}
-			return false;
 		}
 	}
 }

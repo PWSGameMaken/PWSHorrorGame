@@ -11,7 +11,8 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 	#region Variables
 	[SerializeField] protected int _slotAmount = 1;
 	protected ItemDatabaseSO itemDatabaseSO;
-	
+
+	[System.NonSerialized]
 	public InventorySlot[] slots;
 	#endregion
 
@@ -25,11 +26,11 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 
 	public bool AddItem(ItemObject itemObject, int amount = 1)
 	{
-		var itemId_object = itemObject.Item.Id;
-		InventorySlot slot = FindItemOnInventory(itemId_object);
-		var stackableItem = itemDatabaseSO.ItemSOlist[itemId_object].stackable;
+		var itemSOToAdd = itemObject.Item.ItemSO;
+		var stackableItem = itemSOToAdd.stackable;
+		InventorySlot slot = FindItemOnInventory(itemSOToAdd.id);
 
-		if ((!stackableItem || (stackableItem && slot == null)) && CountEmptySlots() > 0)
+		if ((!stackableItem || (stackableItem && slot == null)) && HasEmptySlots())
 		{
 			FillEmptySlot(itemObject, amount);
 			return true;
@@ -42,17 +43,16 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 		return false;
 	}
 
-	public int CountEmptySlots()
+	public bool HasEmptySlots()
 	{
-		var emptySlots = 0;
-		for (int i = 0; i < slots.Length; i++)
+		foreach (var slot in slots)
 		{
-			if (slots[i].ItemObject == null)
+			if(slot.ItemObject == null)
 			{
-				emptySlots++;
+				return true;
 			}
 		}
-		return emptySlots;
+		return false;
 	}
 
 	protected void CreateSlots()
@@ -72,25 +72,6 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 		}
 		return null;
 	}
-
-	//public void RemoveItem(ItemObject itemObject)
-	//{
-	//	for (int i = 0; i < slots.Length; i++)
-	//	{
-	//		if (slots[i].ItemObject == itemObject)
-	//		{
-	//			slots[i].ClearSlot();
-	//		}
-	//	}
-	//}
-
-	//public void ClearSlots()
-	//{
-	//	for (int i = 0; i < slots.Length; i++)
-	//	{
-	//		slots[i].ClearSlot();
-	//	}
-	//}
 
 	protected abstract void FillSlots();
 	#endregion

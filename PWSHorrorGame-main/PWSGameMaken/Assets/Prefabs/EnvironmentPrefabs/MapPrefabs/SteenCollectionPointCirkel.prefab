@@ -4049,7 +4049,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2032
+  m_VersionIndex: 2041
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -4169,9 +4169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a9935337bb07e4d8881bd1f60c505b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemsToAnimate: []
   hintText: Needs circle!
-  acceptedItemSO:
+  _acceptedItemSO:
   - {fileID: 11400000, guid: 4bfecdbc5b8036947bc94a6b24746acd, type: 2}
 --- !u!114 &171181186121656304
 MonoBehaviour:
@@ -4186,8 +4185,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slotAmount: 1
-  itemDatabaseSO: {fileID: 11400000, guid: db9e470c6a4a1d04da18539225b705fa, type: 2}
-  slots: []
 --- !u!114 &4047122913847985746
 MonoBehaviour:
   m_ObjectHideFlags: 0
