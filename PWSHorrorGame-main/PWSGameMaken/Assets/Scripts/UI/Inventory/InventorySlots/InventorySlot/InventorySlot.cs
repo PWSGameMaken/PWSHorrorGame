@@ -3,19 +3,18 @@
 * https://github.com/GroBro-s
 */
 
+using Inventory;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Inventory
 {
 	[System.Serializable]
 	public class InventorySlot
 	{
-		//public ItemType[] AllowedItems = new ItemType[0];
-		[System.NonSerialized]
 		public GameObject slotGO;
-		[System.NonSerialized]
 		public SlotUpdated OnAfterUpdate;
-		[System.NonSerialized]
 		public SlotUpdated OnBeforeUpdate;
 		public ItemObject ItemObject { get; set; }
 		public int amount;
@@ -47,24 +46,35 @@ namespace Inventory
 		{
 			UpdateSlot(ItemObject, amount += value);
 		}
+	}
+}
+public static class ExtensionMethods
+{
+	//public static void UpdateSlotsDisplay(this Dictionary<GameObject, InventorySlot> _slotsOnInterface)
+	//{
+	//	foreach (KeyValuePair<GameObject, InventorySlot> _slot in _slotsOnInterface)
+	//	{
+	//		var slot = _slot.Value;
+	//		slot.UpdateSlotDisplay();
+	//	}
+	//}
 
-		//public bool IsAllowedInSlot(ItemObject itemObject)
-		//{
-		//	var hasItem = AllowedItems.Length > 0 || itemObject != null || itemObject.Item.Id >= 0;
-			
-		//	return !hasItem || CheckAllowedItems(itemObject);
-		//}
+	public static void UpdateSlotDisplay(this InventorySlot slot)
+	{
+		var slotImage = slot.slotGO.transform.GetChild(0).GetComponentInChildren<Image>();
+		var slotText = slot.slotGO.GetComponentInChildren<TextMeshProUGUI>();
 
-		//private bool CheckAllowedItems(ItemObject itemObject)
-		//{
-		//	for (int i = 0; i < AllowedItems.Length; i++)
-		//	{
-		//		if (itemObject.Item.Type == AllowedItems[i])
-		//		{
-		//			return true;
-		//		}
-		//	}
-		//	return false;
-		//}
+		if ((slot.ItemObject?.Item.Id ?? -1) >= 0)
+		{
+			slotImage.sprite = slot.ItemObject.Item.Sprite;
+			slotImage.color = new Color(1, 1, 1, 1);
+			slotText.text = slot.amount == 1 ? "" : slot.amount.ToString("n0");
+		}
+		else
+		{
+			slotImage.sprite = null;
+			slotImage.color = new Color(0, 0, 0, 0);
+			slotText.text = "";
+		}
 	}
 }
