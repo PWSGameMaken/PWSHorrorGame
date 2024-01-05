@@ -19,12 +19,12 @@ public class HiddenSlotsMB : ParentSlotsMB
 
 	public override InventorySlot FillEmptySlot(ItemObject itemObject, int amount)
 	{
-		for (int i = 0; i < slots.Length; i++)
+		foreach (var slot in slots)
 		{
-			if (slots[i].ItemObject == null)
+			if(slot.ItemObject == null)
 			{
-				slots[i].UpdateSlot(itemObject, amount);
-				return slots[i];
+				slot.UpdateSlot(itemObject, amount);
+				return slot;
 			}
 		}
 		//negeer item als de inventory vol is.

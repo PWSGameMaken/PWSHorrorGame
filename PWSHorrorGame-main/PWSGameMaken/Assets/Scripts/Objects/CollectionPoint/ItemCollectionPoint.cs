@@ -36,7 +36,7 @@ public class ItemCollectionPoint : CollectionPointMB, IInteractWithSlot
 
 		if(isMoved)
 		{
-			_hiddenSlotsMB.slots[0].ClearSlot();
+			_hiddenSlotsMB.ClearSlots();
 			ObjectiveCompleted();
 		}
 	}

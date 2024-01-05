@@ -151,7 +151,7 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 
 			if (MouseObject.slotHoveredOver)
 			{
-				SwapItems(slot);
+				MergeOrSwapSlots(slot);
 			}
 		}
 	}
@@ -183,79 +183,43 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 		slot.UpdateSlotDisplay();
 	}
 
-	private void SwapSlots(InventorySlot slot1, InventorySlot slot2)
-	{
-		var item1 = slot1.ItemObject.Item;
-		var item2 = slot2.ItemObject?.Item;
-
-		if (item1.Id == item2?.Id && slot1 != slot2)
-		{
-			var isStackable = item1.Stackable;
-
-			if (isStackable)
-			{
-				MergeStackableSlots(slot1, slot2);
-			}
-			else
-			{
-				SwapUnstackableSlots(slot1, slot2);
-			}
-		}
-		else
-		{
-			SwapUnstackableSlots(slot1, slot2);
-		}
-	}
-
-	private void SwapItems(InventorySlot slot1)
+	private void MergeOrSwapSlots(InventorySlot slot1)
 	{
 		InventorySlot slot2 = MouseObject.visibleSlotsMB.slots_dict[MouseObject.slotHoveredOver];
 
+		MergeOrSwapSlots(slot1, slot2);
+	}
+
+	private void MergeOrSwapSlots(InventorySlot slot1, InventorySlot slot2)
+	{
+		if (slot1 == slot2) return;
+
+		var item1 = slot1.ItemObject.Item;
+		var item2 = slot2.ItemObject?.Item;
+		var stackable = item1.Stackable;
+		var identicalItemId = item1.Id == item2?.Id;
+
+		if (identicalItemId && stackable)
+		{
+			MergeSlots(slot1, slot2);
+
+			return;
+		}
+		
 		SwapSlots(slot1, slot2);
 	}
 
-	private void MergeStackableSlots(InventorySlot slot1, InventorySlot slot2)
+	private void MergeSlots(InventorySlot slot1, InventorySlot slot2)
 	{
 		slot1.AddAmount(slot2.amount);
 		slot2.ClearSlot();
 	}
 
-	private void SwapUnstackableSlots(InventorySlot slot1, InventorySlot slot2)
+	private void SwapSlots(InventorySlot slot1, InventorySlot slot2)
 	{
 		InventorySlot temp = new InventorySlot(slot2.ItemObject, slot2.amount);
 		slot2.UpdateSlot(slot1.ItemObject, slot1.amount);
 		slot1.UpdateSlot(temp.ItemObject, temp.amount);
 	}
 	#endregion
-}
-
-public static class ExtensionMethods
-{
-	public static void UpdateSlotsDisplay(this Dictionary<GameObject, InventorySlot> _slotsOnInterface)
-	{
-		foreach (KeyValuePair<GameObject, InventorySlot> _slot in _slotsOnInterface)
-		{
-			var slot = _slot.Value;
-			slot.UpdateSlotDisplay();
-		}
-	}
-
-	public static void UpdateSlotDisplay(this InventorySlot slot)
-	{
-		var slotImage = slot.slotGO.transform.GetChild(0).GetComponentInChildren<Image>();
-		var slotText = slot.slotGO.GetComponentInChildren<TextMeshProUGUI>();
-
-		if ((slot.ItemObject?.Item.Id ?? -1) >= 0)
-		{
-			slotImage.sprite = slot.ItemObject.Item.Sprite;
-			slotImage.color = new Color(1, 1, 1, 1);
-			slotText.text = slot.amount == 1 ? "" : slot.amount.ToString("n0");
-		}
-		else
-		{
-			slotImage.sprite = null;
-			slotImage.color = new Color(0, 0, 0, 0);
-			slotText.text = "";
-		}
-	}
 }
