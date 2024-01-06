@@ -730,6 +730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hintText: Needs square!
+  _isFullHintText: Press E to retrieve stone!
   _acceptedItemSO:
   - {fileID: 11400000, guid: 300d849787ad57b46960f27ff6f150e7, type: 2}
 --- !u!114 &1165729434754948028
@@ -745,7 +746,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slotAmount: 1
-  slots: []
 --- !u!114 &8521282416817712757
 MonoBehaviour:
   m_ObjectHideFlags: 0

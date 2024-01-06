@@ -10,16 +10,14 @@ public enum AnimTag
 
 public class MovementAnimationMB : MonoBehaviour
 {
-    [SerializeField] private Animator _anim;
-    [SerializeField] private AudioSource _soundSource;
-    [SerializeField] public AudioClip walkSound;
+    private Animator _anim;
+    [SerializeField] private Audio _walkingSound;
 
     private bool _walking = false;
-    private bool _soundPlayed = false;
 
     private void Start()
     {
-        _anim = gameObject.GetComponent<Animator>();
+        _anim = GetComponent<Animator>();
         _anim.SetBool(AnimTag.IsWalking.ToString(), _walking);
     }
 
@@ -34,28 +32,14 @@ public class MovementAnimationMB : MonoBehaviour
 
         if (toggleWalking)
         {
-            ChangeMovementState(AnimTag.IsWalking, !_walking);
-        }
-        if (isWalking)
-        {
-            if (!_soundPlayed)
-            {
-                PlaySound(true);
-            }
-
-        }
-        else
-        {
-            if (_soundPlayed)
-            {
-                PlaySound(false);
-            }
+            ChangeWalkingState(AnimTag.IsWalking, !_walking);
         }
     }
 
-    private void ChangeMovementState(AnimTag animTag, bool state)
+    private void ChangeWalkingState(AnimTag animTag, bool state)
     {
         _anim.SetBool(animTag.ToString(), state);
+        _walkingSound.PlaySound(state);
         _walking = state;
     }
 
@@ -63,12 +47,4 @@ public class MovementAnimationMB : MonoBehaviour
     {
         _anim.SetBool(animTag.ToString(), state);
     }
-
-    private void PlaySound(bool setPlay)
-    {
-		if(setPlay == true) { _soundSource.Play(); }
-        else { _soundSource.Stop(); }
-
-		_soundPlayed = setPlay;
-	}
 }

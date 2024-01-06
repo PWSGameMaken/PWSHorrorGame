@@ -3,9 +3,16 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum MonsterState
+{
+	killing,
+	hunting,
+	walking
+}
 public class MonsterControllerMB : MonoBehaviour
 {
 	private bool _isCaught = false;
+	private MonsterState _currentState;
 
 	private PlayerMB _playerMB;
 	private MonsterMB _monsterMB;
@@ -42,34 +49,32 @@ public class MonsterControllerMB : MonoBehaviour
 	private void CheckDistanceToPlayer()
 	{
 		float distance = Vector3.Distance(_playerMB.playerCameraRoot.position, transform.position);
-		if (distance < _monsterMB.killRadius)
+		if (distance < _monsterMB.killRadius && _currentState != MonsterState.killing)
 		{
 			StartCoroutine(GameOver());
 		}
-		else if (distance < _monsterMB.huntRadius)
+		else if (distance < _monsterMB.huntRadius && _currentState != MonsterState.hunting)
 		{
 			HuntPlayer();
 		}
-		else
+		else if (distance > _monsterMB.huntRadius && _currentState != MonsterState.walking)
 		{
-			SetMovementAnimState(false);
+			_currentState = MonsterState.walking;
+			MonsterRunning(false);
 		}
 	}
 
 	private void HuntPlayer()
 	{
-		if(_monsterMB.audioSource.isPlaying == false)
-		{
-			_monsterMB.audioSource.PlayOneShot(_monsterMB.audioSource.clip);
-		}
-
+		_currentState = MonsterState.hunting;
 		FaceTarget(_monsterMB.navMeshAgent.transform, _playerMB.playerCameraRoot, _monsterMB.rotationSpeed);
-		SetMovementAnimState(true);
+		MonsterRunning(true);
 	}
 
-	private void SetMovementAnimState(bool state)
+	private void MonsterRunning(bool state)
 	{
 		_navMeshAgent.speed = state == true ? _monsterMB.runningSpeed : _monsterMB.walkingSpeed;
+		_monsterMB.runningAudio.PlaySound(state);
 		_monsterMB.anim.SetBool("Run", state);
 		_monsterMB.anim.SetBool("Walk", !state);
 	}
@@ -83,6 +88,8 @@ public class MonsterControllerMB : MonoBehaviour
 
 	private IEnumerator GameOver()
 	{
+		_currentState = MonsterState.killing;
+		MonsterRunning(false);
 		IsDead(true);
 		BlockPlayerMovement(true);
 

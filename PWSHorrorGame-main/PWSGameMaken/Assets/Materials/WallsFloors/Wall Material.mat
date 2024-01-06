@@ -53,6 +53,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _ReceiveShadows: 1
     - _Smoothness: 0.3
     m_Colors: []
   m_BuildTextureStacks: []

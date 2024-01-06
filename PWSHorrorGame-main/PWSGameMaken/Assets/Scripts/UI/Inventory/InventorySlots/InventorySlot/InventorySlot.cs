@@ -3,7 +3,6 @@
 * https://github.com/GroBro-s
 */
 
-using Inventory;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,35 +45,24 @@ namespace Inventory
 		{
 			UpdateSlot(ItemObject, amount += value);
 		}
-	}
-}
-public static class ExtensionMethods
-{
-	//public static void UpdateSlotsDisplay(this Dictionary<GameObject, InventorySlot> _slotsOnInterface)
-	//{
-	//	foreach (KeyValuePair<GameObject, InventorySlot> _slot in _slotsOnInterface)
-	//	{
-	//		var slot = _slot.Value;
-	//		slot.UpdateSlotDisplay();
-	//	}
-	//}
 
-	public static void UpdateSlotDisplay(this InventorySlot slot)
-	{
-		var slotImage = slot.slotGO.transform.GetChild(0).GetComponentInChildren<Image>();
-		var slotText = slot.slotGO.GetComponentInChildren<TextMeshProUGUI>();
+		public void UpdateSlotDisplay()
+		{
+			var slotImage = slotGO.transform.GetChild(0).GetComponentInChildren<Image>();
+			var slotText = slotGO.GetComponentInChildren<TextMeshProUGUI>();
 
-		if ((slot.ItemObject?.Item.Id ?? -1) >= 0)
-		{
-			slotImage.sprite = slot.ItemObject.Item.Sprite;
-			slotImage.color = new Color(1, 1, 1, 1);
-			slotText.text = slot.amount == 1 ? "" : slot.amount.ToString("n0");
-		}
-		else
-		{
-			slotImage.sprite = null;
-			slotImage.color = new Color(0, 0, 0, 0);
-			slotText.text = "";
+			if ((ItemObject?.Item.Id ?? -1) >= 0)
+			{
+				slotImage.sprite = ItemObject.Item.Sprite;
+				slotImage.color = new Color(1, 1, 1, 1);
+				slotText.text = amount == 1 ? "" : amount.ToString("n0");
+			}
+			else
+			{
+				slotImage.sprite = null;
+				slotImage.color = new Color(0, 0, 0, 0);
+				slotText.text = "";
+			}
 		}
 	}
 }
