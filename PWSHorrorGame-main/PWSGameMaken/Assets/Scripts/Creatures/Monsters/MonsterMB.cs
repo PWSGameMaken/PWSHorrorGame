@@ -4,7 +4,6 @@ using UnityEngine.AI;
 public class MonsterMB : CreatureMB
 {
 	#region Singleton
-
 	public static MonsterMB instance;
 
 	private void Awake()
@@ -22,7 +21,7 @@ public class MonsterMB : CreatureMB
 	public int walkingSpeed = 4;
 	public int runningSpeed = 6;
 	public AnimationClip killAnimation;
-	public AudioSource audioSource;
+	public Audio runningAudio;
 
 	private void Start()
 	{

@@ -38,6 +38,7 @@ public class ItemCollectionPoint : CollectionPointMB, IInteractWithSlot
 		{
 			_hiddenSlotsMB.ClearSlots();
 			ObjectiveCompleted();
+			ChangeHintText();
 		}
 	}
 
@@ -72,6 +73,7 @@ public class ItemCollectionPoint : CollectionPointMB, IInteractWithSlot
 		if (!_hiddenSlotsMB.HasEmptySlots())
 		{
 			isFull = true;
+			ChangeHintText();
 			ObjectiveCompleted();
 		}
 	}
