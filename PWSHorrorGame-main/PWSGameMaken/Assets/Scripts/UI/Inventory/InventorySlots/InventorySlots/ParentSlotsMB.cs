@@ -12,7 +12,7 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 	[SerializeField] protected int _slotAmount = 1;
 	protected ItemDatabaseSO itemDatabaseSO;
 	
-	public InventorySlot[] slots;
+	[System.NonSerialized] public InventorySlot[] slots;
 	#endregion
 
 	#region Unity Methods

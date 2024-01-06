@@ -5,8 +5,9 @@ public class ItemCollectionPoint : CollectionPointMB, IInteractWithSlot
 	private HiddenSlotsMB _hiddenSlotsMB;
 	[SerializeField] private ItemSO[] _acceptedItemSO;
 
-	private void Start()
+	private new void Start()
 	{
+		base.Start();
 		_hiddenSlotsMB = GetComponent<HiddenSlotsMB>();
 	}
 
@@ -31,13 +32,14 @@ public class ItemCollectionPoint : CollectionPointMB, IInteractWithSlot
 
 	private void DropItems(VisibleSlotsMB visibleSlotsMB)
 	{
-		isFull = false;
 		var isMoved = visibleSlotsMB.AddItem(_hiddenSlotsMB.slots[0].ItemObject);
 
 		if(isMoved)
 		{
+			isFull = false;
 			_hiddenSlotsMB.slots[0].ClearSlot();
 			ObjectiveCompleted();
+			ChangeHintText();
 		}
 	}
 
@@ -73,6 +75,7 @@ public class ItemCollectionPoint : CollectionPointMB, IInteractWithSlot
 		{
 			isFull = true;
 			ObjectiveCompleted();
+			ChangeHintText();
 		}
 	}
 

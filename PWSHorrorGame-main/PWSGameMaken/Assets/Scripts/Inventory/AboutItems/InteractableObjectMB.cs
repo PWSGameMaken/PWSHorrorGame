@@ -4,6 +4,7 @@ public abstract class InteractableObjectMB : MonoBehaviour
 {
 	public string hintText;
 
+
 	public void ObjectiveCompleted()
 	{
 		var _actionObjects = GetComponents<ActionObjectMB>();

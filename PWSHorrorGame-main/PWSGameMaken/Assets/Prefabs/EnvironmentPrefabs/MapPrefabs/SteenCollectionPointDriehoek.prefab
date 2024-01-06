@@ -507,6 +507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hintText: Needs triangle!
+  _isFullHintText: Press E to retrieve!
   _acceptedItemSO:
   - {fileID: 11400000, guid: 9222e76e2eabef24c84a1d7d4d618a62, type: 2}
 --- !u!114 &3749460381784884346
@@ -522,7 +523,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slotAmount: 1
-  slots: []
 --- !u!114 &8592352753820699325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -759,7 +759,7 @@ PrefabInstance:
     - target: {fileID: 6273285936795718352, guid: 118212d4ee4fc904d86470930c006b01,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.073
+      value: -1.09
       objectReference: {fileID: 0}
     - target: {fileID: 6273285936795718352, guid: 118212d4ee4fc904d86470930c006b01,
         type: 3}

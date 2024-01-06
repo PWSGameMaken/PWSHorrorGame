@@ -120,8 +120,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slotAmount: 1
-  itemDatabaseSO: {fileID: 11400000, guid: db9e470c6a4a1d04da18539225b705fa, type: 2}
-  slots: []
 --- !u!114 &3470697804036770970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,8 +132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a9935337bb07e4d8881bd1f60c505b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemsToSpawn: []
-  itemsToDespawn: []
-  itemsToAnimate: []
   hintText: 
-  acceptedItemSO: []
+  _isFullHintText: Press E to retrieve!
+  _acceptedItemSO: []

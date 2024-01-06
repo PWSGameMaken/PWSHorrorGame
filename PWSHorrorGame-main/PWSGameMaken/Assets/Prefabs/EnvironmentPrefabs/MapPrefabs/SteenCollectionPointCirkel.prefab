@@ -4170,6 +4170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hintText: Needs circle!
+  _isFullHintText: Press E to retrieve stone!
   _acceptedItemSO:
   - {fileID: 11400000, guid: 4bfecdbc5b8036947bc94a6b24746acd, type: 2}
 --- !u!114 &171181186121656304
@@ -4185,7 +4186,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slotAmount: 1
-  slots: []
 --- !u!114 &4047122913847985746
 MonoBehaviour:
   m_ObjectHideFlags: 0
