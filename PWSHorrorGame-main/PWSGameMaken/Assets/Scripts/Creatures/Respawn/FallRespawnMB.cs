@@ -4,9 +4,10 @@ public class FallRespawnMB : MonoBehaviour
 {
 	private void OnTriggerStay(Collider other)
 	{
-		if(other.gameObject.CompareTag("Player"))
+		var collidedGO = other.gameObject;
+		if(collidedGO.CompareTag("Player"))
 		{
-			RespawnSystemMB.instance.RespawnFromWeightPuzzle(other.gameObject.transform);
+			RespawnSystemMB.instance.RespawnFromWeightPuzzle(collidedGO.transform);
 		}
 	}
 }

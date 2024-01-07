@@ -4,14 +4,12 @@ public class EarthQuakeMB : MonoBehaviour
 {
     [SerializeField] private float shakeIntensity = 25f;
 	[SerializeField] private float shakeFrequency = 10f;
-	[SerializeField] private AudioSource[] sounds;
-
 	public float shakeTime = 1f;
 
 	public void EarthQuake()
 	{
 		ShakeCamera();
-		ActivateSounds();
+		Sounds();
 	}
 
 	private void ShakeCamera()
@@ -19,11 +17,11 @@ public class EarthQuakeMB : MonoBehaviour
 		CinemachineShakeMB.Instance.ShakeCamera(shakeIntensity, shakeFrequency, shakeTime);	
 	}
 
-	public void ActivateSounds()
+	private void Sounds()
 	{
-		for (int i = 0; i < sounds.Length; i++)
+		if (TryGetComponent<PlaySounds>(out var playSoundsMB))
 		{
-			sounds[i].PlayOneShot(sounds[i].clip);
+			playSoundsMB.ActivateSounds(true);
 		}
 	}
 }

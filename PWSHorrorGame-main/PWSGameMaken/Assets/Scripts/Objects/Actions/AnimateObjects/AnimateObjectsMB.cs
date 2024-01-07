@@ -13,6 +13,5 @@ public abstract class AnimateObjectsMB : ActionObjectMB
 		}
 	}
 
-
 	public abstract void Animate();
 }

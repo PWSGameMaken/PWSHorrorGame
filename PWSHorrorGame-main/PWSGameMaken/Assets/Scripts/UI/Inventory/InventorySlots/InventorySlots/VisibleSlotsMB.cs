@@ -17,7 +17,7 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 	[SerializeField] private Color _slotColor;
 
 	[SerializeField] private ObjectInHandMB _objectInHandMB;
-	[SerializeField] private MovementAnimationMB _movementAnimation;
+	[SerializeField] private PlayerMovementAnimationMB _movementAnimation;
 	protected Dictionary<GameObject, InventorySlot> slots_dict = new();
 	#endregion
 

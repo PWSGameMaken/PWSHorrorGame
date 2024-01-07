@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class MiniMonsterTriggerMB : MonoBehaviour
 {
-	[SerializeField] private AudioSource jumpScareSound;
-    [SerializeField] private AudioSource WalkSound;
+    private PlaySounds _playSounds;
     [SerializeField] private Transform _objectToMove;
     [SerializeField] private Vector3 _moveDirection = new Vector3(0, 0, 1);
     [SerializeField] private float _moveSpeed = 5f;
@@ -11,12 +10,17 @@ public class MiniMonsterTriggerMB : MonoBehaviour
 
     private bool playerInsideTrigger = false;
 
-    private void OnTriggerEnter(Collider other)
+	private void Start()
+	{
+		_playSounds = GetComponent<PlaySounds>();   
+	}
+
+	private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             playerInsideTrigger = true;
-            PlayAudio();
+            _playSounds.ActivateSounds(true);
 		}
     }
 
@@ -25,7 +29,7 @@ public class MiniMonsterTriggerMB : MonoBehaviour
         if(other.gameObject.CompareTag("Player"))
         {
             playerInsideTrigger = false;
-            Destroy(this.gameObject, _destroyDelay);
+            Destroy(gameObject, _destroyDelay);
         }
     }
 
@@ -40,11 +44,5 @@ public class MiniMonsterTriggerMB : MonoBehaviour
     private void MoveObject()
     {
         _objectToMove.Translate(_moveSpeed * Time.deltaTime * _moveDirection.normalized);
-    }
-
-    private void PlayAudio()
-    {
-        jumpScareSound.Play();
-        WalkSound.Play();
     }
 }

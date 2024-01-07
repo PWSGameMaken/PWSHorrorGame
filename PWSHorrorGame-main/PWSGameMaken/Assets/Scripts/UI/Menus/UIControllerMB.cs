@@ -1,16 +1,22 @@
-using StarterAssets;
 using UnityEngine;
 
 public abstract class UIControllerMB : MonoBehaviour
 {
-	[SerializeField] protected GameObject menuToActivate;
-	[SerializeField] private StarterAssetsInputs input;
+	protected GameObject menuToActivate;
 
-	protected bool isActivated = false;
+	private bool isActivated = false;
 
-	public abstract void SetActive();
+	private void Start()
+	{
+		menuToActivate = transform.Find("UI").gameObject;
+	}
 
-	protected void SetActiveMenu(GameObject menuToActivate, bool activeState)
+	public void SetActiveMenu()
+	{
+		SetActiveMenu(menuToActivate, !isActivated);
+	}
+
+	private void SetActiveMenu(GameObject menuToActivate, bool activeState)
 	{
 		SetActiveMenuSettings(activeState);
 		menuToActivate.SetActive(activeState);
@@ -24,8 +30,5 @@ public abstract class UIControllerMB : MonoBehaviour
 		Cursor.visible = activeState;
 
 		Time.timeScale = activeState == true ? 0 : 1;
-
-		input.cursorInputForLook = !activeState;
-		input.cursorLocked = !activeState;
 	}
 }

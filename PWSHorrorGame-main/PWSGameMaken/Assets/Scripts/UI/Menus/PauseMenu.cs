@@ -6,12 +6,7 @@ public class PauseMenu : UIControllerMB
 	{
 		if (Input.GetKeyDown(KeyCode.I))
 		{
-			SetActive();
+			SetActiveMenu();
 		}
-	}
-
-	public override void SetActive()
-	{
-		SetActiveMenu(menuToActivate, !isActivated);
 	}
 }
