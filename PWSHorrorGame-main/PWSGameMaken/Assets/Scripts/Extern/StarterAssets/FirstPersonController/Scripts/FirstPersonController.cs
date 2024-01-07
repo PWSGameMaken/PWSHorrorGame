@@ -125,6 +125,8 @@ namespace StarterAssets
 
 		private void LateUpdate()
 		{
+			//Deze check is zelf toegevoegd
+			if (Time.timeScale == 0) return;
 			CameraRotation();
 		}
 

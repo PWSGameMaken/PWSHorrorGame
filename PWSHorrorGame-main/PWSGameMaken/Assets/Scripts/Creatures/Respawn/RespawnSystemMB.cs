@@ -12,12 +12,20 @@ public class RespawnSystemMB : MonoBehaviour
 	}
 	#endregion
 
-	public void RespawnFromMonsterCollision(Transform CreatureToRespawn)
-	{	
-		Transform[] spawnPoints = CreatureToRespawn.GetComponent<CreatureMB>().respawnPoints;
+	public void RespawnFromMonsterCollision(Transform[] creaturesToRespawn)
+	{
+		foreach (var creature in creaturesToRespawn)
+		{
+			RespawnFromMonsterCollision(creature);
+		}
+	}
 
-		Transform preferredSpawnPoint = GetClosestRespawnPoint(CreatureToRespawn, spawnPoints);
-		Respawn(CreatureToRespawn, preferredSpawnPoint);
+	public void RespawnFromMonsterCollision(Transform creatureToRespawn)
+	{	
+		Transform[] spawnPoints = creatureToRespawn.GetComponent<CreatureMB>().respawnPoints;
+
+		Transform spawnPoint = GetClosestRespawnPoint(creatureToRespawn, spawnPoints);
+		Respawn(creatureToRespawn, spawnPoint);
 	}
 
 	public void RespawnFromWeightPuzzle(Transform CreatureToRespawn)
@@ -26,7 +34,7 @@ public class RespawnSystemMB : MonoBehaviour
 		Respawn(CreatureToRespawn, respawnPoint);
 	}
 
-	private void Respawn(Transform CreatureToRespawn, Transform spawnPos)
+	public void Respawn(Transform CreatureToRespawn, Transform spawnPos)
 	{
 		CreatureToRespawn.position = spawnPos.position;
 	}
