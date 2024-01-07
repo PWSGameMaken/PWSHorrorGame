@@ -28,7 +28,6 @@ public class MiniMonsterTriggerMB : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            playerInsideTrigger = false;
             Destroy(gameObject, _destroyDelay);
         }
     }

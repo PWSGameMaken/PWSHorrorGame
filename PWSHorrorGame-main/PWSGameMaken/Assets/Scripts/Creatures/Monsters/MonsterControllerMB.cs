@@ -17,14 +17,12 @@ public class MonsterControllerMB : MonoBehaviour
 
 	[SerializeField] private Transform[] _creaturesToRespawn;
 	[SerializeField] private GameOverMenu gameOverMenu;
-	private RespawnSystemMB _respawnSystemMB;
 
 
 	private void Start()
 	{
 		_monsterMB = MonsterMB.instance;
 		_playerMB = PlayerMB.instance;
-		_respawnSystemMB = RespawnSystemMB.instance;
 	}
 
 	private void Update()
@@ -86,7 +84,7 @@ public class MonsterControllerMB : MonoBehaviour
 	{
 		IsDead(false);
 
-		_respawnSystemMB.RespawnFromMonsterCollision(_creaturesToRespawn);
+		RespawnSystemMB.Respawn(_creaturesToRespawn);
 	}
 
 	private void IsDead(bool state)
