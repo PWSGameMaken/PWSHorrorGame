@@ -23,7 +23,6 @@ public class PlayerMB : CreatureMB
 
 	private void Start()
 	{
-		playerBody = gameObject;
 		fpsController = GetComponent<FirstPersonController>();
 		playerInput = GetComponent<StarterAssetsInputs>();
 	}

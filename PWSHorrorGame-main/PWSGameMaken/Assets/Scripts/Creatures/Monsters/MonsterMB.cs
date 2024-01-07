@@ -12,16 +12,16 @@ public class MonsterMB : CreatureMB
 	}
 	#endregion
 
+	[HideInInspector] public PlaySounds playSounds;
+	[HideInInspector] public NavMeshAgent navMeshAgent;
+	[HideInInspector] public Animator anim;
 	public Transform focusPoint;
-	public Animator anim;
-	public NavMeshAgent navMeshAgent;
+	public AnimationClip killAnimation;
 	public float rotationSpeed = 5f;
 	public float huntRadius = 10f;
 	public float killRadius = 2f;
 	public int walkingSpeed = 4;
 	public int runningSpeed = 6;
-	public AnimationClip killAnimation;
-	public PlaySounds playSounds;
 
 	private void Start()
 	{

@@ -1,26 +1,16 @@
 using UnityEngine;
 
-public class RespawnSystemMB : MonoBehaviour
+public static class RespawnSystemMB
 {
-	#region Singleton
-
-	public static RespawnSystemMB instance;
-
-	private void Awake()
-	{
-		instance = this;
-	}
-	#endregion
-
-	public void RespawnFromMonsterCollision(Transform[] creaturesToRespawn)
+	public static void Respawn(Transform[] creaturesToRespawn)
 	{
 		foreach (var creature in creaturesToRespawn)
 		{
-			RespawnFromMonsterCollision(creature);
+			Respawn(creature);
 		}
 	}
 
-	public void RespawnFromMonsterCollision(Transform creatureToRespawn)
+	public static void Respawn(Transform creatureToRespawn)
 	{	
 		Transform[] spawnPoints = creatureToRespawn.GetComponent<CreatureMB>().respawnPoints;
 
@@ -28,18 +18,12 @@ public class RespawnSystemMB : MonoBehaviour
 		Respawn(creatureToRespawn, spawnPoint);
 	}
 
-	public void RespawnFromWeightPuzzle(Transform CreatureToRespawn)
-	{
-		Transform respawnPoint = CreatureToRespawn.GetComponent<PlayerMB>().weightPuzzleRespawnPos;
-		Respawn(CreatureToRespawn, respawnPoint);
-	}
-
-	public void Respawn(Transform CreatureToRespawn, Transform spawnPos)
+	public static void Respawn(Transform CreatureToRespawn, Transform spawnPos)
 	{
 		CreatureToRespawn.position = spawnPos.position;
 	}
 
-	private Transform GetClosestRespawnPoint(Transform CreatureToRespawn, Transform[] arrayToCheck)
+	private static Transform GetClosestRespawnPoint(Transform CreatureToRespawn, Transform[] arrayToCheck)
 	{
 		float minSpawnDistance = 10000f;
 		Transform preferredSpawnPoint = null;
