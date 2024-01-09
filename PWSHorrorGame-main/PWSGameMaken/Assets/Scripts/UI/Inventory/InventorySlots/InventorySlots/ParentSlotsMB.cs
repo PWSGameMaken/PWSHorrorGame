@@ -25,9 +25,9 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 
 	public bool AddItem(ItemObject itemObject, int amount = 1)
 	{
-		var itemId_object = itemObject.Item.Id;
-		InventorySlot slot = FindItemOnInventory(itemId_object);
-		var stackableItem = itemDatabaseSO.ItemSOlist[itemId_object].stackable;
+		var itemSO = itemObject.Item.ItemSO;
+		var stackableItem = itemSO.stackable;
+		InventorySlot slot = FindItemOnInventory(itemSO);
 
 		if ((!stackableItem || (stackableItem && slot == null)) && HasEmptySlots())
 		{
@@ -59,12 +59,13 @@ public abstract class ParentSlotsMB : UserInterfaceMB
 		slots = new InventorySlot[_slotAmount];
 	}
 
-	private InventorySlot FindItemOnInventory(int itemId_object)
+	private InventorySlot FindItemOnInventory(ItemSO itemSO_object)
 	{
 		foreach (var slot in slots)
 		{
-			var itemId_slot = slot.ItemObject?.Item.Id;
-			if (itemId_slot == itemId_object) // slot moet null zijn maar de editor laat 0 zien. alsnog wordt hij hier als ongelijk weergegeven, wat klopt. Wij hebben geen verklaring kan later errors opleveren.
+			var itemSO_slot = slot.ItemObject?.Item.ItemSO;
+			//Hier werd origineel de ID's gecontroleerd, maar dat zijn nu ItemSO's
+			if (itemSO_slot == itemSO_object) // slot moet null zijn maar de editor laat 0 zien. alsnog wordt hij hier als ongelijk weergegeven, wat klopt. Wij hebben geen verklaring kan later errors opleveren.
 			{
 				return slot;
 			}

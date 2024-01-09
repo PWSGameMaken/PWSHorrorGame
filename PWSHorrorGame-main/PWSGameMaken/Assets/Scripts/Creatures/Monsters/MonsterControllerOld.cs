@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 using StarterAssets;
 
-public class MonsterControllerOld : CreatureMB
+public class MonsterControllerOld : MonoBehaviour
 {
 	[Header("Monster")]
 	[SerializeField] private GameObject monster;

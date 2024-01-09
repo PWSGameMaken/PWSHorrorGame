@@ -8,9 +8,9 @@ public enum TypeOfCreature
 
 public class CreatureMB : MonoBehaviour
 {
-	public GameObject creatureGO;
+	[HideInInspector] public GameObject creatureGO;
 	public Transform[] respawnPoints;
-	public TypeOfCreature TypeOfCreature;
+	public TypeOfCreature typeOfCreature;
 
 	private void Start()
 	{

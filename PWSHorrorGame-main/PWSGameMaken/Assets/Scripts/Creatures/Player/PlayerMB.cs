@@ -1,4 +1,5 @@
 using StarterAssets;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMB : CreatureMB
@@ -17,18 +18,22 @@ public class PlayerMB : CreatureMB
 	public GameObject playerBody;
 	public GameObject killLantern;
 	public Transform weightPuzzleRespawnPos;
-
-	private FirstPersonController fpsController;
-	private StarterAssetsInputs playerInput;
+	
+	private CharacterController _charController;
+	private FirstPersonController _fpsController;
+	private StarterAssetsInputs _playerInput;
 
 	private void Start()
 	{
-		fpsController = GetComponent<FirstPersonController>();
-		playerInput = GetComponent<StarterAssetsInputs>();
+		_charController = GetComponent<CharacterController>();
+		_fpsController = GetComponent<FirstPersonController>();
+		_playerInput = GetComponent<StarterAssetsInputs>();
+		typeOfCreature = TypeOfCreature.Player;
 	}
 
 	public void ActivateKillScene(bool state)
 	{
+		StartCoroutine(ActivateCharacterController(state));
 		playerBody.SetActive(!state);
 		killLantern.SetActive(state);
 		BlockPlayerMovement(state);
@@ -36,7 +41,13 @@ public class PlayerMB : CreatureMB
 
 	private void BlockPlayerMovement(bool state)
 	{
-		playerInput.cursorInputForLook = !state;
-		fpsController.MoveSpeed = state == true ? 0 : 4;
+		_playerInput.cursorInputForLook = !state;
+		_fpsController.MoveSpeed = state == true ? 0 : 4;
+	}
+		
+	private IEnumerator ActivateCharacterController(bool state)
+	{
+		yield return new WaitForSecondsRealtime(0.5f);
+		_charController.enabled = !state;
 	}
 }

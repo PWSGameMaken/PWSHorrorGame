@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class GroundItemMB : InteractableObjectMB, IInteractWithSlot
 {
-	private static Transform _collectables;
+	//private static Transform _collectables;
 	public ItemSO itemSO;
 	private static readonly int _power = 100;
 	private bool isMoving = false;
@@ -17,9 +17,8 @@ public class GroundItemMB : InteractableObjectMB, IInteractWithSlot
 	private void Start()
 	{
 		_player = GameObject.FindGameObjectWithTag("Player").transform;
-		_collectables = GameStatsMB.instance.collectables;
+		//_collectables = GameStatsMB.instance.collectables;
 	}
-
 
 	public void Interact(VisibleSlotsMB visibleSlotsMB)
 	{
@@ -50,7 +49,7 @@ public class GroundItemMB : InteractableObjectMB, IInteractWithSlot
 	{
 		Vector3 forward = _player.TransformDirection(Vector3.forward);
 
-		var newGroundItem = Instantiate(itemSO.groundItemPrefab, GetSpawnPosition() + forward * 0.75f, _player.rotation * itemSO.groundItemPrefab.transform.rotation, _collectables);
+		var newGroundItem = Instantiate(itemSO.groundItemPrefab, GetSpawnPosition() + forward * 0.75f, _player.rotation * itemSO.groundItemPrefab.transform.rotation);
 		newGroundItem.GetComponent<GroundItemMB>().itemSO = itemSO;
 
 		newGroundItem.GetComponent<Rigidbody>().AddForce(forward * _power);

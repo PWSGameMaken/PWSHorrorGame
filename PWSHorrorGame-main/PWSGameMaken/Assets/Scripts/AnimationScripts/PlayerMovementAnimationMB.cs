@@ -17,6 +17,7 @@ public class PlayerMovementAnimationMB : MonoBehaviour
     private void Start()
     {
         _playSoundsMB = GetComponent<PlaySounds>();
+
         _anim = GetComponent<Animator>();
         _anim.SetBool(AnimTag.IsWalking.ToString(), _walking);
     }

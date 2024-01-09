@@ -7,13 +7,14 @@ public enum MonsterState
 	hunting,
 	walking
 }
+
 public class MonsterControllerMB : MonoBehaviour
 {
 	private bool _isCaught = false;
 	private MonsterState _currentState;
 
 	private PlayerMB _playerMB;
-	private MonsterMB _monsterMB;
+	private EindMonsterMB _eindMonsterMB;
 
 	[SerializeField] private Transform[] _creaturesToRespawn;
 	[SerializeField] private GameOverMenu gameOverMenu;
@@ -21,7 +22,7 @@ public class MonsterControllerMB : MonoBehaviour
 
 	private void Start()
 	{
-		_monsterMB = MonsterMB.instance;
+		_eindMonsterMB = GetComponent<EindMonsterMB>();
 		_playerMB = PlayerMB.instance;
 	}
 
@@ -29,11 +30,11 @@ public class MonsterControllerMB : MonoBehaviour
 	{
 		if (_isCaught)
 		{
-			FaceTarget(_playerMB.playerCameraRoot, _monsterMB.focusPoint, 20f);
+			FaceTarget(_playerMB.playerCameraRoot, _eindMonsterMB.focusPoint, 20f);
 			return;
 		}
 
-		_monsterMB.navMeshAgent.SetDestination(_playerMB.playerCameraRoot.position);
+		_eindMonsterMB.navMeshAgent.SetDestination(_playerMB.playerCameraRoot.position);
 
 		CheckDistanceToPlayer();
 	}
@@ -41,26 +42,26 @@ public class MonsterControllerMB : MonoBehaviour
 	private void CheckDistanceToPlayer()
 	{
 		float distance = Vector3.Distance(_playerMB.playerCameraRoot.position, transform.position);
-		if (distance < _monsterMB.killRadius && _currentState != MonsterState.killing)
+		if (distance < _eindMonsterMB.killRadius && _currentState != MonsterState.killing)
 		{
 			StartCoroutine(GameOver());
 		}
-		else if (distance < _monsterMB.huntRadius && _currentState != MonsterState.hunting)
+		else if (distance < _eindMonsterMB.huntRadius && _currentState != MonsterState.hunting)
 		{
 			HuntPlayer();
 		}
-		else if (distance > _monsterMB.huntRadius && _currentState != MonsterState.walking)
+		else if (distance > _eindMonsterMB.huntRadius && _currentState != MonsterState.walking)
 		{
 			_currentState = MonsterState.walking;
-			_monsterMB.Run(false);
+			_eindMonsterMB.Run(false);
 		}
 	}
 
 	private void HuntPlayer()
 	{
 		_currentState = MonsterState.hunting;
-		FaceTarget(_monsterMB.navMeshAgent.transform, _playerMB.playerCameraRoot, _monsterMB.rotationSpeed);
-		_monsterMB.Run(true);
+		FaceTarget(_eindMonsterMB.navMeshAgent.transform, _playerMB.playerCameraRoot, _eindMonsterMB.rotationSpeed);
+		_eindMonsterMB.Run(true);
 	}
 
 	private void FaceTarget(Transform ObjectToRotate, Transform ObjectToFace, float rotationSpeed)
@@ -72,10 +73,9 @@ public class MonsterControllerMB : MonoBehaviour
 
 	private IEnumerator GameOver()
 	{
-		_monsterMB.Run(false);
 		IsDead(true);
 
-		yield return new WaitForSeconds(_monsterMB.killAnimation.length);
+		yield return new WaitForSeconds(_eindMonsterMB.killAnimation.length);
 
 		gameOverMenu.SetActiveMenu();
 	}
@@ -89,11 +89,12 @@ public class MonsterControllerMB : MonoBehaviour
 
 	private void IsDead(bool state)
 	{
+		_eindMonsterMB.Run(false);
 		_currentState = state ? MonsterState.killing : MonsterState.walking;
 		_isCaught = state;
 		var monsterTarget = state ? transform.position : _playerMB.playerCameraRoot.position;
 
-		_monsterMB.ActivateKillScene(monsterTarget, state);
+		_eindMonsterMB.ActivateKillScene(monsterTarget, state);
 		_playerMB.ActivateKillScene(state);
 	}
 }
