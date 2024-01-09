@@ -203,7 +203,9 @@ namespace StarterAssets
 			}
 
 			// move the player
-			_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+			//Deze check is zelf toegevoegd, geeft anders waarschuwing bij bewegen in game-over modus
+			if(_controller.enabled)
+				_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 		}
 
 		private void JumpAndGravity()

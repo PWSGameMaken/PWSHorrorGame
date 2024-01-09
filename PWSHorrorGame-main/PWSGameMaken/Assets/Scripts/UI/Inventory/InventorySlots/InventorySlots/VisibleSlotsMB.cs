@@ -1,6 +1,5 @@
 using Inventory;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -45,13 +44,13 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 				return;
 		}
 
-		if (selectedSlot.ItemObject != null) { SetActiveObjectInHand(false); }
+		SetActiveObjectInHand(false);
 
 		selectedSlot.slotGO.GetComponent<Image>().color = _slotColor;
 		selectedSlot = slots[slotIndex];
 		selectedSlot.slotGO.GetComponent<Image>().color = _selectedSlotColor;
 
-		if (selectedSlot.ItemObject != null) { SetActiveObjectInHand(true); }
+		SetActiveObjectInHand(true);
 	}
 
 	public void DropItems(InventorySlot slot)
