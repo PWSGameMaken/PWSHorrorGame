@@ -10,14 +10,26 @@ public enum MonsterState
 public abstract class MonsterWithAIMB : MonsterMB
 {
 	[HideInInspector] public NavMeshAgent navMeshAgent;
-	public float rotationSpeed = 5f;
+	[Header("NavMesh Settings")]
+	public float rotationSpeed = 15f;
 	public float huntRadius = 10f;
-	public float killRadius = 2f;
+	public float killRadius = 3f;
 	public int walkingSpeed = 4;
 	public int runningSpeed = 6;
+
 	protected PlayerMB playerMB;
+	protected bool playerIsCaught = false;
 
 	private MonsterState currentState;
+
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(transform.position, huntRadius);
+
+		Gizmos.color = Color.blue;
+		Gizmos.DrawWireSphere(transform.position, killRadius);
+	}
 
 	protected void StartV2()
 	{
@@ -51,6 +63,13 @@ public abstract class MonsterWithAIMB : MonsterMB
 			currentState = MonsterState.isWalking;
 			FollowPlayer();
 		}
+	}
+
+	protected void FaceTarget(Transform ObjectToRotate, Transform ObjectToFace, float rotationSpeed)
+	{
+		Vector3 direction = (ObjectToFace.position - ObjectToRotate.position).normalized;
+		Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, direction.y, direction.z));
+		ObjectToRotate.rotation = Quaternion.Slerp(ObjectToRotate.rotation, lookRotation, Time.deltaTime * rotationSpeed);
 	}
 
 	public abstract void CollideWithPlayer();

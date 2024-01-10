@@ -3,20 +3,11 @@ using UnityEngine;
 
 public class EindMonsterMB : MonsterWithAIMB
 {
+	[Header("Other")]
 	public Transform focusPoint;
 	public AnimationClip killAnimation;
 	[SerializeField] private Transform[] _creaturesToRespawn;
 	[SerializeField] private GameOverMenu gameOverMenu;
-	private bool _isCaught = false;
-
-	private void OnDrawGizmosSelected()
-	{
-		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(transform.position, huntRadius);
-
-		Gizmos.color = Color.blue;
-		Gizmos.DrawWireSphere(transform.position, killRadius);
-	}
 
 	private new void Start()
 	{
@@ -25,7 +16,7 @@ public class EindMonsterMB : MonsterWithAIMB
 
 	private void Update()
 	{
-		if (_isCaught)
+		if (playerIsCaught)
 		{
 			FaceTarget(playerMB.playerCameraRoot, focusPoint, 20f);
 			return;
@@ -71,13 +62,6 @@ public class EindMonsterMB : MonsterWithAIMB
 		anim.SetBool("Walk", !state);
 	}
 
-	private void FaceTarget(Transform ObjectToRotate, Transform ObjectToFace, float rotationSpeed)
-	{
-		Vector3 direction = (ObjectToFace.position - ObjectToRotate.position).normalized;
-		Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, direction.y, direction.z));
-		ObjectToRotate.rotation = Quaternion.Slerp(ObjectToRotate.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-	}
-
 	private IEnumerator GameOver()
 	{
 		IsDead(true);
@@ -94,7 +78,7 @@ public class EindMonsterMB : MonsterWithAIMB
 
 	private void IsDead(bool state)
 	{
-		_isCaught = state;
+		playerIsCaught = state;
 		Run(false);
 		//Deze werkt niet aangezien het monster en de speler in eerste instantie nog naast elkaar staan. De update van MonsterWithAIMB fixt dit momenteel wel.
 		//currentState = state ? MonsterState.isColliding : MonsterState.isWalking;
