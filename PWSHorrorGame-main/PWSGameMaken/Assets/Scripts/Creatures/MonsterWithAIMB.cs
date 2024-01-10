@@ -1,7 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+public enum MonsterState
+{
+	isColliding,
+	isHunting,
+	isWalking
+}
 
 public abstract class MonsterWithAIMB : MonsterMB
 {
@@ -11,28 +15,47 @@ public abstract class MonsterWithAIMB : MonsterMB
 	public float killRadius = 2f;
 	public int walkingSpeed = 4;
 	public int runningSpeed = 6;
+	protected PlayerMB playerMB;
 
-	private new void Start()
+	private MonsterState currentState;
+
+	protected void StartV2()
 	{
+		playerMB = PlayerMB.instance;
 		navMeshAgent = GetComponent<NavMeshAgent>();
+		currentState = MonsterState.isWalking;
 		base.Start();
 	}
 
-	public void Run(bool state)
+	protected void Move()
 	{
-		navMeshAgent.speed = state == true ? runningSpeed : walkingSpeed;
-		playSounds.ActivateSounds(state);
-
-		anim.SetBool("Run", state);
-		anim.SetBool("Walk", !state);
+		navMeshAgent.SetDestination(playerMB.playerCameraRoot.position);
+		CheckDistanceToPlayer();
 	}
 
-	private void OnDrawGizmosSelected()
+	protected void CheckDistanceToPlayer()
 	{
-		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(transform.position, huntRadius);
-
-		Gizmos.color = Color.blue;
-		Gizmos.DrawWireSphere(transform.position, killRadius);
+		float distance = Vector3.Distance(playerMB.playerCameraRoot.position, transform.position);
+		if (distance < killRadius && currentState != MonsterState.isColliding)
+		{
+			currentState = MonsterState.isColliding;
+			CollideWithPlayer();
+		}
+		else if (distance < huntRadius && currentState != MonsterState.isHunting)
+		{
+			currentState = MonsterState.isHunting;
+			HuntPlayer();
+		}
+		else if (distance > huntRadius && currentState != MonsterState.isWalking)
+		{
+			currentState = MonsterState.isWalking;
+			FollowPlayer();
+		}
 	}
+
+	public abstract void CollideWithPlayer();
+
+	public abstract void HuntPlayer();
+
+	public abstract void FollowPlayer();
 }
