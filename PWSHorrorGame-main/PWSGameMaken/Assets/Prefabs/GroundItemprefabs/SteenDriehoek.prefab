@@ -216,7 +216,6 @@ GameObject:
   - component: {fileID: 1320527412124065086}
   - component: {fileID: 7144647813943841038}
   - component: {fileID: -7301678092191316807}
-  - component: {fileID: -4312219145148948405}
   m_Layer: 0
   m_Name: SteenDriehoek
   m_TagString: Untagged
@@ -254,7 +253,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hintText: Press E to pickup!
-  itemSO: {fileID: 11400000, guid: 9222e76e2eabef24c84a1d7d4d618a62, type: 2}
+  _itemSO: {fileID: 11400000, guid: 9222e76e2eabef24c84a1d7d4d618a62, type: 2}
+  _dropSound: {fileID: 8300000, guid: 1e98d7bf35d61b949b5b61f6099debc1, type: 3}
 --- !u!65 &-5819423274268183988
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -334,7 +334,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1e98d7bf35d61b949b5b61f6099debc1, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -420,18 +420,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-4312219145148948405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6642811999651541296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca7a0f3e225e6424b94f0c4368e03eb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7310033329262935779
 GameObject:
   m_ObjectHideFlags: 0

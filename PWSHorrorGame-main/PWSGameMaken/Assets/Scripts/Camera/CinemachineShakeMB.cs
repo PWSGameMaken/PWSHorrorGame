@@ -5,13 +5,13 @@ public class CinemachineShakeMB : MonoBehaviour
 {
 	public static CinemachineShakeMB Instance { get; private set; }
 
-	private CinemachineVirtualCamera cinemachineVirtualCamera;
+	private CinemachineVirtualCamera _cinemachineVirtualCamera;
 	private float _shakeTimerTotal = 0;
 	private float _shakeTimer = 0;
 	private float _startingIntensity = 0;
 
-	private float defaultIntensity;
-	private float defaultFrequency;
+	private float _defaultIntensity;
+	private float _defaultFrequency;
 
 	private bool _hasClimaxed = false;
 	
@@ -20,15 +20,15 @@ public class CinemachineShakeMB : MonoBehaviour
 	private void Awake()
 	{
 		Instance = this;
-		cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
+		_cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
 	}
 
 	public void ShakeCamera(float intensity, float frequency, float time)
 	{
-		_cBMCP = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+		_cBMCP = _cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-		defaultIntensity = _cBMCP.m_AmplitudeGain;
-		defaultFrequency = _cBMCP.m_FrequencyGain;
+		_defaultIntensity = _cBMCP.m_AmplitudeGain;
+		_defaultFrequency = _cBMCP.m_FrequencyGain;
 
 		_cBMCP.m_AmplitudeGain = intensity;
 		_cBMCP.m_FrequencyGain = frequency;
@@ -70,7 +70,7 @@ public class CinemachineShakeMB : MonoBehaviour
 	{
 		_shakeTimerTotal = 0f;
 		_hasClimaxed = false;
-		_cBMCP.m_AmplitudeGain = defaultIntensity;
-		_cBMCP.m_FrequencyGain = defaultFrequency;
+		_cBMCP.m_AmplitudeGain = _defaultIntensity;
+		_cBMCP.m_FrequencyGain = _defaultFrequency;
 	}
 }

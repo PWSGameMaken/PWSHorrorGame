@@ -8,12 +8,15 @@ public enum TypeOfCreature
 
 public class CreatureMB : MonoBehaviour
 {
-	[HideInInspector] public GameObject creatureGO;
-	public Transform[] respawnPoints;
-	public TypeOfCreature typeOfCreature;
+	[SerializeField] private Transform[] respawnPoints;
+	private TypeOfCreature typeOfCreature;
 
-	private void Start()
-	{
-		creatureGO = gameObject;
-	}
+	public Transform[] RespawnPoints { get => respawnPoints; }
+	protected TypeOfCreature TypeOfCreature { set => typeOfCreature = value; }
+
+	//[HideInInspector] public GameObject creatureGO;
+	//private void Start()
+	//{
+	//	creatureGO = gameObject;
+	//}
 }

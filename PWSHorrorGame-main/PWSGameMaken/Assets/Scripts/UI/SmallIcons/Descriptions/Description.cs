@@ -19,13 +19,14 @@ public static class Description
 	#endregion
 
 	#region unity functions
-	public static void SetDescription(IBaseItem item, Vector3 slotPos)
+	public static void SetDescription(IBaseItem itemToDescribe, Vector3 slotPos)
 	{
-		Description.item = GameObject.FindGameObjectWithTag("DescriptionPrefab");
- 		Description.item.GetComponentInChildren<TextMeshProUGUI>().text = item.ItemSO.description;
+		//Moet nog efficiënter, de Find wordt iedere frame uitgevoerd wanneer Item boven slot
+		item = GameObject.FindGameObjectWithTag("DescriptionPrefab");
+ 		item.GetComponentInChildren<TextMeshProUGUI>().text = itemToDescribe.ItemSO.description;
 
-		Description.item.GetComponentInChildren<Image>().color = opaque;
-		Description.item.GetComponentInChildren<RectTransform>().position = Move(slotPos);
+		item.GetComponentInChildren<Image>().color = opaque;
+		item.GetComponentInChildren<RectTransform>().position = Move(slotPos);
 	}
 
 	public static void DeleteDescription()

@@ -132,7 +132,6 @@ GameObject:
   - component: {fileID: 2121069187794713746}
   - component: {fileID: -4228103102517336592}
   - component: {fileID: -4058495999775634455}
-  - component: {fileID: 4606225691265600945}
   m_Layer: 0
   m_Name: SteenVierkant
   m_TagString: Untagged
@@ -170,7 +169,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hintText: Press E to pickup!
-  itemSO: {fileID: 11400000, guid: 300d849787ad57b46960f27ff6f150e7, type: 2}
+  _itemSO: {fileID: 11400000, guid: 300d849787ad57b46960f27ff6f150e7, type: 2}
+  _dropSound: {fileID: 8300000, guid: 1e98d7bf35d61b949b5b61f6099debc1, type: 3}
 --- !u!65 &-466795451311596862
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -250,7 +250,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1e98d7bf35d61b949b5b61f6099debc1, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -336,18 +336,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &4606225691265600945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6320035328214705818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca7a0f3e225e6424b94f0c4368e03eb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8092640522984825288
 GameObject:
   m_ObjectHideFlags: 0

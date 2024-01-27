@@ -14,35 +14,43 @@ public class PlayerMB : CreatureMB
 	}
 	#endregion
 
-	public Transform playerCameraRoot;
-	public GameObject playerBody;
-	public GameObject killLantern;
-	public Transform weightPuzzleRespawnPos;
-	
+	[SerializeField] private Transform _playerCameraRoot;
+	[SerializeField] private GameObject _playerBody;
+	[SerializeField] private GameObject _killLantern;
+	[SerializeField] private Transform _weightPuzzleRespawnPos;
+	[SerializeField] private int _killCamRotationSpeed = 5;
+
 	private CharacterController _charController;
 	private FirstPersonController _fpsController;
 	private StarterAssetsInputs _playerInput;
+
+	public Transform PlayerCameraRoot { get => _playerCameraRoot; }
+	public GameObject PlayerBody { get => _playerBody; }
+	public Transform WeightPuzzleRespawnPos { get => _weightPuzzleRespawnPos; }
+	public int KillCamRotationSpeed { get => _killCamRotationSpeed; }
 
 	private void Start()
 	{
 		_charController = GetComponent<CharacterController>();
 		_fpsController = GetComponent<FirstPersonController>();
 		_playerInput = GetComponent<StarterAssetsInputs>();
-		typeOfCreature = TypeOfCreature.Player;
+		TypeOfCreature = TypeOfCreature.Player;
 	}
 
 	public void ActivateKillScene(bool state)
 	{
-		StartCoroutine(ActivateCharacterController(state));
-		playerBody.SetActive(!state);
-		killLantern.SetActive(state);
 		BlockPlayerMovement(state);
+
+		PlayerBody.SetActive(!state);
+		_killLantern.SetActive(state);
 	}
 
 	private void BlockPlayerMovement(bool state)
 	{
 		_playerInput.cursorInputForLook = !state;
 		_fpsController.MoveSpeed = state == true ? 0 : 4;
+
+		StartCoroutine(ActivateCharacterController(state));
 	}
 		
 	private IEnumerator ActivateCharacterController(bool state)

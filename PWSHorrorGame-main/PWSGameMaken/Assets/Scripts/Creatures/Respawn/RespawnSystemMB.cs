@@ -12,7 +12,7 @@ public static class RespawnSystemMB
 
 	public static void Respawn(Transform creatureToRespawn)
 	{	
-		Transform[] spawnPoints = creatureToRespawn.GetComponent<CreatureMB>().respawnPoints;
+		Transform[] spawnPoints = creatureToRespawn.GetComponent<CreatureMB>().RespawnPoints;
 
 		Transform spawnPoint = GetClosestRespawnPoint(creatureToRespawn, spawnPoints);
 		Respawn(creatureToRespawn, spawnPoint);

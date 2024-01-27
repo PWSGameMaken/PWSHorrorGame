@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
-public enum MonsterState
+public enum CurrentState
 {
 	isColliding,
 	isHunting,
@@ -9,18 +9,21 @@ public enum MonsterState
 
 public abstract class MonsterWithAIMB : MonsterMB
 {
-	[HideInInspector] public NavMeshAgent navMeshAgent;
-	[Header("NavMesh Settings")]
-	public float rotationSpeed = 15f;
-	public float huntRadius = 10f;
-	public float killRadius = 3f;
-	public int walkingSpeed = 4;
-	public int runningSpeed = 6;
-
-	protected PlayerMB playerMB;
 	protected bool playerIsCaught = false;
 
-	private MonsterState currentState;
+	[Header("NavMesh Settings")]
+	private NavMeshAgent navMeshAgent;
+	[SerializeField] private float rotationSpeed = 15f;
+	[SerializeField] private float huntRadius = 10f;
+	[SerializeField] private float killRadius = 3f;
+
+	private PlayerMB playerMB;
+	private CurrentState currentState;
+
+	protected float RotationSpeed { get => rotationSpeed;}
+	protected PlayerMB PlayerMB { get => playerMB; private set => playerMB = value; }
+	protected NavMeshAgent NavMeshAgent { get => navMeshAgent; private set => navMeshAgent = value; }
+
 
 	private void OnDrawGizmosSelected()
 	{
@@ -31,36 +34,36 @@ public abstract class MonsterWithAIMB : MonsterMB
 		Gizmos.DrawWireSphere(transform.position, killRadius);
 	}
 
-	protected void StartV2()
+	protected new void Start()
 	{
-		playerMB = PlayerMB.instance;
-		navMeshAgent = GetComponent<NavMeshAgent>();
-		currentState = MonsterState.isWalking;
+		PlayerMB = PlayerMB.instance;
+		NavMeshAgent = GetComponent<NavMeshAgent>();
+		currentState = CurrentState.isWalking;
 		base.Start();
 	}
 
 	protected void Move()
 	{
-		navMeshAgent.SetDestination(playerMB.playerCameraRoot.position);
+		NavMeshAgent.SetDestination(PlayerMB.PlayerCameraRoot.position);
 		CheckDistanceToPlayer();
 	}
 
 	protected void CheckDistanceToPlayer()
 	{
-		float distance = Vector3.Distance(playerMB.playerCameraRoot.position, transform.position);
-		if (distance < killRadius && currentState != MonsterState.isColliding)
+		float distance = Vector3.Distance(PlayerMB.PlayerCameraRoot.position, transform.position);
+		if (distance < killRadius && currentState != CurrentState.isColliding)
 		{
-			currentState = MonsterState.isColliding;
+			currentState = CurrentState.isColliding;
 			CollideWithPlayer();
 		}
-		else if (distance < huntRadius && currentState != MonsterState.isHunting)
+		else if (distance < huntRadius && currentState != CurrentState.isHunting)
 		{
-			currentState = MonsterState.isHunting;
+			currentState = CurrentState.isHunting;
 			HuntPlayer();
 		}
-		else if (distance > huntRadius && currentState != MonsterState.isWalking)
+		else if (distance > huntRadius && currentState != CurrentState.isWalking)
 		{
-			currentState = MonsterState.isWalking;
+			currentState = CurrentState.isWalking;
 			FollowPlayer();
 		}
 	}

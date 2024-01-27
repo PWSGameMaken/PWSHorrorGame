@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 2058785425860350850}
   - component: {fileID: 5910745825657551662}
   - component: {fileID: -6619062309114579245}
-  - component: {fileID: 8377715007384492727}
   m_Layer: 0
   m_Name: GroundItemPrefab
   m_TagString: Untagged
@@ -102,7 +101,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hintText: Press E to pickup!
-  itemSO: {fileID: 11400000, guid: 0f260beb6404a8d48846a5f1c75ae0ea, type: 2}
+  _itemSO: {fileID: 0}
+  _dropSound: {fileID: 8300000, guid: 1e98d7bf35d61b949b5b61f6099debc1, type: 3}
 --- !u!65 &7627378489788081437
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -182,7 +182,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1e98d7bf35d61b949b5b61f6099debc1, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -268,15 +268,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8377715007384492727
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 137288753681790374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca7a0f3e225e6424b94f0c4368e03eb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

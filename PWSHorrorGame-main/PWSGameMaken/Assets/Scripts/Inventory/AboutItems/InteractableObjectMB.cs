@@ -2,7 +2,9 @@ using UnityEngine;
 
 public abstract class InteractableObjectMB : MonoBehaviour
 {
-	public string hintText;
+	[SerializeField] private string hintText;
+
+	public string HintText { get => hintText; set => hintText = value; }
 
 	public void ObjectiveCompleted()
 	{
