@@ -51,7 +51,7 @@ public class LightFlickerEffectV2MB : MonoBehaviour
 			light = GetComponent<Light>();
 		}
 
-		_player = PlayerMB.instance.playerBody;
+		_player = PlayerMB.instance.PlayerBody;
 	}
 
 	void FixedUpdate()

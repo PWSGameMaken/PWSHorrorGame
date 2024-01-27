@@ -84,7 +84,7 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 
 		var selectedItemSO = selectedSlot.ItemObject.Item.ItemSO;
 
-		_movementAnimation.ChangeHandAnimationState(selectedItemSO.animTag, activeState);
+		_movementAnimation.SetAnimation(selectedItemSO.animTag, activeState);
 		_objectInHandMB.SetActive(selectedItemSO, activeState);
 	}
 

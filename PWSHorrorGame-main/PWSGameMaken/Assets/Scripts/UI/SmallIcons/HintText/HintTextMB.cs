@@ -27,7 +27,7 @@ public class HintTextMB : MonoBehaviour
 		{
 			if(collidedGO.TryGetComponent(out InteractableObjectMB interactableObjectMB))
 			{
-				_hintText.text = interactableObjectMB.hintText;
+				_hintText.text = interactableObjectMB.HintText;
 			}
 		}
 	}

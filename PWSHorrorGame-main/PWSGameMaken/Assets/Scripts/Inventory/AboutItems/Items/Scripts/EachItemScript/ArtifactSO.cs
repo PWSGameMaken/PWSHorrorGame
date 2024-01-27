@@ -8,7 +8,5 @@ public class ArtifactSO : ItemSO
 	{
 		animTag = AnimTag.HasVase;
 		stackable = false;
-		itemName = "Artifact";
-		type = ItemType.Artifact;
 	}
 }

@@ -9,15 +9,34 @@ using UnityEngine;
 public class GroundItemMB : InteractableObjectMB, IInteractWithSlot
 {
 	//private static Transform _collectables;
-	public ItemSO itemSO;
+	[SerializeField] private ItemSO _itemSO;
+
+	[SerializeField] private AudioClip _dropSound;
+	private AudioSource _audioSource;
+
+	private static Transform _player;
+	private Rigidbody _rb;
+
 	private static readonly int _power = 100;
 	private bool isMoving = false;
-	private static Transform _player;
+
+	public ItemSO ItemSO { get => _itemSO; set => _itemSO = value; }
 
 	private void Start()
 	{
 		_player = GameObject.FindGameObjectWithTag("Player").transform;
+		_audioSource = GetComponent<AudioSource>();
+		_rb = GetComponent<Rigidbody>();
 		//_collectables = GameStatsMB.instance.collectables;
+	}
+
+	private void OnCollisionEnter(Collision collision)
+	{
+		//Alle geluiden spelen in het begin nog tegelijkertijd af tot één grote boem!
+		if (_rb.velocity.magnitude > 1)
+		{
+			_audioSource.PlayOneShot(_dropSound);
+		}
 	}
 
 	public void Interact(VisibleSlotsMB visibleSlotsMB)
@@ -27,7 +46,7 @@ public class GroundItemMB : InteractableObjectMB, IInteractWithSlot
 
 	private bool AddToSlot(VisibleSlotsMB visibleSlotsMB)
 	{
-		var itemObject = new ItemObject(itemSO);
+		var itemObject = new ItemObject(ItemSO);
 		
 		return visibleSlotsMB.AddItem(itemObject);
 	}
@@ -41,7 +60,7 @@ public class GroundItemMB : InteractableObjectMB, IInteractWithSlot
 			earthQuakeMB.EarthQuake();
 		}
 
-		var destroyDelay = earthQuakeMB != null ? earthQuakeMB.shakeTime / 2 : 0;
+		var destroyDelay = earthQuakeMB != null ? earthQuakeMB.ShakeTime / 2 : 0;
 		StartCoroutine(DestroyExec(destroyDelay));
 	}
 
@@ -50,7 +69,7 @@ public class GroundItemMB : InteractableObjectMB, IInteractWithSlot
 		Vector3 forward = _player.TransformDirection(Vector3.forward);
 
 		var newGroundItem = Instantiate(itemSO.groundItemPrefab, GetSpawnPosition() + forward * 0.75f, _player.rotation * itemSO.groundItemPrefab.transform.rotation);
-		newGroundItem.GetComponent<GroundItemMB>().itemSO = itemSO;
+		newGroundItem.GetComponent<GroundItemMB>().ItemSO = itemSO;
 
 		newGroundItem.GetComponent<Rigidbody>().AddForce(forward * _power);
 

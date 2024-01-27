@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: -8289283090254900320}
   - component: {fileID: 42271197941177616}
   - component: {fileID: -9147194794776231899}
-  - component: {fileID: 7032125539154141100}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -52,7 +51,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hintText: Press E to pickup!
-  itemSO: {fileID: 11400000, guid: 39325e71ca257624f861f4bdafaecc0d, type: 2}
+  _itemSO: {fileID: 11400000, guid: 39325e71ca257624f861f4bdafaecc0d, type: 2}
+  _dropSound: {fileID: 8300000, guid: 1e98d7bf35d61b949b5b61f6099debc1, type: 3}
 --- !u!65 &4372004910398004602
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -132,7 +132,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1e98d7bf35d61b949b5b61f6099debc1, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -218,18 +218,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7032125539154141100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1394990789689852786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca7a0f3e225e6424b94f0c4368e03eb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4866848424771270716
 GameObject:
   m_ObjectHideFlags: 0

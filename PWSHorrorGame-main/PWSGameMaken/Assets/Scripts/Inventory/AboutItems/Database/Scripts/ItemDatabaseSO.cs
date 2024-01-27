@@ -8,17 +8,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Item Database", menuName = "Inventory System/Items/Database")]
 public class ItemDatabaseSO : ScriptableObject, ISerializationCallbackReceiver
 {
-	public ItemSO[] ItemSOlist;
+	public ItemSO[] itemSOlist;
 
 	//checkt of de Id's nogsteeds overeenkomen
 	[ContextMenu("Update ID's")]
 	private void UpdateID()
 	{
-		for (int i = 0; i < ItemSOlist.Length; i++)
+		for (int i = 0; i < itemSOlist.Length; i++)
 		{
-			if (ItemSOlist[i].id != i)
+			if (itemSOlist[i].id != i)
 			{
-				ItemSOlist[i].id = i;
+				itemSOlist[i].id = i;
 			}
 		}
 	}

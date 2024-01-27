@@ -10,16 +10,14 @@ public enum AnimTag
 
 public class PlayerMovementAnimationMB : MonoBehaviour
 {
+	[SerializeField] private AudioSource _soundSource;
     private Animator _anim;
-    private PlaySounds _playSoundsMB;
     private bool _walking = false;
 
     private void Start()
     {
-        _playSoundsMB = GetComponent<PlaySounds>();
-
         _anim = GetComponent<Animator>();
-        _anim.SetBool(AnimTag.IsWalking.ToString(), _walking);
+        SetAnimation(AnimTag.IsWalking, _walking);
     }
 
     private void Update()
@@ -33,19 +31,25 @@ public class PlayerMovementAnimationMB : MonoBehaviour
 
         if (toggleWalking)
         {
-            ToggleWalking(AnimTag.IsWalking, !_walking);
+            ToggleWalking(!_walking);
         }
     }
 
-    private void ToggleWalking(AnimTag animTag, bool state)
+    private void ToggleWalking(bool state)
     {
-        _anim.SetBool(animTag.ToString(), state);
-        _playSoundsMB.ActivateSounds(state);
+        SetAnimation(AnimTag.IsWalking, state);
+        //ToggleWalkingSounds(state);
         _walking = state;
     }
 
-    public void ChangeHandAnimationState(AnimTag animTag, bool state)
+    public void SetAnimation(AnimTag animTag, bool state)
     {
         _anim.SetBool(animTag.ToString(), state);
     }
+
+    //private void ToggleWalkingSounds(bool state)
+    //{
+    //    if(state) _soundSource.Play();
+    //    else _soundSource.Stop();
+    //}
 }
