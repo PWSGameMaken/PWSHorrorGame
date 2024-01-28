@@ -16,7 +16,8 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 	[SerializeField] private Color _slotColor;
 
 	[SerializeField] private ObjectInHandMB _objectInHandMB;
-	[SerializeField] private PlayerMovementAnimationMB _movementAnimation;
+	[SerializeField] private AnimMB _animMB;
+
 	protected Dictionary<GameObject, InventorySlot> slots_dict = new();
 	#endregion
 
@@ -84,7 +85,7 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 
 		var selectedItemSO = selectedSlot.ItemObject.Item.ItemSO;
 
-		_movementAnimation.SetAnimation(selectedItemSO.animTag, activeState);
+		_animMB.SetAnimation(selectedItemSO.animTag.ToString(), activeState);
 		_objectInHandMB.SetActive(selectedItemSO, activeState);
 	}
 

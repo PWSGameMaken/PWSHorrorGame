@@ -23,6 +23,10 @@ public class PlayerMB : CreatureMB
 	private CharacterController _charController;
 	private FirstPersonController _fpsController;
 	private StarterAssetsInputs _playerInput;
+	private AnimMB _animMB;
+	private AudioManager _audioManager;
+
+	private bool _walking = false;
 
 	public Transform PlayerCameraRoot { get => _playerCameraRoot; }
 	public GameObject PlayerBody { get => _playerBody; }
@@ -34,28 +38,78 @@ public class PlayerMB : CreatureMB
 		_charController = GetComponent<CharacterController>();
 		_fpsController = GetComponent<FirstPersonController>();
 		_playerInput = GetComponent<StarterAssetsInputs>();
+		_animMB = GetComponentInChildren<AnimMB>();
+
+		_audioManager = AudioManager.instance;
 		TypeOfCreature = TypeOfCreature.Player;
+
+		_animMB.SetAnimation(PlayerAnimations.IsWalking.ToString(), false);
 	}
 
-	public void ActivateKillScene(bool state)
+	private void Update()
 	{
-		BlockPlayerMovement(state);
+		var goingToWalk = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
+		var toggleWalking =
+			!_walking && goingToWalk
+			|| _walking && !goingToWalk
+			//Deze lijn moet weg worden gehaald wanneer we geen sprint meer hebben! (Onder)
+			|| _walking && Input.GetKey(KeyCode.LeftShift);
 
-		PlayerBody.SetActive(!state);
-		_killLantern.SetActive(state);
+		if (toggleWalking)
+		{
+			_walking = !_walking;
+			if (_walking)
+			{
+				_animMB.SetAnimation(PlayerAnimations.IsWalking.ToString(), true);
+				_audioManager.Play("PlayerFootsteps", gameObject);
+			}
+			else
+			{
+				_animMB.SetAnimation(PlayerAnimations.IsWalking.ToString(), false);
+				_audioManager.Stop("PlayerFootsteps");
+			}
+		}
 	}
 
-	private void BlockPlayerMovement(bool state)
+	public void ActivateKillScene(bool activate)
 	{
-		_playerInput.cursorInputForLook = !state;
-		_fpsController.MoveSpeed = state == true ? 0 : 4;
+		if(activate)
+		{
+			BlockPlayerMovement(true);
 
-		StartCoroutine(ActivateCharacterController(state));
+			PlayerBody.SetActive(false);
+			_killLantern.SetActive(true);
+		}
+		else
+		{
+			BlockPlayerMovement(false);
+
+			PlayerBody.SetActive(true);
+			_killLantern.SetActive(false);
+		}
+	}
+
+	private void BlockPlayerMovement(bool blockMovement)
+	{
+		if(blockMovement)
+		{
+			_playerInput.cursorInputForLook = false;
+			_fpsController.MoveSpeed = 0;
+
+			StartCoroutine(ActivateCharacterController(false));
+		}
+		else
+		{
+			_playerInput.cursorInputForLook = true;
+			_fpsController.MoveSpeed = 4;
+
+			StartCoroutine(ActivateCharacterController(true));
+		}
 	}
 		
-	private IEnumerator ActivateCharacterController(bool state)
+	private IEnumerator ActivateCharacterController(bool activeState)
 	{
 		yield return new WaitForSecondsRealtime(0.5f);
-		_charController.enabled = !state;
+		_charController.enabled = activeState;
 	}
 }

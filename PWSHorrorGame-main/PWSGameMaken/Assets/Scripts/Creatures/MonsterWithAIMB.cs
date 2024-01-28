@@ -7,7 +7,7 @@ public enum CurrentState
 	isWalking
 }
 
-public abstract class MonsterWithAIMB : MonsterMB
+public abstract class MonsterWithAiMB : MonsterMB
 {
 	protected bool playerIsCaught = false;
 
@@ -51,17 +51,21 @@ public abstract class MonsterWithAIMB : MonsterMB
 	protected void CheckDistanceToPlayer()
 	{
 		float distance = Vector3.Distance(PlayerMB.PlayerCameraRoot.position, transform.position);
-		if (distance < killRadius && currentState != CurrentState.isColliding)
+		var killMode = distance < killRadius && currentState != CurrentState.isColliding;
+		var huntMode = distance < huntRadius && currentState != CurrentState.isHunting;
+		var lookForMode = distance > huntRadius && currentState != CurrentState.isWalking;
+
+		if (killMode)
 		{
 			currentState = CurrentState.isColliding;
 			CollideWithPlayer();
 		}
-		else if (distance < huntRadius && currentState != CurrentState.isHunting)
+		else if (huntMode)
 		{
 			currentState = CurrentState.isHunting;
 			HuntPlayer();
 		}
-		else if (distance > huntRadius && currentState != CurrentState.isWalking)
+		else if (lookForMode)
 		{
 			currentState = CurrentState.isWalking;
 			FollowPlayer();
