@@ -6,14 +6,7 @@ public class EarthQuakeMB : MonoBehaviour
 	[SerializeField] private float _shakeFrequency = 10f;
 	[SerializeField] private float _shakeTime = 1f;
 
-	[SerializeField] private AudioSource _audioSource;
-	[SerializeField] private AudioClip earthQuakeSound;
     public float ShakeTime { get => _shakeTime; }
-
-	private void Start()
-	{
-		_audioSource = GetComponent<AudioSource>();
-	}
 
 	public void EarthQuake()
 	{
@@ -28,6 +21,6 @@ public class EarthQuakeMB : MonoBehaviour
 
 	private void PlaySounds()
 	{
-		_audioSource.PlayOneShot(earthQuakeSound);
+		AudioManager.instance.PlayOneShot("EarthQuake", gameObject);
 	}
 }

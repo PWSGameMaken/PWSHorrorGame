@@ -1,21 +1,24 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class EindMonsterMB : MonsterWithAIMB
+public class EindMonsterMB : MonsterWithAiMB
 {
 	[SerializeField] private Transform _focusPoint;
 	[SerializeField] private AnimationClip _killAnimation;
 	[SerializeField] private Transform[] _creaturesToRespawn;
 	[SerializeField] private GameOverMenu _gameOverMenu;
+
 	[SerializeField] private int walkingSpeed = 4;
 	[SerializeField] private int runningSpeed = 6;
-	private AudioManager_EindMonster _audioManager;
+
+	private AudioManager _audioManager;
 
 	private new void Start()
 	{
 		base.Start();
-		Anim.SetBool("Walk", true);
-		_audioManager = GetComponentInChildren<AudioManager_EindMonster>();
+		AnimMB.SetAnimation(MonsterAnimations.Walk.ToString(), false);
+		_audioManager = FindObjectOfType<AudioManager>();
 	}
 
 	private void Update()
@@ -27,6 +30,29 @@ public class EindMonsterMB : MonsterWithAIMB
 		}
 			
 		Move();
+	}
+
+	private void OnCollisionEnter(Collision collision)
+	{
+		if(collision.gameObject.CompareTag("Player"))
+		{
+			var contactPoint = collision.GetContact(0);
+
+			var name = contactPoint.thisCollider.gameObject.name;
+			if (name == "KillArea")
+			{
+				print("KillArea is hit");
+			}
+			else if (name == "HuntArea")
+			{
+				print("HuntArea is hit");
+			}
+		}
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		
 	}
 
 	public override void CollideWithPlayer()
@@ -45,32 +71,57 @@ public class EindMonsterMB : MonsterWithAIMB
 		Run(false);
 	}
 
-	private void ActivateKillScene(Vector3 monsterTarget, bool state)
+	private void ActivateKillScene(bool activate)
 	{
-		NavMeshAgent.SetDestination(monsterTarget);
-		ActivateSlashAnimation(state);
+		if (activate)
+		{
+			AnimMB.SetAnimation(MonsterAnimations.Slash.ToString(), true);
+			AnimMB.SetAnimation(MonsterAnimations.Run.ToString(), false);
+			_audioManager.PlayOneShot("MonsterSlash", gameObject);
+		}
+		else
+		{
+			AnimMB.SetAnimation(MonsterAnimations.Slash.ToString(), false);
+		}
 	}
 
-	private void ActivateSlashAnimation(bool state)
+	private void Run(bool running)
 	{
-		Anim.SetBool("Slash", state);
-		Anim.SetBool("Run", !state);
+		if (running)
+		{
+			StartRunning();
+		}
+		else
+		{
+			StopRunning();
+		}
 	}
 
-	private void Run(bool state)
+	private void StartRunning()
 	{
-		NavMeshAgent.speed = state == true ? runningSpeed : walkingSpeed;
-		_audioManager.Footsteps(state);
-		_audioManager.Scream();
+		NavMeshAgent.speed = runningSpeed;
 
-		Anim.SetBool("Run", state);
-		Anim.SetBool("Walk", !state);
+		_audioManager.PlayOneShot("MonsterScream", gameObject);
+		_audioManager.Play("MonsterRun", gameObject);
+
+		AnimMB.SetAnimation(MonsterAnimations.Run.ToString(), true);
+		AnimMB.SetAnimation(MonsterAnimations.Walk.ToString(), false);
+	}
+
+	private void StopRunning()
+	{
+		NavMeshAgent.speed = walkingSpeed;
+
+		_audioManager.Stop("MonsterRun");
+
+		AnimMB.SetAnimation(MonsterAnimations.Run.ToString(), false);
+		AnimMB.SetAnimation(MonsterAnimations.Walk.ToString(), true);
 	}
 
 	private IEnumerator GameOver()
 	{
 		Run(false);
-		IsDead(true);
+		PlayerIsDead(true);
 		yield return new WaitForSeconds(_killAnimation.length);
 		AudioListener.pause = true;
 		_gameOverMenu.SetActiveMenu();
@@ -81,18 +132,40 @@ public class EindMonsterMB : MonsterWithAIMB
 		AudioListener.pause = false;
 		RespawnSystemMB.Respawn(_creaturesToRespawn);
 		_gameOverMenu.SetActiveMenu();
-		IsDead(false);
+		PlayerIsDead(false);
 	}
 
-	private void IsDead(bool state)
+	private void PlayerIsDead(bool isDying)
 	{
-		//Deze werkt niet aangezien het monster en de speler in eerste instantie nog naast elkaar staan. De update van MonsterWithAIMB fixt dit momenteel wel.
-		//currentState = state ? MonsterState.isColliding : MonsterState.isWalking;
+		if (isDying)
+		{
+			ActivateGameOver();
+		}
+		else
+		{
+			DeActivateGameOver();
+		}
+	}
 
-		playerIsCaught = state;
+	private void ActivateGameOver()
+	{
+		playerIsCaught = true;
 
-		var monsterTarget = state ? transform.position : PlayerMB.PlayerCameraRoot.position;
-		ActivateKillScene(monsterTarget, state);
-		PlayerMB.ActivateKillScene(state);
+		var monsterPos = transform.position;
+		NavMeshAgent.SetDestination(monsterPos);
+
+		ActivateKillScene(true);
+		PlayerMB.ActivateKillScene(true);
+	}
+
+	private void DeActivateGameOver()
+	{
+		playerIsCaught = false;
+
+		var playerPos = PlayerMB.PlayerCameraRoot.position;
+		NavMeshAgent.SetDestination(playerPos);
+
+		ActivateKillScene(false);
+		PlayerMB.ActivateKillScene(false);
 	}
 }

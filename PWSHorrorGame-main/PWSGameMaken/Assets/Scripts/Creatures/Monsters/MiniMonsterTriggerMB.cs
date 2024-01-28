@@ -7,12 +7,12 @@ public class MiniMonsterTriggerMB : MonoBehaviour
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _destroyDelay;
 
-    private AudioSource[] _audioSource;
+    private AudioManager _audioManager;
     private bool playerInsideTrigger = false;
 
 	private void Start()
 	{
-        _audioSource = GetComponentsInChildren<AudioSource>();
+        _audioManager = AudioManager.instance;
 	}
 
 	private void Update()
@@ -31,7 +31,8 @@ public class MiniMonsterTriggerMB : MonoBehaviour
 	private void Activate()
 	{
 		playerInsideTrigger = true;
-		foreach (var source in _audioSource) { source.Play(); }
+        _audioManager.Play("MiniMonsterFootsteps", gameObject);
+        _audioManager.PlayOneShot("MiniMonsterScream", gameObject);
 	}
 
 	private void OnTriggerExit(Collider other)

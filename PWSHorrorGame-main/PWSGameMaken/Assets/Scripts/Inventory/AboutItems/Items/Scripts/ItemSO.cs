@@ -16,6 +16,6 @@ public class ItemSO : ScriptableObject
 	public int id = -1;
 	[TextArea(15, 20)]
 	public string description;
-	public AnimTag animTag;
+	public PlayerAnimations animTag;
 	public AudioClip dropSound;
 } 
