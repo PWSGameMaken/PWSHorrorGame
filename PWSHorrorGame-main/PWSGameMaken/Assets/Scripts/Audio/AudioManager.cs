@@ -2,21 +2,10 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-//Mogelijk inplaats van syntax gevoelige strings te gebruiken
-public enum AudioType
+public enum OtherAudio
 {
-	MonsterRun,
-	MonsterScream,
-	MonsterSlah,
-
 	Ambiance,
-
-	PlayerFootsteps,
-
 	EarthQuake,
-
-	MiniMonsterFootsteps,
-	MiniMonsterScream
 }
 
 public class AudioManager : MonoBehaviour
@@ -38,12 +27,7 @@ public class AudioManager : MonoBehaviour
 		}
 	}
 
-	private void Start()
-	{
-		Play("Ambiance", gameObject);
-	}
-
-	private void SetAudioStats(Sound sound, GameObject emitter)
+	private static void SetAudioStats(Sound sound, GameObject emitter)
 	{
 		if(emitter.TryGetComponent<AudioSource>(out var source) && !source.isPlaying)
 		{
@@ -68,56 +52,53 @@ public class AudioManager : MonoBehaviour
 			sound.source.maxDistance = sound.maxDistance;
 		}
 
+		#region Alleen nodig bij Mixer
 		//s.source.outputAudioMixedGrouop = mixerGroup;
 		//s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
 		//s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
+		#endregion
 	}
 
 	public void Play(string name, GameObject emitter)
 	{
-		Sound s = Array.Find(sounds, sound => sound.name == name);
-		if (s == null) 
-		{ 
-			print("Sound: " + name + " not found!"); 
-			return; 
+		if(TryFindSound(name, out var sound))
+		{
+			SetAudioStats(sound, emitter);
+			sound.source.Play();
 		}
+	}
 
-		SetAudioStats(s, emitter);
-		s.source.Play();
+	public void PlayOneShot(string name, GameObject emitter) //Voor Sound Effects
+	{
+		if (TryFindSound(name, out var sound))
+		{
+			SetAudioStats(sound, emitter);
+			sound.source.PlayOneShot(sound.clip);
+
+			Destroy(sound.source, sound.clip.length);
+		}
 	}
 
 	public void Stop(string name)
 	{
-		Sound s = Array.Find(sounds, sound => sound.name == name);
-		if (s == null)
+		if(TryFindSound(name, out var sound))
 		{
-			print("Sound: " + name + " not found!");
-			return;
+			sound.source.Stop();
 		}
-		s.source.Stop();
 	}
 
-	public void PlayOneShot(string name, GameObject emitter) //For Sound Effects
+	private bool TryFindSound(string name, out Sound sound)
 	{
-		Sound sound = Array.Find(sounds, item => item.name == name);
+		sound = Array.Find(sounds, item => item.name == name);
 
-		//if there there is no sound specified by the string, throw an error
+		//Print error wanneer er geen Sound is gevonden
 		if (sound == null)
 		{
 			print("Sound: " + sound.name + " not found! Did you spell it correctly?");
-			return;
+			return false;
 		}
 
-		SetAudioStats(sound, emitter);
-		sound.source.PlayOneShot(sound.clip);
-
-		StartCoroutine(DestroyAudioSource(sound.source));
-	}
-
-	private IEnumerator DestroyAudioSource(AudioSource source)
-	{
-		yield return new WaitForSeconds(source.clip.length);
-		Destroy(source);
+		return true;
 	}
 }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class MiniMonsterTriggerMB : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class MiniMonsterTriggerMB : MonoBehaviour
 
 	private void Start()
 	{
-        _audioManager = AudioManager.instance;
+		_audioManager = AudioManager.instance;
 	}
 
 	private void Update()
@@ -31,8 +32,8 @@ public class MiniMonsterTriggerMB : MonoBehaviour
 	private void Activate()
 	{
 		playerInsideTrigger = true;
-        _audioManager.Play("MiniMonsterFootsteps", gameObject);
-        _audioManager.PlayOneShot("MiniMonsterScream", gameObject);
+		_audioManager.Play(MiniMonsterAudio.MiniMonsterFootsteps.ToString(), gameObject);
+		_audioManager.PlayOneShot(MiniMonsterAudio.MiniMonsterScream.ToString(), gameObject);
 	}
 
 	private void OnTriggerExit(Collider other)

@@ -8,7 +8,6 @@ using UnityEngine;
 
 public class GroundItemMB : InteractableObjectMB, IInteractWithSlot
 {
-	//private static Transform _collectables;
 	[SerializeField] private ItemSO _itemSO;
 
 	[SerializeField] private AudioClip _dropSound;
@@ -27,7 +26,6 @@ public class GroundItemMB : InteractableObjectMB, IInteractWithSlot
 		_player = GameObject.FindGameObjectWithTag("Player").transform;
 		_audioSource = GetComponent<AudioSource>();
 		_rb = GetComponent<Rigidbody>();
-		//_collectables = GameStatsMB.instance.collectables;
 	}
 
 	private void OnCollisionEnter(Collision collision)

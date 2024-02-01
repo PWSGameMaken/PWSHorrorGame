@@ -17,7 +17,6 @@ public class GameStatsMB : MonoBehaviour
 	#endregion
 
 	#region Variables
-	public Transform collectables;
 	public ItemDatabaseSO itemDatabaseSO;
     #endregion
 }

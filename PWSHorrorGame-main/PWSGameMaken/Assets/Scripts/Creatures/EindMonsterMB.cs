@@ -1,6 +1,19 @@
 using System.Collections;
-using System.Runtime.CompilerServices;
 using UnityEngine;
+
+public enum MonsterAnimation
+{
+	Walk,
+	Run,
+	Slash
+}
+
+public enum MonsterAudio
+{
+	MonsterRun,
+	MonsterScream,
+	MonsterSlash
+}
 
 public class EindMonsterMB : MonsterWithAiMB
 {
@@ -12,13 +25,9 @@ public class EindMonsterMB : MonsterWithAiMB
 	[SerializeField] private int walkingSpeed = 4;
 	[SerializeField] private int runningSpeed = 6;
 
-	private AudioManager _audioManager;
-
 	private new void Start()
 	{
 		base.Start();
-		AnimMB.SetAnimation(MonsterAnimations.Walk.ToString(), false);
-		_audioManager = FindObjectOfType<AudioManager>();
 	}
 
 	private void Update()
@@ -30,29 +39,6 @@ public class EindMonsterMB : MonsterWithAiMB
 		}
 			
 		Move();
-	}
-
-	private void OnCollisionEnter(Collision collision)
-	{
-		if(collision.gameObject.CompareTag("Player"))
-		{
-			var contactPoint = collision.GetContact(0);
-
-			var name = contactPoint.thisCollider.gameObject.name;
-			if (name == "KillArea")
-			{
-				print("KillArea is hit");
-			}
-			else if (name == "HuntArea")
-			{
-				print("HuntArea is hit");
-			}
-		}
-	}
-
-	private void OnTriggerEnter(Collider other)
-	{
-		
 	}
 
 	public override void CollideWithPlayer()
@@ -75,13 +61,13 @@ public class EindMonsterMB : MonsterWithAiMB
 	{
 		if (activate)
 		{
-			AnimMB.SetAnimation(MonsterAnimations.Slash.ToString(), true);
-			AnimMB.SetAnimation(MonsterAnimations.Run.ToString(), false);
-			_audioManager.PlayOneShot("MonsterSlash", gameObject);
+			AnimMB.SetAnimation(MonsterAnimation.Slash.ToString(), true);
+			AnimMB.SetAnimation(MonsterAnimation.Run.ToString(), false);
+			AudioManager.PlayOneShot(MonsterAudio.MonsterSlash.ToString(), gameObject);
 		}
 		else
 		{
-			AnimMB.SetAnimation(MonsterAnimations.Slash.ToString(), false);
+			AnimMB.SetAnimation(MonsterAnimation.Slash.ToString(), false);
 		}
 	}
 
@@ -101,21 +87,21 @@ public class EindMonsterMB : MonsterWithAiMB
 	{
 		NavMeshAgent.speed = runningSpeed;
 
-		_audioManager.PlayOneShot("MonsterScream", gameObject);
-		_audioManager.Play("MonsterRun", gameObject);
+		AudioManager.PlayOneShot(MonsterAudio.MonsterScream.ToString(), gameObject);
+		AudioManager.Play(MonsterAudio.MonsterRun.ToString(), gameObject);
 
-		AnimMB.SetAnimation(MonsterAnimations.Run.ToString(), true);
-		AnimMB.SetAnimation(MonsterAnimations.Walk.ToString(), false);
+		AnimMB.SetAnimation(MonsterAnimation.Run.ToString(), true);
+		AnimMB.SetAnimation(MonsterAnimation.Walk.ToString(), false);
 	}
 
 	private void StopRunning()
 	{
 		NavMeshAgent.speed = walkingSpeed;
 
-		_audioManager.Stop("MonsterRun");
+		AudioManager.Stop(MonsterAudio.MonsterRun.ToString());
 
-		AnimMB.SetAnimation(MonsterAnimations.Run.ToString(), false);
-		AnimMB.SetAnimation(MonsterAnimations.Walk.ToString(), true);
+		AnimMB.SetAnimation(MonsterAnimation.Run.ToString(), false);
+		AnimMB.SetAnimation(MonsterAnimation.Walk.ToString(), true);
 	}
 
 	private IEnumerator GameOver()

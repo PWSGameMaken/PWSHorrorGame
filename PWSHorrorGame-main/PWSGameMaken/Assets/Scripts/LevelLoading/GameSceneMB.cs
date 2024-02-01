@@ -6,5 +6,6 @@ public class GameSceneMB : MonoBehaviour
 	{
 		//Cursor.lockState = CursorLockMode.None;
 		Cursor.visible = false;
+		AudioManager.instance.Play(OtherAudio.Ambiance.ToString(), gameObject);
 	}
 }

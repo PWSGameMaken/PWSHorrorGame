@@ -18,11 +18,9 @@ MonoBehaviour:
     type: 3}
   sprite: {fileID: 21300000, guid: c01689805b87b1b4080f7ba766789a37, type: 3}
   stackable: 0
-  itemName: SteenVierkant
   id: 11
-  type: 9
   description: 'Just a stone. A square, huh, I had hoped for a bit more flattering
     thing that is supposed to save my life. Almost like im not worth it... But I
     am! I am worth it! '
-  hintText: Press E to pickup
   animTag: 3
+  dropSound: {fileID: 8300000, guid: 1e98d7bf35d61b949b5b61f6099debc1, type: 3}

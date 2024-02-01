@@ -18,10 +18,8 @@ MonoBehaviour:
     type: 3}
   sprite: {fileID: 21300000, guid: 1c32e7e319456e14f89a0d623b24adff, type: 3}
   stackable: 0
-  itemName: SteenDriehoek
   id: 10
-  type: 9
   description: It's the eye! I have been seeing it in my dreams! No... I've been
     feeling it... yes... Feeling it... Following me... Devouring!
-  hintText: Press E to pickup
   animTag: 3
+  dropSound: {fileID: 8300000, guid: 1e98d7bf35d61b949b5b61f6099debc1, type: 3}

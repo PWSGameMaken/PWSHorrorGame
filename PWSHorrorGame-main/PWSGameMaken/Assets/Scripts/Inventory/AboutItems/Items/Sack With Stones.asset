@@ -18,10 +18,8 @@ MonoBehaviour:
     type: 3}
   sprite: {fileID: 21300000, guid: 3427aa36ea46bd24c82d63180067a86a, type: 3}
   stackable: 0
-  itemName: SackWithStones
   id: 13
-  type: 11
   description: Now that the have removed the net, i figured i could just as well
     take it with me on my journey! Could come in handy...
-  hintText: Press E to pickup
   animTag: 3
+  dropSound: {fileID: 8300000, guid: 1e98d7bf35d61b949b5b61f6099debc1, type: 3}
