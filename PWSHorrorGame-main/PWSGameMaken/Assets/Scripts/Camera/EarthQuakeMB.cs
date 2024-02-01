@@ -21,6 +21,6 @@ public class EarthQuakeMB : MonoBehaviour
 
 	private void PlaySounds()
 	{
-		AudioManager.instance.PlayOneShot("EarthQuake", gameObject);
+		AudioManager.instance.PlayOneShot(OtherAudio.EarthQuake.ToString(), gameObject);
 	}
 }

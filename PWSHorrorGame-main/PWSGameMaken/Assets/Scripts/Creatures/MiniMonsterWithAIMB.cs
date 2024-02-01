@@ -1,15 +1,19 @@
 using UnityEngine;
 
+public enum MiniMonsterAudio
+{
+	MiniMonsterFootsteps,
+	MiniMonsterScream
+}
+
 public class MiniMonsterWithAIMB : MonsterWithAiMB
 {
 	[SerializeField] private Transform _runAwayPosition;
-	private AudioManager _audioManager;
 
 	private new void Start()
 	{
 		base.Start();
-		_audioManager = AudioManager.instance;
-		_audioManager.Play("MiniMonsterFootsteps", gameObject);
+		AudioManager.Play(MiniMonsterAudio.MiniMonsterFootsteps.ToString(), gameObject);
 	}
 
 	private void Update()
@@ -26,7 +30,7 @@ public class MiniMonsterWithAIMB : MonsterWithAiMB
 	public override void CollideWithPlayer()
 	{
 		playerIsCaught = true;
-		_audioManager.PlayOneShot("MiniMonsterScream", gameObject);
+		AudioManager.Play(MiniMonsterAudio.MiniMonsterScream.ToString(), gameObject);
 	}
 
 	public override void FollowPlayer()

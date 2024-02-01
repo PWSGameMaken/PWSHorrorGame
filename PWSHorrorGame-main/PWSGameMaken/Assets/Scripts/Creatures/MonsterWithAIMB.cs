@@ -7,7 +7,7 @@ public enum CurrentState
 	isWalking
 }
 
-public abstract class MonsterWithAiMB : MonsterMB
+public abstract class MonsterWithAiMB : CreatureMB
 {
 	protected bool playerIsCaught = false;
 
@@ -36,10 +36,10 @@ public abstract class MonsterWithAiMB : MonsterMB
 
 	protected new void Start()
 	{
+		base.Start();
 		PlayerMB = PlayerMB.instance;
 		NavMeshAgent = GetComponent<NavMeshAgent>();
 		currentState = CurrentState.isWalking;
-		base.Start();
 	}
 
 	protected void Move()
@@ -58,17 +58,17 @@ public abstract class MonsterWithAiMB : MonsterMB
 		if (killMode)
 		{
 			currentState = CurrentState.isColliding;
-			CollideWithPlayer();
+			//CollideWithPlayer();
 		}
 		else if (huntMode)
 		{
 			currentState = CurrentState.isHunting;
-			HuntPlayer();
+			//HuntPlayer();
 		}
 		else if (lookForMode)
 		{
 			currentState = CurrentState.isWalking;
-			FollowPlayer();
+			//FollowPlayer();
 		}
 	}
 

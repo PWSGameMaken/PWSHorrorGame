@@ -6,7 +6,7 @@ public class ArtifactSO : ItemSO
 {
 	public ArtifactSO()
 	{
-		animTag = PlayerAnimations.HasVase;
+		animTag = AnimationsPlayer.HasVase;
 		stackable = false;
 	}
 }

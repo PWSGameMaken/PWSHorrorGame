@@ -18,10 +18,8 @@ MonoBehaviour:
     type: 3}
   sprite: {fileID: 21300000, guid: a0764916bda0e0a4997aee2dbded8961, type: 3}
   stackable: 0
-  itemName: Ladder
   id: 12
-  type: 12
   description: A ladder, quite a lucky find! This will probably become handy in the
     future, better take it with me.
-  hintText: Press E to pickup
   animTag: 2
+  dropSound: {fileID: 8300000, guid: 1e98d7bf35d61b949b5b61f6099debc1, type: 3}

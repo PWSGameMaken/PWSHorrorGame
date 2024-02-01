@@ -14,7 +14,7 @@ public class ItemDatabaseSO : ScriptableObject, ISerializationCallbackReceiver
 	[ContextMenu("Update ID's")]
 	private void UpdateID()
 	{
-		for (int i = 0; i < itemSOlist.Length; i++)
+		for (int i = 0; i < itemSOlist.Length; i++) 
 		{
 			if (itemSOlist[i].id != i)
 			{

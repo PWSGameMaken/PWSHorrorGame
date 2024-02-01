@@ -2,6 +2,19 @@ using StarterAssets;
 using System.Collections;
 using UnityEngine;
 
+public enum AnimationsPlayer
+{
+	NoAnimation,
+	IsWalking,
+	HasVase,
+	HasStone,
+}
+
+public enum PlayerAudio
+{
+	PlayerFootsteps
+}
+
 public class PlayerMB : CreatureMB
 {
 	#region Singleton
@@ -23,8 +36,6 @@ public class PlayerMB : CreatureMB
 	private CharacterController _charController;
 	private FirstPersonController _fpsController;
 	private StarterAssetsInputs _playerInput;
-	private AnimMB _animMB;
-	private AudioManager _audioManager;
 
 	private bool _walking = false;
 
@@ -33,17 +44,12 @@ public class PlayerMB : CreatureMB
 	public Transform WeightPuzzleRespawnPos { get => _weightPuzzleRespawnPos; }
 	public int KillCamRotationSpeed { get => _killCamRotationSpeed; }
 
-	private void Start()
+	private new void Start()
 	{
+		base.Start();
 		_charController = GetComponent<CharacterController>();
 		_fpsController = GetComponent<FirstPersonController>();
 		_playerInput = GetComponent<StarterAssetsInputs>();
-		_animMB = GetComponentInChildren<AnimMB>();
-
-		_audioManager = AudioManager.instance;
-		TypeOfCreature = TypeOfCreature.Player;
-
-		_animMB.SetAnimation(PlayerAnimations.IsWalking.ToString(), false);
 	}
 
 	private void Update()
@@ -60,13 +66,13 @@ public class PlayerMB : CreatureMB
 			_walking = !_walking;
 			if (_walking)
 			{
-				_animMB.SetAnimation(PlayerAnimations.IsWalking.ToString(), true);
-				_audioManager.Play("PlayerFootsteps", gameObject);
+				AnimMB.SetAnimation(AnimationsPlayer.IsWalking.ToString(), true);
+				AudioManager.Play(PlayerAudio.PlayerFootsteps.ToString(), gameObject);
 			}
 			else
 			{
-				_animMB.SetAnimation(PlayerAnimations.IsWalking.ToString(), false);
-				_audioManager.Stop("PlayerFootsteps");
+				AnimMB.SetAnimation(AnimationsPlayer.IsWalking.ToString(), false);
+				AudioManager.Stop(PlayerAudio.PlayerFootsteps.ToString());
 			}
 		}
 	}

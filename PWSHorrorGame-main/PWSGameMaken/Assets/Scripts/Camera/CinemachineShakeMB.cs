@@ -5,7 +5,6 @@ public class CinemachineShakeMB : MonoBehaviour
 {
 	public static CinemachineShakeMB Instance { get; private set; }
 
-	private CinemachineVirtualCamera _cinemachineVirtualCamera;
 	private float _shakeTimerTotal = 0;
 	private float _shakeTimer = 0;
 	private float _startingIntensity = 0;
@@ -20,13 +19,11 @@ public class CinemachineShakeMB : MonoBehaviour
 	private void Awake()
 	{
 		Instance = this;
-		_cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
+		_cBMCP = GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 	}
 
 	public void ShakeCamera(float intensity, float frequency, float time)
 	{
-		_cBMCP = _cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-
 		_defaultIntensity = _cBMCP.m_AmplitudeGain;
 		_defaultFrequency = _cBMCP.m_FrequencyGain;
 
