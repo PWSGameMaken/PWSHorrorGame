@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 993021986bb03964c9e7ecb21d0ee689, type: 3}
+  m_Name: Ladder
+  m_EditorClassIdentifier: 
+  groundItemPrefab: {fileID: 9123080685102209700, guid: f2362d832c0fe0344b12caa17774011b,
+    type: 3}
+  inHandItemPrefab: {fileID: 4906466458697759600, guid: 11658134ca1432a4bab2bebf3339c397,
+    type: 3}
+  sprite: {fileID: 21300000, guid: a0764916bda0e0a4997aee2dbded8961, type: 3}
+  stackable: 0
+  id: 12
+  description: A ladder, quite a lucky find! This will probably become handy in the
+    future, better take it with me.
+  animTag: 2
+  dropSound: {fileID: 8300000, guid: 1e98d7bf35d61b949b5b61f6099debc1, type: 3}

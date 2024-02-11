@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 993021986bb03964c9e7ecb21d0ee689, type: 3}
+  m_Name: SteenDriehoek
+  m_EditorClassIdentifier: 
+  groundItemPrefab: {fileID: 6642811999651541296, guid: 118212d4ee4fc904d86470930c006b01,
+    type: 3}
+  inHandItemPrefab: {fileID: 6642811999651541296, guid: f2768e9dce47e5e4890175f65ad7a8c4,
+    type: 3}
+  sprite: {fileID: 21300000, guid: 1c32e7e319456e14f89a0d623b24adff, type: 3}
+  stackable: 0
+  id: 10
+  description: It's the eye! I have been seeing it in my dreams! No... I've been
+    feeling it... yes... Feeling it... Following me... Devouring!
+  animTag: 3
+  dropSound: {fileID: 8300000, guid: 1e98d7bf35d61b949b5b61f6099debc1, type: 3}

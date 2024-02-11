@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 public enum OtherAudio
@@ -91,7 +90,6 @@ public class AudioManager : MonoBehaviour
 	{
 		sound = Array.Find(sounds, item => item.name == name);
 
-		//Print error wanneer er geen Sound is gevonden
 		if (sound == null)
 		{
 			print("Sound: " + sound.name + " not found! Did you spell it correctly?");
@@ -102,16 +100,3 @@ public class AudioManager : MonoBehaviour
 	}
 }
 
-#region als we willen dat geluid niet afgekapt wordt tussen scenes
-//public static AudioManager instance;
-
-//Awake()
-//if (instance == null)
-//	instance = this;
-//else
-//{
-//	Destroy(gameObject);
-//	return;
-//}
-//DontDestroyOnLoad(gameObject);
-#endregion
