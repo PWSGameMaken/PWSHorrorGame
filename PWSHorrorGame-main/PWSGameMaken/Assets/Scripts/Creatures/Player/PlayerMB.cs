@@ -17,8 +17,8 @@ public enum PlayerAudio
 
 public interface ITargetMB
 {
-	bool IsCaught { get; set; }
-	Transform RespawnPoint { get; }
+	//bool IsCaught { get; set; }
+	//Transform RespawnPoint { get; }
 
 	void Kill();
 	void Respawn();
@@ -37,43 +37,43 @@ public class PlayerMB : CreatureMB, ITargetMB
 	#endregion
 
 	[SerializeField] private Transform _playerCameraRoot;
+	[SerializeField] private int _killCamRotationSpeed = 5;
 
 	[SerializeField] private AnimationClip _killAnimation;
 	[SerializeField] private GameObject _playerBody;
 	[SerializeField] private GameObject _killLantern;
 
-	[SerializeField] private int _killCamRotationSpeed = 5;
-
 	[SerializeField] private Transform _weightPuzzleRespawnPos;
 	[SerializeField] private Transform _respawnPoint;
-	[SerializeField] private Transform _monsterFocusPoint;
 
-	[SerializeField] private GameOverMenu _gameOverMenu;
+	[SerializeField] private EindMonsterMB _eindMonsterMB;
 
-	private CharacterController _charController;
-	private FirstPersonController _fpsController;
+	private CharacterController _characterController;
 	private StarterAssetsInputs _playerInput;
 
 	private bool _walking = false;
-	public bool isCaught = false;
+	private bool _isCaught = false;
 
 	public Transform WeightPuzzleRespawnPos { get => _weightPuzzleRespawnPos; }
-	public Transform RespawnPoint { get => _respawnPoint; }
-	public bool IsCaught { get => isCaught; set => isCaught = value; }
+
+	public delegate void OnKill();
+	public OnKill onKill;
+
+	public delegate void OnRespawn();
+	public OnRespawn onRespawn;
 
 	private new void Start()
 	{
 		base.Start();
-		_charController = GetComponent<CharacterController>();
-		_fpsController = GetComponent<FirstPersonController>();
+		_characterController = GetComponent<CharacterController>();
 		_playerInput = GetComponent<StarterAssetsInputs>();
 	}
 
 	private void Update()
 	{
-		if (IsCaught)
+		if (_isCaught)
 		{
-			Face(_monsterFocusPoint.position);
+			Face(_eindMonsterMB.focusPoint.position);
 			return;
 		}
 
@@ -82,11 +82,11 @@ public class PlayerMB : CreatureMB, ITargetMB
 
 	public void Kill()
 	{
-		BlockPlayerMovement(true);
+		BlockPlayerMovement();
 
 		_playerBody.SetActive(false);
 		_killLantern.SetActive(true);
-		IsCaught = true;
+		_isCaught = true;
 		StartCoroutine(KillPart2());
 	}
 
@@ -94,37 +94,33 @@ public class PlayerMB : CreatureMB, ITargetMB
 	{
 		yield return new WaitForSeconds(_killAnimation.length);
 		AudioListener.pause = true;
-		_gameOverMenu.SetActiveMenu();
+		onKill();
 	}
 
 	public void Respawn()
 	{
-		RespawnSystemMB.Respawn(gameObject.transform, RespawnPoint);
+		RespawnSystemMB.Respawn(gameObject.transform, _respawnPoint.position);
 		AudioListener.pause = false;
-		BlockPlayerMovement(false);
+		UnblockPlayerMovement();
 
-		_gameOverMenu.SetActiveMenu();
+		onRespawn();
 		_playerBody.SetActive(true);
 		_killLantern.SetActive(false);
-		IsCaught = false;
+		_isCaught = false;
 	}
 
-	private void BlockPlayerMovement(bool blockMovement)
+	private void BlockPlayerMovement()
 	{
-		if(blockMovement)
-		{
-			_playerInput.cursorInputForLook = false;
-			_fpsController.MoveSpeed = 0;
+		_playerInput.cursorInputForLook = false;
 
-			StartCoroutine(ActivateCharacterController(false));
-		}
-		else
-		{
-			_playerInput.cursorInputForLook = true;
-			_fpsController.MoveSpeed = 4;
+		StartCoroutine(ActivateCharacterController(false));
+	}
 
-			StartCoroutine(ActivateCharacterController(true));
-		}
+	private void UnblockPlayerMovement()
+	{
+		_playerInput.cursorInputForLook = true;
+
+		StartCoroutine(ActivateCharacterController(true));
 	}
 
 	private void SetMovementAnimation()
@@ -152,10 +148,11 @@ public class PlayerMB : CreatureMB, ITargetMB
 		}
 	}
 
+	//Wait is necessary, otherwise the controller will block the respawn(position)
 	private IEnumerator ActivateCharacterController(bool activeState)
 	{
 		yield return new WaitForSecondsRealtime(0.5f);
-		_charController.enabled = activeState;
+		_characterController.enabled = activeState;
 	}
 
 	public void Face(Vector3 faceDirection)

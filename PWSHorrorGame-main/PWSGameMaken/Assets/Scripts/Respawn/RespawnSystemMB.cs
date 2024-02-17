@@ -2,9 +2,9 @@ using UnityEngine;
 
 public static class RespawnSystemMB
 {
-	public static void Respawn(Transform CreatureToRespawn, Transform spawnPos)
+	public static void Respawn(Transform CreatureToRespawn, Vector3 spawnPos)
 	{
-		CreatureToRespawn.position = spawnPos.position;
+		CreatureToRespawn.position = spawnPos;
 	}
 }
 

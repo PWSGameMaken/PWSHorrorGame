@@ -141,7 +141,7 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 		{
 			TempItem.ResetSprite();
 
-			if (MouseObject.interfaceMouseIsOver == null && itemObject.Item.Id >= 0)
+			if (MouseObject.interfaceMouseOver == null && itemObject.Item.Id >= 0)
 			{
 				DropItems(slot);
 				return;
@@ -167,11 +167,13 @@ public abstract class VisibleSlotsMB : ParentSlotsMB
 
 	protected GameObject AddEvents(GameObject slot)
 	{
-		AddEvent(slot, EventTriggerType.PointerEnter, delegate { OnEnter(slot); });
-		AddEvent(slot, EventTriggerType.PointerExit, delegate { OnExit(slot); });
-		AddEvent(slot, EventTriggerType.BeginDrag, delegate { OnDragStart(slot); });
-		AddEvent(slot, EventTriggerType.EndDrag, delegate { OnDragEnd(slot); });
-		AddEvent(slot, EventTriggerType.Drag, delegate { OnDrag(); });
+		EventTrigger trigger = slot.GetComponent<EventTrigger>();
+
+		AddEvent(trigger, EventTriggerType.PointerEnter, delegate { OnEnter(slot); });
+		AddEvent(trigger, EventTriggerType.PointerExit, delegate { OnExit(slot); });
+		AddEvent(trigger, EventTriggerType.BeginDrag, delegate { OnDragStart(slot); });
+		AddEvent(trigger, EventTriggerType.EndDrag, delegate { OnDragEnd(slot); });
+		AddEvent(trigger, EventTriggerType.Drag, delegate { OnDrag(); });
 
 		return slot;
 	}
