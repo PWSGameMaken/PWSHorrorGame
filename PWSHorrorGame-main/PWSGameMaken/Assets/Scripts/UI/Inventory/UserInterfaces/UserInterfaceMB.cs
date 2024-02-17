@@ -17,17 +17,20 @@ public class UserInterfaceMB : MonoBehaviour
 
 	private void AddEvents()
 	{
-		AddEvent(this.gameObject, EventTriggerType.PointerEnter, delegate { MouseObject.OnEnterInterface(this.gameObject); });
-		AddEvent(this.gameObject, EventTriggerType.PointerExit, delegate { MouseObject.OnExitInterface(); });
+		var eventTrigger = GetComponent<EventTrigger>();
+		AddEvent(eventTrigger, EventTriggerType.PointerEnter, delegate { MouseObject.OnEnterInterface(this); });
+		AddEvent(eventTrigger, EventTriggerType.PointerExit, delegate { MouseObject.OnExitInterface(); });
 	}
 
-	protected void AddEvent(GameObject gameObject, EventTriggerType type, UnityAction<BaseEventData> action)
+	protected void AddEvent(EventTrigger trigger, EventTriggerType type, UnityAction<BaseEventData> action)
 	{
-		EventTrigger trigger = gameObject.GetComponent<EventTrigger>();
-		var eventTrigger = new EventTrigger.Entry();
-		eventTrigger.eventID = type;
-		eventTrigger.callback.AddListener(action);
-		trigger.triggers.Add(eventTrigger);
+		var triggerEntry = new EventTrigger.Entry
+		{
+			eventID = type
+		};
+		triggerEntry.callback.AddListener(action);
+
+		trigger.triggers.Add(triggerEntry);
 	}
 	#endregion
 }

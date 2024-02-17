@@ -4,9 +4,9 @@ public abstract class UIControllerMB : MonoBehaviour
 {
 	protected GameObject menuToActivate;
 
-	private bool isActivated = false;
+	protected bool isActivated = false;
 
-	private void Start()
+	protected void Start()
 	{
 		menuToActivate = transform.Find("UI").gameObject;
 	}
@@ -16,7 +16,7 @@ public abstract class UIControllerMB : MonoBehaviour
 		SetActiveMenu(menuToActivate, !isActivated);
 	}
 
-	private void SetActiveMenu(GameObject menuToActivate, bool activeState)
+	public void SetActiveMenu(GameObject menuToActivate, bool activeState)
 	{
 		SetActiveMenuSettings(activeState);
 		menuToActivate.SetActive(activeState);

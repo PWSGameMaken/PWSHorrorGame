@@ -6,7 +6,7 @@ public class FallRespawnMB : MonoBehaviour
 	{
 		if(other.gameObject.CompareTag("Player"))
 		{
-			var respawnPos = other.GetComponent<PlayerMB>().WeightPuzzleRespawnPos;
+			var respawnPos = other.GetComponent<PlayerMB>().WeightPuzzleRespawnPos.position;
 			RespawnSystemMB.Respawn(other.transform, respawnPos);
 		}
 	}

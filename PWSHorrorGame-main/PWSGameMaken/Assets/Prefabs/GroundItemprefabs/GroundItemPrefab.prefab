@@ -102,7 +102,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hintText: Press E to pickup!
   _itemSO: {fileID: 0}
-  _dropSound: {fileID: 8300000, guid: 1e98d7bf35d61b949b5b61f6099debc1, type: 3}
 --- !u!65 &7627378489788081437
 BoxCollider:
   m_ObjectHideFlags: 0

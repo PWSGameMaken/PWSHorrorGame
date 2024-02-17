@@ -6,17 +6,18 @@
 using System.Collections;
 using UnityEngine;
 
+public enum GroundItemSounds
+{
+	DropSound
+}
+
 public class GroundItemMB : InteractableObjectMB, IInteractWithSlot
 {
 	[SerializeField] private ItemSO _itemSO;
 
-	[SerializeField] private AudioClip _dropSound;
-	private AudioSource _audioSource;
-
 	private static Transform _player;
-	private Rigidbody _rb;
 
-	private static readonly int _power = 100;
+	private static readonly int _throwPower = 100;
 	private bool isMoving = false;
 
 	public ItemSO ItemSO { get => _itemSO; set => _itemSO = value; }
@@ -24,17 +25,11 @@ public class GroundItemMB : InteractableObjectMB, IInteractWithSlot
 	private void Start()
 	{
 		_player = GameObject.FindGameObjectWithTag("Player").transform;
-		_audioSource = GetComponent<AudioSource>();
-		_rb = GetComponent<Rigidbody>();
 	}
 
 	private void OnCollisionEnter(Collision collision)
 	{
-		//Alle geluiden spelen in het begin nog tegelijkertijd af tot één grote boem!
-		if (_rb.velocity.magnitude > 1)
-		{
-			_audioSource.PlayOneShot(_dropSound);
-		}
+		AudioManager.instance.PlayOneShot(GroundItemSounds.DropSound.ToString(), gameObject);
 	}
 
 	public void Interact(VisibleSlotsMB visibleSlotsMB)
@@ -69,7 +64,7 @@ public class GroundItemMB : InteractableObjectMB, IInteractWithSlot
 		var newGroundItem = Instantiate(itemSO.groundItemPrefab, GetSpawnPosition() + forward * 0.75f, _player.rotation * itemSO.groundItemPrefab.transform.rotation);
 		newGroundItem.GetComponent<GroundItemMB>().ItemSO = itemSO;
 
-		newGroundItem.GetComponent<Rigidbody>().AddForce(forward * _power);
+		newGroundItem.GetComponent<Rigidbody>().AddForce(forward * _throwPower);
 
 		return newGroundItem;
 	}
@@ -91,3 +86,12 @@ public class GroundItemMB : InteractableObjectMB, IInteractWithSlot
 		Destroy(gameObject);
 	}
 }
+
+#region Geluiden niet onnodig afsplen (werkt niet in begin) (Zit in OnCollisionEnter)
+//private Rigidbody _rb;
+//_rb = GetComponent<Rigidbody>();
+//Alle geluiden spelen in het begin nog tegelijkertijd af tot één grote boem!
+//if (_rb.velocity.magnitude > 0.1f)
+//{
+//}
+#endregion
